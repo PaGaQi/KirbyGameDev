@@ -36,7 +36,7 @@ void Map::Draw()
 
     // L03: DONE 6: Iterate all tilesets and draw all their 
     // images in 0,0 (you should have only one tileset for now)
-	/*
+	
     ListItem<TileSet*>* tileset;
     tileset = mapData.tilesets.start;
 
@@ -45,9 +45,22 @@ void Map::Draw()
         app->render->DrawTexture(tileset->data->texture,0,0);
         tileset = tileset->next;
     }
-	*/
+	
 	
 	// L04: TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
+	for (int x = 0; x < mapData.maplayers.start->data->width; x++)
+	{
+		for (int y = 0; y < mapData.maplayers.start->data->height; y++)
+		{
+			int gid = mapData.maplayers.start->data->Get(x, y);
+			SDL_Rect rect = mapData.tilesets.start->data->GetTileRect(gid);
+
+			iPoint screenPos = MapToWorld(x, y);
+
+			app->render->DrawTexture(mapData.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
+		}
+	}
+
 
 	// L04: TODO 9: Complete the draw function (inside the loop from TODO 5)
 	// Find which tile id is on x, y coordinates 
@@ -61,7 +74,8 @@ void Map::Draw()
 iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
-
+	ret.x = x * mapData.tileWidth;
+	ret.y = y * mapData.tileHeight;
 
 	return ret;
 }
@@ -73,6 +87,12 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	int relativeIndex = id - firstgid;
 	
 	// L04: TODO 7: Get relative Tile rectangle
+
+	rect.w = tile_width;
+	rect.h = tile_height;
+
+	rect.x = margin + (tile_width + spacing) * (relativeIndex % columns);
+	rect.y = margin + (tile_height + spacing) * (relativeIndex / columns);
 
 	return rect;
 }
