@@ -32,6 +32,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
+	app->map->Load("KirbyMapBackground.tmx");
 	app->map->Load("KirbyMapForeground.tmx");
 	app->audio->PlayMusic("Assets/audio/music/Kirb.ogg");
 

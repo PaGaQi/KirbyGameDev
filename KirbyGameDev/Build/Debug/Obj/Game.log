@@ -1,7 +1,3 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  Map.cpp
-  Player.cpp
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(56,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-  Generando código...
+  Scene.cpp
   Game.vcxproj -> D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe

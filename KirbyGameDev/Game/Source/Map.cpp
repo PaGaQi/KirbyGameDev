@@ -84,7 +84,7 @@ iPoint Map::MapToWorld(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
-	int relativeIndex = id - 1; //El 1 s'hauria de canviar per el firstgid
+	int relativeIndex = id - firstgid; //El 1 s'hauria de canviar per el firstgid
 	
 	// L04: TODO 7: Get relative Tile rectangle
 
