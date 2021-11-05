@@ -42,7 +42,7 @@ void Map::Draw()
 
     while (tileset != NULL) 
 	{
-        app->render->DrawTexture(tileset->data->texture,0,0);
+       // app->render->DrawTexture(tileset->data->texture,0,0);
         tileset = tileset->next;
     }
 	
@@ -84,7 +84,7 @@ iPoint Map::MapToWorld(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
-	int relativeIndex = id - firstgid;
+	int relativeIndex = id - 1;
 	
 	// L04: TODO 7: Get relative Tile rectangle
 
