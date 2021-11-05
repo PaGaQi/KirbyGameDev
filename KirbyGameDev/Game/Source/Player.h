@@ -5,21 +5,22 @@
 #include "Module.h"
 #include "Animation.h"
 
+#include <Box2D/Box2D/Box2D.h>
+
 struct SDL_Texture;
-struct Collider;
 
 class Player : public Module
 {
 public:
 
 
-	Player(bool startEnabled);
+	Player();
 
 	// Destructor
 	virtual ~Player();
-	/*
+	
 	// Called before render is available
-	bool Awake(pugi::xml_node&) override;
+	//bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start() override;
@@ -28,57 +29,42 @@ public:
 	bool LevelStart(int level);
 
 	// Called each loop iteration
-	bool Update(float dt) override;
+	bool PreUpdate();
 
 	// Called each loop iteration
-	bool PostUpdate() override;
+	bool Update(float dt);
+
+	// Called each loop iteration
+	bool PostUpdate();
 
 
 	// Called before quitting
-	virtual bool CleanUp() override;
-
-	bool isPlayerMoving();
-
-	int playerDirection();
-
-	void drawPlayer();
+	virtual bool CleanUp();
 
 	//Collision callback, called when the player intersects with another collider
-	void OnCollision(Collider* c1, Collider* c2) override;
+	void OnCollision(b2Body* bodyA, b2Body* bodyB);
 
-	void DisablePlayer()
-	{
-		
-	}
-	*/
+
 	// Position of the player in the map
-	int positionX;
-	int positionY;
-	bool move;
-	bool playerPushing[4];
+	int x;
+	int y;
+	bool isMoving;
 	int direction;
-	int moveAction;
-	int step = 8;
-	int framesPerSprite = 8;
-	bool playerCanMove[4];
-	bool afterGame;
-	bool count;
-	SDL_Rect playerhitbox;
+
+	SDL_Rect playerRect;
 
 	// The player spritesheet loaded into an SDL_Texture
-	SDL_Texture* spriteSheet = nullptr;
+	SDL_Texture* playerSprites = nullptr;
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
 
 	// A set of animations
-	Animation idleAnim;
-	Animation jumpAnim;	
-	Animation leftAnim;
-	Animation rightAnim;
-	// The counter of the player Steps
-	int playerSteps;
+	Animation idle;
+	Animation jump;
+	Animation left;
+	Animation right;
 
 	// Sound effects indices								???????????????????????????????????
 };
