@@ -31,4 +31,6 @@
 *.out
 *.app
 *.db
+*.VC.db
 *.opendb
+*.VC.opendb

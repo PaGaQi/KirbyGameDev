@@ -43,7 +43,7 @@ Player::Player()
 	left.speed = 0.1f;
 
 	playerRect = { 0, 0, 32, 32 };
-
+	playerCrop = { 0, 0, 32, 32 };
 }
 
 Player::~Player()
@@ -71,7 +71,7 @@ bool Player::PreUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-
+		playerRect.x++;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -81,7 +81,7 @@ bool Player::PreUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-
+		
 	}
 	return true;
 }
@@ -96,7 +96,7 @@ bool Player::Update(float dt)
 // Called each loop iteration
 bool Player::PostUpdate()
 {
-	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &playerCrop);
 
 	return true;
 }

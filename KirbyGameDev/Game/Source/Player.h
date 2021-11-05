@@ -26,9 +26,6 @@ public:
 	bool Start() override;
 
 	// Called each loop iteration
-	bool LevelStart(int level);
-
-	// Called each loop iteration
 	bool PreUpdate();
 
 	// Called each loop iteration
@@ -36,7 +33,6 @@ public:
 
 	// Called each loop iteration
 	bool PostUpdate();
-
 
 	// Called before quitting
 	virtual bool CleanUp();
@@ -50,8 +46,10 @@ public:
 	int y;
 	bool isMoving;
 	int direction;
+	bool godMode;
 
 	SDL_Rect playerRect;
+	SDL_Rect playerCrop;
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* playerSprites = nullptr;
