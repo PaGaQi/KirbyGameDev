@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="50" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset version="1.5" tiledversion="1.7.2" name="Kirby Tileset 32x32" tilewidth="32" tileheight="32" spacing="4" margin="4" tilecount="360" columns="24">
  <image source="Kirby Tileset 32x32.png" width="870" height="544"/>
  </tileset>
