@@ -22,7 +22,7 @@ public:
 
 	virtual ~Module()
 	{}
-	
+
 	Module() : active(false)
 	{}
 
@@ -71,7 +71,7 @@ public:
 	{
 	}
 
-    // L02: DONE 2: Create new virtual methods to Load / Save state
+	// L02: DONE 2: Create new virtual methods to Load / Save state
 	virtual bool LoadState(pugi::xml_node&)
 	{
 		return true;
@@ -82,11 +82,16 @@ public:
 		return true;
 	}
 
+
+
+
+
 public:
 
 	SString name;
 	bool active;
 
 };
+
 
 #endif // __MODULE_H__

@@ -5,7 +5,9 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Player.h"
+#include"Menu.h"
 #include "Scene.h"
+
 #include "Map.h"
 #include "Physics.h"
 
@@ -31,6 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	physics = new Physics();
+	
 
 
 	// Ordered for awake / Start / Update
@@ -322,6 +325,17 @@ bool App::SaveGame() const
 	saveGameRequested = false;
 
 	return ret;
+}
+
+void App::ChangeScene(sceneType nextScene)
+{
+	currentScene = nextScene;
+
+	/*CleanUp();
+	Awake();*/
+
+	Start();
+
 }
 
 

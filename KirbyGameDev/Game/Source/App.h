@@ -20,9 +20,19 @@ class Render;
 class Textures;
 class Audio;
 class Player;
+class Menu;
 class Scene;
 class Map;
 class Physics;
+
+
+enum sceneType
+{
+	TITLE,
+	LEVEL_1,
+	
+
+};
 
 class App
 {
@@ -59,6 +69,8 @@ public:
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
+	void ChangeScene(sceneType nextScene);
+
 private:
 
 	// Load config file
@@ -93,9 +105,18 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Player* player;
+	Menu* menu;
 	Scene* scene;
 	Map* map;
 	Physics* physics;
+
+	sceneType currentScene = TITLE;
+#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 512
+	
+
+	
+
 
 
 

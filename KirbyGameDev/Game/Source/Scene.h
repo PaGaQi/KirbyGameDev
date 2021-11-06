@@ -35,13 +35,8 @@ public:
 private:
 	SDL_Texture* img;
 
-	PhysBody* Platform1;
-	PhysBody* Platform2;
-	PhysBody* Platform3;
-	PhysBody* Platform4;
-	PhysBody* Platform5;
-	PhysBody* Platform6;
-	PhysBody* PlatformSky;
+	SDL_Texture* menuBackground;
+	
 };
 
 #endif // __SCENE_H__

@@ -2,14 +2,24 @@
   App.cpp
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(56,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Audio.cpp
+  Input.cpp
+  Main.cpp
+  Map.cpp
   Physics.cpp
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(56,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(55,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(56,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(62,27): warning C4244: 'return': conversion from 'float32' to 'int', possible loss of data
+  Player.cpp
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(56,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Render.cpp
   Scene.cpp
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
 C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(56,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Textures.cpp
+  Window.cpp
   Generating Code...
   Game.vcxproj -> C:\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe
