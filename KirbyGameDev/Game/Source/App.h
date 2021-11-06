@@ -3,6 +3,9 @@
 
 #include "Module.h"
 #include "List.h"
+#include "Point.h"
+
+#include "Box2D/Box2D/Box2D.h"
 
 #include "PugiXml/src/pugixml.hpp"
 

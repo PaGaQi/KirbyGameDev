@@ -4,6 +4,8 @@
 #include "App.h"
 #include "Player.h"
 
+
+
 #define GRAVITY_X 0.0f
 #define GRAVITY_Y -7.0f
 
@@ -20,7 +22,7 @@
 class PhysBody
 {
 public:
-	PhysBody() : listener(NULL), body(NULL)
+	PhysBody() 
 	{}
 
 	void GetPosition(int& x, int &y) const;
@@ -45,15 +47,15 @@ public:
 	bool PreUpdate();
 	bool PostUpdate();
 	bool CleanUp();
-
-	PhysBody* CreateCircle(int x, int y, int radius);
-	PhysBody* CreateRectangle(int x, int y, int width, int height);
-	PhysBody* CreateStaticRectangle(int x, int y, int width, int height);
-	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
-	PhysBody* CreateChain(int x, int y, int* points, int size);
+	
+	//PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type);
+	//PhysBody* CreateRectangle(int x, int y, int width, int height);
+	//PhysBody* CreateStaticRectangle(int x, int y, int width, int height);
+	//PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
+	//PhysBody* CreateChain(int x, int y, int* points, int size);
 
 	// b2ContactListener ---
-	void BeginContact(b2Contact* contact);
+	//void BeginContact(b2Contact* contact);
 	
 
 	List<PhysBody*> groundColliders;

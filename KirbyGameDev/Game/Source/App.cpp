@@ -4,14 +4,18 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Player.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Physics.h"
 
 #include "Defs.h"
 #include "Log.h"
 
 #include <iostream>
 #include <sstream>
+
+#include "Box2D/Box2D/Box2D.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -23,8 +27,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
+	player = new Player();
 	scene = new Scene();
 	map = new Map();
+	physics = new Physics();
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -32,8 +39,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(player);
 	AddModule(scene);
 	AddModule(map);
+	AddModule(physics);
+
 
 	// Render last to swap buffer
 	AddModule(render);

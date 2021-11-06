@@ -1,4 +1,5 @@
 #include "App.h"
+#include "Point.h"
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -6,6 +7,8 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Physics.h"
+#include "Box2D/Box2D/Box2D.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -35,6 +38,70 @@ bool Scene::Start()
 	app->map->Load("KirbyMapBackground.tmx");
 	app->map->Load("KirbyMapForeground.tmx");
 	app->audio->PlayMusic("Assets/audio/music/Kirb.ogg");
+
+	int Platform1_vertex[8] = {
+	0, 479,
+	0, 352,
+	192, 352,
+	192, 479
+	};
+
+	int Platform2_vertex[8] = {
+	224, 480,
+	224, 352,
+	256, 352,
+	256, 480
+	};
+
+	int Platform3_vertex[8] = {
+	288, 480,
+	288, 352,
+	384, 352,
+	384, 480
+	};
+
+	int Platform4_vertex[8] = {
+	448, 479,
+	448, 320,
+	576, 320,
+	576, 480
+	};
+
+	int Platform5_vertex[16] = {
+	736, 478,
+	736, 320,
+	1024, 320,
+	1024, 288,
+	1120, 289,
+	1120, 224,
+	1280, 224,
+	1280, 481
+	};
+
+	int Platform6_vertex[12] = {
+	1440, 480,
+	1440, 288,
+	1472, 288,
+	1472, 320,
+	1536, 320,
+	1536, 479
+	};
+
+	int PlatformSky_vertex[8] = {
+	32, 256,
+	32, 224,
+	128, 224,
+	128, 256
+	};
+
+	/*Platform1 = app->physics->CreateChain(0, 0, Platform1_vertex, 8 );
+	Platform2 = app->physics->CreateChain(0, 0, Platform2_vertex, 8 );
+	Platform3 = app->physics->CreateChain(0, 0, Platform3_vertex, 8 );
+	Platform4 = app->physics->CreateChain(0, 0, Platform4_vertex, 8 );
+	Platform5 = app->physics->CreateChain(0, 0, Platform5_vertex, 16 );
+	Platform6 = app->physics->CreateChain(0, 0, Platform6_vertex, 12);
+	PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);*/
+	
 	
 
 	return true;
