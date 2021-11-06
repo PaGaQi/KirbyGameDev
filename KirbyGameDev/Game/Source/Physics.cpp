@@ -122,7 +122,7 @@ bool Physics::CleanUp()
 //PhysBody* Physics::CreateRectangle(int x, int y, int width, int height){}
 //PhysBody* Physics::CreateStaticRectangle(int x, int y, int width, int height){}
 //PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height){}
-/*PhysBody* Physics::CreateChain(int x, int y, int* points, int size)
+PhysBody* Physics::CreateChain(int x, int y, int* points, int size)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -154,5 +154,5 @@ bool Physics::CleanUp()
 	pbody->width = pbody->height = 0;
 
 	return pbody;
-}*/
+}
 

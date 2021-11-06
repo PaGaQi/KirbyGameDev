@@ -56,7 +56,7 @@ bool Player::Start()
 {
 	//LOG("Loading player textures");
 
-	playerSprites = app->tex->Load("Output/Assets/textures/Kirby Spritesheet 32x32");
+	playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
 
 	return true;
 }

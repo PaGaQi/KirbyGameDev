@@ -102,13 +102,13 @@ bool Scene::Start()
 		128, 256
 		};
 
-		/*Platform1 = app->physics->CreateChain(0, 0, Platform1_vertex, 8 );
+		Platform1 = app->physics->CreateChain(0, 0, Platform1_vertex, 8 );
 		Platform2 = app->physics->CreateChain(0, 0, Platform2_vertex, 8 );
 		Platform3 = app->physics->CreateChain(0, 0, Platform3_vertex, 8 );
 		Platform4 = app->physics->CreateChain(0, 0, Platform4_vertex, 8 );
 		Platform5 = app->physics->CreateChain(0, 0, Platform5_vertex, 16 );
 		Platform6 = app->physics->CreateChain(0, 0, Platform6_vertex, 12);
-		PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);*/
+		PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);
 
 
 
