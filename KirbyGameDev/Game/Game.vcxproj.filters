@@ -96,6 +96,9 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

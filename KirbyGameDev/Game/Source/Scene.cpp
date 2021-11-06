@@ -69,6 +69,7 @@ bool Scene::Update(float dt)
 		app->render->camera.x += 1;
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	//app->render->DrawTexture()
 
 	// Draw map
 	app->map->Draw();
@@ -94,6 +95,8 @@ bool Scene::PostUpdate()
 
 	return ret;
 }
+
+
 
 // Called before quitting
 bool Scene::CleanUp()

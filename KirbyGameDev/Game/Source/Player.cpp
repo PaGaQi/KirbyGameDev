@@ -7,6 +7,8 @@
 #include "Animation.h"
 #include <Box2D/Box2D/Box2D.h>
 
+#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
+
 Player::Player()
 {
 	isMoving = false;
@@ -52,16 +54,19 @@ Player::~Player()
 // Load assets
 bool Player::Start()
 {
+	//LOG("Loading player textures");
+
 	playerSprites = app->tex->Load("Output/Assets/textures/Kirby Spritesheet 32x32");
 
 	return true;
 }
 
+
 // Unload assets
 bool Player::CleanUp()
 {
 
-
+	
 	return true;
 }
 

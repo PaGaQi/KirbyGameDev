@@ -19,6 +19,7 @@ class Audio;
 class Player;
 class Scene;
 class Map;
+class Physics;
 
 class App
 {
@@ -91,6 +92,9 @@ public:
 	Player* player;
 	Scene* scene;
 	Map* map;
+	Physics* physics;
+
+
 
 private:
 
@@ -100,6 +104,9 @@ private:
 	SString organization;
 
 	List<Module *> modules;
+public:
+	
+	
 
 	// L01: DONE 2: Create new variables from pugui namespace
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables

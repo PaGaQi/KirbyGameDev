@@ -6,11 +6,23 @@
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
+class PhysBody;
 
 class Module
 {
+private:
+	bool enabled;
+
 public:
 
+	App* Application;
+
+	Module(App* parent, bool start_enabled = true) : Application(parent), enabled(start_enabled)
+	{}
+
+	virtual ~Module()
+	{}
+	
 	Module() : active(false)
 	{}
 
@@ -54,6 +66,9 @@ public:
 	virtual bool CleanUp()
 	{
 		return true;
+	}
+	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+	{
 	}
 
     // L02: DONE 2: Create new virtual methods to Load / Save state
