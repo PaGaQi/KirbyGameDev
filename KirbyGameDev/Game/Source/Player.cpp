@@ -126,7 +126,7 @@ bool Player::Start()
 	b2Vec2 playerPos = { 0, 0 };
 	b2Vec2 playerVel = { 0, 0 };
 
-	playerPhys = app->physics->CreateCircle(0, 320, 14, b2_dynamicBody);
+	playerPhys = app->physics->CreateCircle(32, 320, 14, b2_dynamicBody);
 
 	return true;
 }
@@ -154,6 +154,7 @@ bool Player::PreUpdate()
 	
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{		
+		app->render->camera.x -= 4;
 		playerVel = { 6, 0 };
 		direction = 0;
 		playerRect.x += 8;
@@ -161,6 +162,7 @@ bool Player::PreUpdate()
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
+		app->render->camera.x += 4;
 		playerVel = { -6, 0 };
 		playerRect.x -= 8;
 		direction = 1;
