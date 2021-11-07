@@ -35,9 +35,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	if (app->currentScene == TITLE)
-	{
-
-		
+	{		
 		menuBackground = app->tex->Load("Assets/maps/TitleScreenVer1.png");
 
 	}
@@ -102,6 +100,7 @@ bool Scene::Start()
 		128, 256
 		};
 
+		/*
 		Platform1 = app->physics->CreateChain(0, 0, Platform1_vertex, 8 );
 		Platform2 = app->physics->CreateChain(0, 0, Platform2_vertex, 8 );
 		Platform3 = app->physics->CreateChain(0, 0, Platform3_vertex, 8 );
@@ -109,6 +108,7 @@ bool Scene::Start()
 		Platform5 = app->physics->CreateChain(0, 0, Platform5_vertex, 16 );
 		Platform6 = app->physics->CreateChain(0, 0, Platform6_vertex, 12);
 		PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);
+		*/
 
 
 
@@ -151,9 +151,17 @@ bool Scene::Update(float dt)
 	
 	if (app->currentScene == TITLE)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE))
+		if (app->input->GetKey(SDL_SCANCODE_RETURN))
 		{
 			app->ChangeScene(LEVEL_1);
+		}
+	}
+
+	if (app->currentScene == LEVEL_1)
+	{
+		if (app->player->isDead == 1)
+		{
+			app->ChangeScene(TITLE);
 		}
 	}
 

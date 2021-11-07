@@ -13,38 +13,93 @@ Player::Player()
 {
 	isMoving = false;
 
-	idle.PushBack({ 0, 0, 32, 32 });
-	idle.PushBack({ 34, 0, 32, 32 });
+	//Right Idle Animation---------------------------
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 34, 0, 32, 32 });
+	idleRight.PushBack({ 0, 0, 32, 32 });
+	idleRight.PushBack({ 34, 0, 32, 32 });
 
-	idle.loop = true;
-	idle.speed = 0.1f;
+	idleRight.loop = true;
+	idleRight.speed = 0.005f;
 
-	right.PushBack({ 0, 34, 32, 32 });
-	right.PushBack({ 34, 34, 32, 32 });
-	right.PushBack({ 68, 34, 32, 32 });
-	right.PushBack({ 102, 34, 32, 32 });
+	//Left Idle Animation-------------------------- -
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 34, 102, 32, 32 });
+	idleLeft.PushBack({ 0, 102, 32, 32 });
+	idleLeft.PushBack({ 34, 102, 32, 32 });
 
-	right.loop = true;
-	right.speed = 0.1f;
+	idleLeft.loop = true;
+	idleLeft.speed = 0.005f;
 
-	//Left movement not yet implemented :)
-	left.PushBack({ 0, 34, 32, 32 });
-	left.PushBack({ 34, 34, 32, 32 });
-	left.PushBack({ 68, 34, 32, 32 });
-	left.PushBack({ 102, 34, 32, 32 });
+	//Right Walk Animation---------------------------
+	walkRight.PushBack({ 0, 34, 32, 32 });
+	walkRight.PushBack({ 34, 34, 32, 32 });
+	walkRight.PushBack({ 68, 34, 32, 32 });
+	walkRight.PushBack({ 102, 34, 32, 32 });
 
-	left.loop = true;
-	left.speed = 0.1f;
+	walkRight.loop = true;
+	walkRight.speed = 0.009f;
 
-	jump.PushBack({ 40, 0, 19, 20 });
-	jump.PushBack({ 40, 44, 19, 20 });
-	jump.PushBack({ 40, 88, 19, 20 });
-	jump.PushBack({ 40, 132, 19, 20 });
+	////Left Walk Animation---------------------------
+	walkLeft.PushBack({ 0, 136, 32, 32 });
+	walkLeft.PushBack({ 34, 136, 32, 32 });
+	walkLeft.PushBack({ 68, 136, 32, 32 });
+	walkLeft.PushBack({ 102, 136, 32, 32 });
 
-	left.loop = true;
-	left.speed = 0.1f;
+	walkLeft.loop = true;
+	walkLeft.speed = 0.009f;
 
-	playerRect = { 0, 0, 32, 32 };
+	//Right Jump Animation---------------------------
+	jumpRight.PushBack({ 0, 170, 32, 32 });
+	jumpRight.PushBack({ 34, 170, 32, 32 });
+	jumpRight.PushBack({ 68, 170, 32, 32 });
+	jumpRight.PushBack({ 102, 170, 32, 32 });
+
+	jumpRight.loop = true;
+	jumpRight.speed = 0.1f;
+
+	//Right Jump Animation---------------------------
+	jumpLeft.PushBack({ 0, 170, 32, 32 });
+	jumpLeft.PushBack({ 34, 170, 32, 32 });
+	jumpLeft.PushBack({ 68, 170, 32, 32 });
+	jumpLeft.PushBack({ 102, 170, 32, 32 });
+
+	jumpLeft.loop = true;
+	jumpLeft.speed = 0.1f;
+
+	//Death Animation-------------------------------
+	death.PushBack({ 0, 204, 32, 32 });
+	death.PushBack({ 34, 204, 32, 32 });
+	death.PushBack({ 68, 204, 32, 32 });
+	death.PushBack({ 102, 204, 32, 32 });
+
+	jumpLeft.loop = true;
+	jumpLeft.speed = 0.1f;
+
+	playerRect = { 0, 320, 32, 32 };
 	playerCrop = { 0, 0, 32, 32 };
 }
 
@@ -58,6 +113,8 @@ bool Player::Start()
 
 	playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
 
+	direction = 0;
+
 	return true;
 }
 
@@ -65,7 +122,7 @@ bool Player::Start()
 // Unload assets
 bool Player::CleanUp()
 {
-
+	
 	
 	return true;
 }
@@ -73,20 +130,41 @@ bool Player::CleanUp()
 // Called each loop iteration
 bool Player::PreUpdate()
 {
-
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		playerRect.x++;
+		direction = 0;
+		currentAnimation = &walkRight;
+
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerRect.x--;
+		direction = 1;
+		currentAnimation = &walkLeft;
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	
+	else if (direction == 0)
 	{
-		
+		currentAnimation = &idleRight;
+	}
+	else if (direction == 1)
+	{
+		currentAnimation = &idleLeft;
+	}
+	
+
+	if (godMode == true)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			playerRect.y--;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			playerRect.y++;
+		}
 	}
 	return true;
 }
@@ -94,6 +172,17 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		if (!godMode) godMode = 1;
+		else godMode = 0;
+	}
+
+	
+
+
+	currentAnimation->Update();
+
 
 	return true;
 }
@@ -101,8 +190,12 @@ bool Player::Update(float dt)
 // Called each loop iteration
 bool Player::PostUpdate()
 {
-	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &playerCrop);
-
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		if (!isDead) isDead = 1;
+		else isDead = 0;
+	}
+	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
 	return true;
 }
 

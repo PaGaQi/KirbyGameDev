@@ -45,8 +45,9 @@ public:
 	int x;
 	int y;
 	bool isMoving;
-	int direction;
+	bool direction;
 	bool godMode;
+	bool isDead;
 
 	SDL_Rect playerRect;
 	SDL_Rect playerCrop;
@@ -59,10 +60,13 @@ public:
 	Animation* currentAnimation = nullptr;
 
 	// A set of animations
-	Animation idle;
-	Animation jump;
-	Animation left;
-	Animation right;
+	Animation idleRight;
+	Animation idleLeft;
+	Animation jumpRight;
+	Animation jumpLeft;
+	Animation walkLeft;
+	Animation walkRight;
+	Animation death;
 
 	// Sound effects indices								???????????????????????????????????
 };
