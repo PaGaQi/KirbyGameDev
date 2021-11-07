@@ -42,10 +42,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(physics);
 	AddModule(player);
 	AddModule(scene);
 	AddModule(map);
-	AddModule(physics);
 
 
 	// Render last to swap buffer

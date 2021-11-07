@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Animation.h"
 #include <Box2D/Box2D/Box2D.h>
+#include "Physics.h"
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -73,28 +74,23 @@ Player::Player()
 	walkLeft.speed = 0.1f;
 
 	//Right Jump Animation---------------------------
+	
 	jumpRight.PushBack({ 0, 68, 32, 32 });
-	jumpRight.PushBack({ 0, 68, 32, 32 });
-	jumpRight.PushBack({ 0, 68, 32, 32 });
-	jumpRight.PushBack({ 0, 68, 32, 32 });
-	jumpRight.PushBack({ 0, 68, 32, 32 });
-	jumpRight.PushBack({ 34, 68, 32, 32 });
-	jumpRight.PushBack({ 68, 68, 32, 32 });
-	jumpRight.PushBack({ 102, 68, 32, 32 });
-	jumpRight.PushBack({ 136, 68, 32, 32 });
-	jumpRight.PushBack({ 136, 68, 32, 32 });
-	jumpRight.PushBack({ 136, 68, 32, 32 });
-	jumpRight.PushBack({ 136, 68, 32, 32 });
+	//jumpRight.PushBack({ 34, 68, 32, 32 });
+	//jumpRight.PushBack({ 68, 68, 32, 32 });
+	//jumpRight.PushBack({ 102, 68, 32, 32 });
+	//jumpRight.PushBack({ 136, 68, 32, 32 });
+
 
 	jumpRight.loop = true;
 	jumpRight.speed = 0.1f;
 
 	//Left Jump Animation---------------------------
 	jumpLeft.PushBack({ 0, 170, 32, 32 });
-	jumpLeft.PushBack({ 34, 170, 32, 32 });
-	jumpLeft.PushBack({ 68, 170, 32, 32 });
-	jumpLeft.PushBack({ 102, 170, 32, 32 });
-	jumpLeft.PushBack({ 136, 170, 32, 32 });
+	//jumpLeft.PushBack({ 34, 170, 32, 32 });
+	//jumpLeft.PushBack({ 68, 170, 32, 32 });
+	//jumpLeft.PushBack({ 102, 170, 32, 32 });
+	//jumpLeft.PushBack({ 136, 170, 32, 32 });
 
 	jumpLeft.loop = true;
 	jumpLeft.speed = 0.1f;
@@ -127,6 +123,11 @@ bool Player::Start()
 
 	direction = 0;
 
+	b2Vec2 playerPos = { 0, 0 };
+	b2Vec2 playerVel = { 0, 0 };
+
+	playerPhys = app->physics->CreateCircle(0, 320, 14, b2_dynamicBody);
+
 	return true;
 }
 
@@ -134,8 +135,7 @@ bool Player::Start()
 // Unload assets
 bool Player::CleanUp()
 {
-	
-	
+		
 	return true;
 }
 
@@ -144,79 +144,85 @@ bool Player::PreUpdate()
 {
 	if (isDead == 1)
 	{
-		currentAnimation = &death;
-		
+		currentAnimation = &death;		
 
 		if (deadDirection == 1) playerRect.y -= 5;
 		if (playerRect.y == 320) deadDirection = 0;
-		if (deadDirection == 0) playerRect.y += 5;	
-		
-
+		if (deadDirection == 0) playerRect.y += 5;
 	}	
 	
 	
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		playerRect.x += 5;
+	{		
+		playerVel = { 6, 0 };
 		direction = 0;
+		playerRect.x += 8;
 		currentAnimation = &walkRight;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		playerRect.x -= 5;
+		playerVel = { -6, 0 };
+		playerRect.x -= 8;
 		direction = 1;
 		currentAnimation = &walkLeft;
 	}
 
 	else if (direction == 0)
 	{
+		playerVel = { 0, 0 };
 		currentAnimation = &idleRight;
 	}
 	else if (direction == 1)
 	{
+		playerVel = { 0, 0 };
 		currentAnimation = &idleLeft;
 	}
 	if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) &&(direction == 0))
 	{
-		playerRect.y -= 5;
+		playerVel.y = -20;
 		direction = 0;
 		currentAnimation = &jumpRight;
 	}
 	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (direction == 1))
 	{
-		playerRect.y -= 5;
+		playerVel.y = -20;
 		direction = 1;
 		currentAnimation = &jumpLeft;
 	}
-	
-
-	
+		
 
 	if (godMode == true)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			playerRect.y -= 5;
+			playerRect.y -= 8;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
-			playerRect.y += 5;
+			playerRect.y += 8;
 		}
 	}
+
+	if (!godMode) playerPhys->body->SetLinearVelocity(playerVel);
 	return true;
 }
 
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	if (!godMode)
+	{
+		playerPos = playerPhys->body->GetPosition();
+		playerRect.x = METERS_TO_PIXELS(playerPos.x) - 16;
+		playerRect.y = METERS_TO_PIXELS(playerPos.y) - 16;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		if (!godMode) godMode = 1;
 		else godMode = 0;
-	}
-
+	}	
 	
-
 
 	currentAnimation->Update();
 

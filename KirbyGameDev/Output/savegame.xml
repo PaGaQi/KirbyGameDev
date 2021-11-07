@@ -5,8 +5,8 @@
 	<textures />
 	<audio />
 	<:anonymous />
+	<:anonymous />
 	<scene />
 	<map />
-	<:anonymous />
 	<renderer />
 </save_state>

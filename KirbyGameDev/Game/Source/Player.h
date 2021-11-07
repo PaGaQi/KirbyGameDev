@@ -4,6 +4,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "Physics.h"
 
 #include <Box2D/Box2D/Box2D.h>
 #include "SDL/include/SDL.h"
@@ -71,11 +72,19 @@ public:
 	Animation idleLeft;
 	Animation jumpRight;
 	Animation jumpLeft;
+	//Animation fallRight;
+	//Animation fallLeft;
+	//Animation peakRight;
+	//Animation peakLeft;
 	Animation walkLeft;
 	Animation walkRight;
 	Animation death;
 
-	// Sound effects indices								???????????????????????????????????
+	PhysBody* playerPhys;
+	
+
+	b2Vec2 playerPos;
+	b2Vec2 playerVel;
 };
 
 #endif
