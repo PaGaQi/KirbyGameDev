@@ -52,6 +52,8 @@ public:
 	bool isDead;
 	bool isJumping;
 
+	bool deadDirection;
+
 	SDL_Rect playerRect;
 	SDL_Rect playerCrop;
 

@@ -73,22 +73,31 @@ Player::Player()
 	walkLeft.speed = 0.009f;
 
 	//Right Jump Animation---------------------------
-	jumpRight.PushBack({ 0, 170, 32, 32 });
-	jumpRight.PushBack({ 34, 170, 32, 32 });
-	jumpRight.PushBack({ 68, 170, 32, 32 });
-	jumpRight.PushBack({ 102, 170, 32, 32 });
+	jumpRight.PushBack({ 0, 68, 32, 32 });
+	jumpRight.PushBack({ 0, 68, 32, 32 });
+	jumpRight.PushBack({ 0, 68, 32, 32 });
+	jumpRight.PushBack({ 0, 68, 32, 32 });
+	jumpRight.PushBack({ 0, 68, 32, 32 });
+	jumpRight.PushBack({ 34, 68, 32, 32 });
+	jumpRight.PushBack({ 68, 68, 32, 32 });
+	jumpRight.PushBack({ 102, 68, 32, 32 });
+	jumpRight.PushBack({ 136, 68, 32, 32 });
+	jumpRight.PushBack({ 136, 68, 32, 32 });
+	jumpRight.PushBack({ 136, 68, 32, 32 });
+	jumpRight.PushBack({ 136, 68, 32, 32 });
 
 	jumpRight.loop = true;
-	jumpRight.speed = 0.1f;
+	jumpRight.speed = 0.005f;
 
 	//Left Jump Animation---------------------------
 	jumpLeft.PushBack({ 0, 170, 32, 32 });
 	jumpLeft.PushBack({ 34, 170, 32, 32 });
 	jumpLeft.PushBack({ 68, 170, 32, 32 });
 	jumpLeft.PushBack({ 102, 170, 32, 32 });
+	jumpLeft.PushBack({ 136, 170, 32, 32 });
 
 	jumpLeft.loop = true;
-	jumpLeft.speed = 0.1f;
+	jumpLeft.speed = 0.005f;
 
 	//Death Animation-------------------------------
 	death.PushBack({ 0, 204, 32, 32 });
@@ -96,11 +105,14 @@ Player::Player()
 	death.PushBack({ 68, 204, 32, 32 });
 	death.PushBack({ 102, 204, 32, 32 });
 
-	jumpLeft.loop = true;
-	jumpLeft.speed = 0.1f;
+	death.loop = true;
+	death.speed = 0.005f;
+	
+	deadDirection = 1;
 
 	playerRect = { 0, 320, 32, 32 };
 	playerCrop = { 0, 0, 32, 32 };
+
 }
 
 Player::~Player()
@@ -130,30 +142,43 @@ bool Player::CleanUp()
 // Called each loop iteration
 bool Player::PreUpdate()
 {
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (isDead == 1)
+	{
+		currentAnimation = &death;
+		
+
+		if (deadDirection == 1) playerRect.y -= 1;
+		if (playerRect.y == 288) deadDirection = 0;	
+		if (deadDirection == 0) playerRect.y += 1;
+		
+		
+
+	}	
+	
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		playerRect.x++;
 		direction = 0;
 		currentAnimation = &walkRight;
-
 	}
-
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerRect.x--;
 		direction = 1;
 		currentAnimation = &walkLeft;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) &&(direction == 0))
+	{
+		playerRect.y--;
+		direction = 0;
+		currentAnimation = &jumpRight;
+	}
+	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (direction == 1))
 	{
 		playerRect.y--;
 		direction = 1;
 		currentAnimation = &jumpLeft;
-		
-
-
 	}
-	
 	else if (direction == 0)
 	{
 		currentAnimation = &idleRight;
@@ -162,6 +187,7 @@ bool Player::PreUpdate()
 	{
 		currentAnimation = &idleLeft;
 	}
+
 	
 
 	if (godMode == true)
