@@ -1,26 +1,22 @@
 #include "App.h"
-#include "Physics.h"
 #include "Input.h"
 #include "Render.h"
-
-#include "Defs.h"
+#include "Physics.h"
+#include "Point.h"
+#include "math.h"
 #include "Log.h"
 
-#include "SDL/include/SDL.h"
-
-
-
-
-Physics::Physics() : Module()
+Physics :: Physics()
 {
 	world = NULL;
 	mouseJoint = NULL;
-	ground = NULL;
 	debug = true;
-
 }
 
-Physics::~Physics() {}
+// Destructor
+Physics::~Physics()
+{
+}
 
 bool Physics::Start()
 {
@@ -45,10 +41,10 @@ bool Physics::Start()
 	b2Body* big_ball = world->CreateBody(&body);
 
 	int Platform1_vertex[8] = {
-		0, 479,
-		0, 352,
-		192, 352,
-		192, 479
+	0, 480,
+	0, 352,
+	192, 352,
+	192, 479
 	};
 
 	int Platform2_vertex[8] = {
@@ -66,21 +62,21 @@ bool Physics::Start()
 	};
 
 	int Platform4_vertex[8] = {
-	448, 479,
+	448, 480,
 	448, 320,
 	576, 320,
 	576, 480
 	};
 
 	int Platform5_vertex[16] = {
-	736, 478,
+	736, 480,
 	736, 320,
 	1024, 320,
 	1024, 288,
-	1120, 289,
+	1120, 288,
 	1120, 224,
 	1280, 224,
-	1280, 481
+	1280, 480
 	};
 
 	int Platform6_vertex[12] = {
@@ -89,7 +85,7 @@ bool Physics::Start()
 	1472, 288,
 	1472, 320,
 	1536, 320,
-	1536, 479
+	1536, 480
 	};
 
 	int PlatformSky_vertex[8] = {
@@ -107,25 +103,153 @@ bool Physics::Start()
 	Platform5 = app->physics->CreateChain(0, 0, Platform5_vertex, 16);
 	Platform6 = app->physics->CreateChain(0, 0, Platform6_vertex, 12);
 	PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);
-	
-	return true;
-}
-bool  Physics::PreUpdate()
-{
+
+
+	//Background colliders
 	
 
 	return true;
+}
+
+// 
+bool Physics::PreUpdate()
+{
+	world->Step(1.0f / 60.0f, 6, 2);
+
+	for (b2Contact* c = world->GetContactList(); c; c = c->GetNext())
+	{
+		if (c->GetFixtureA()->IsSensor() && c->IsTouching())
+		{
+			PhysBody* pb1 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
+			PhysBody* pb2 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
+			if (pb1 && pb2 && pb1->listener)
+				pb1->listener->OnCollision(pb1, pb2);
+		}
+	}
+
+	return true;
+}
+
+PhysBody* Physics :: CreateCircle(int x, int y, int radius)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2CircleShape shape;
+	shape.m_radius = PIXEL_TO_METERS(radius);
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = radius;
+
+	return pbody;
+}
+
+PhysBody* Physics :: CreateRectangle(int x, int y, int width, int height)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width * 0.5f;
+	pbody->height = height * 0.5f;
+
+	return pbody;
+}
+
+PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+	fixture.isSensor = true;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width;
+	pbody->height = height;
+
+	return pbody;
+}
+
+PhysBody* Physics::CreateChain(int x, int y, int* points, int size)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2ChainShape shape;
+	b2Vec2* p = new b2Vec2[size / 2];
+
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+
+	shape.CreateLoop(p, size / 2);
+
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+	b->CreateFixture(&fixture);
+
+	//delete p;
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = 0;
+
+	return pbody;
 }
 
 bool Physics::PostUpdate()
 {
-
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
 	if (!debug)
 		return true;
 
+	// Bonus code: this will iterate all objects in the world and draw the circles
+	// You need to provide your own macro to translate meters to pixels
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
 		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
@@ -194,28 +318,35 @@ bool Physics::PostUpdate()
 			break;
 			}
 		}
-
-		return true;
 	}
+
+	return true;
 }
 
-bool Physics::CleanUp()
+// Called before quitting
+bool Physics :: CleanUp()
 {
+	LOG("Destroying physics world");
+
+	// Delete the whole physics world!
 	delete world;
 
 	return true;
 }
 
+void PhysBody :: GetPosition(int& x, int& y) const
+{
+	b2Vec2 pos = body->GetPosition();
+	x = METERS_TO_PIXELS(pos.x) - (width);
+	y = METERS_TO_PIXELS(pos.y) - (height);
+}
 
-
-
-
-float PhysBody::GetRotation() const
+float PhysBody :: GetRotation() const
 {
 	return RADTODEG * body->GetAngle();
 }
 
-bool PhysBody::Contains(int x, int y) const
+bool PhysBody :: Contains(int x, int y) const
 {
 	b2Vec2 p(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
@@ -230,8 +361,8 @@ bool PhysBody::Contains(int x, int y) const
 
 	return false;
 }
-
-int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const
+ 
+int PhysBody :: RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const
 {
 	int ret = -1;
 
@@ -263,68 +394,5 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	}
 
 	return ret;
-}
-
-
-
-
-/*PhysBody* Physics::CreateCircle(int x, int y, int radius, b2BodyType type)
-{
-	b2BodyDef body;
-	body.type = type;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* b = world->CreateBody(&body);
-
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(radius);
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	fixture.density = 1.0f;
-
-	b->CreateFixture(&fixture);
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = pbody->height = radius;
-
-	return pbody;
-}*/
-//PhysBody* Physics::CreateRectangle(int x, int y, int width, int height){}
-//PhysBody* Physics::CreateStaticRectangle(int x, int y, int width, int height){}
-//PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height){}
-PhysBody* Physics::CreateChain(int x, int y, int* points, int size)
-{
-	b2BodyDef body;
-	body.type = b2_dynamicBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* b = world->CreateBody(&body);
-
-	b2ChainShape shape;
-	b2Vec2* p = new b2Vec2[size / 2];
-
-	for (uint i = 0; i < size / 2; ++i)
-	{
-		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
-		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
-	}
-
-	shape.CreateLoop(p, size / 2);
-
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-
-	b->CreateFixture(&fixture);
-
-	delete p;
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = pbody->height = 0;
-
-	return pbody;
 }
 

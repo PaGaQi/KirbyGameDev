@@ -1,5 +1,12 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  Player.cpp
+  Physics.cpp
 D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(34,8): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(176,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(177,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(220,21): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(384,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(385,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(391,27): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
   Game.vcxproj -> D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe
