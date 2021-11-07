@@ -1,3 +1,5 @@
+
+
 #include "App.h"
 
 #include "Defs.h"
@@ -31,6 +33,8 @@ int main(int argc, char* args[])
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
+
+
 
 	while(state != EXIT)
 	{

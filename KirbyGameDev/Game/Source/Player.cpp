@@ -32,7 +32,7 @@ Player::Player()
 	idleRight.PushBack({ 34, 0, 32, 32 });
 
 	idleRight.loop = true;
-	idleRight.speed = 0.005f;
+	idleRight.speed = 0.2f;
 
 	//Left Idle Animation-------------------------- -
 	idleLeft.PushBack({ 0, 102, 32, 32 });
@@ -52,7 +52,7 @@ Player::Player()
 	idleLeft.PushBack({ 34, 102, 32, 32 });
 
 	idleLeft.loop = true;
-	idleLeft.speed = 0.005f;
+	idleLeft.speed = 0.2f;
 
 	//Right Walk Animation---------------------------
 	walkRight.PushBack({ 0, 34, 32, 32 });
@@ -61,7 +61,7 @@ Player::Player()
 	walkRight.PushBack({ 102, 34, 32, 32 });
 
 	walkRight.loop = true;
-	walkRight.speed = 0.009f;
+	walkRight.speed = 0.1f;
 
 	////Left Walk Animation---------------------------
 	walkLeft.PushBack({ 0, 136, 32, 32 });
@@ -70,7 +70,7 @@ Player::Player()
 	walkLeft.PushBack({ 102, 136, 32, 32 });
 
 	walkLeft.loop = true;
-	walkLeft.speed = 0.009f;
+	walkLeft.speed = 0.1f;
 
 	//Right Jump Animation---------------------------
 	jumpRight.PushBack({ 0, 68, 32, 32 });
@@ -87,7 +87,7 @@ Player::Player()
 	jumpRight.PushBack({ 136, 68, 32, 32 });
 
 	jumpRight.loop = true;
-	jumpRight.speed = 0.005f;
+	jumpRight.speed = 0.1f;
 
 	//Left Jump Animation---------------------------
 	jumpLeft.PushBack({ 0, 170, 32, 32 });
@@ -97,7 +97,7 @@ Player::Player()
 	jumpLeft.PushBack({ 136, 170, 32, 32 });
 
 	jumpLeft.loop = true;
-	jumpLeft.speed = 0.005f;
+	jumpLeft.speed = 0.1f;
 
 	//Death Animation-------------------------------
 	death.PushBack({ 0, 204, 32, 32 });
@@ -106,7 +106,7 @@ Player::Player()
 	death.PushBack({ 102, 204, 32, 32 });
 
 	death.loop = true;
-	death.speed = 0.005f;
+	death.speed = 0.1f;
 	
 	deadDirection = 1;
 
@@ -147,38 +147,27 @@ bool Player::PreUpdate()
 		currentAnimation = &death;
 		
 
-		if (deadDirection == 1) playerRect.y -= 1;
-		if (playerRect.y == 288) deadDirection = 0;	
-		if (deadDirection == 0) playerRect.y += 1;
-		
+		if (deadDirection == 1) playerRect.y -= 5;
+		if (playerRect.y == 320) deadDirection = 0;
+		if (deadDirection == 0) playerRect.y += 5;	
 		
 
 	}	
 	
+	
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		playerRect.x++;
+		playerRect.x += 5;
 		direction = 0;
 		currentAnimation = &walkRight;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		playerRect.x--;
+		playerRect.x -= 5;
 		direction = 1;
 		currentAnimation = &walkLeft;
 	}
-	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) &&(direction == 0))
-	{
-		playerRect.y--;
-		direction = 0;
-		currentAnimation = &jumpRight;
-	}
-	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (direction == 1))
-	{
-		playerRect.y--;
-		direction = 1;
-		currentAnimation = &jumpLeft;
-	}
+
 	else if (direction == 0)
 	{
 		currentAnimation = &idleRight;
@@ -187,6 +176,19 @@ bool Player::PreUpdate()
 	{
 		currentAnimation = &idleLeft;
 	}
+	if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) &&(direction == 0))
+	{
+		playerRect.y -= 5;
+		direction = 0;
+		currentAnimation = &jumpRight;
+	}
+	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (direction == 1))
+	{
+		playerRect.y -= 5;
+		direction = 1;
+		currentAnimation = &jumpLeft;
+	}
+	
 
 	
 
@@ -194,11 +196,11 @@ bool Player::PreUpdate()
 	{
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			playerRect.y--;
+			playerRect.y -= 5;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
-			playerRect.y++;
+			playerRect.y += 5;
 		}
 	}
 	return true;

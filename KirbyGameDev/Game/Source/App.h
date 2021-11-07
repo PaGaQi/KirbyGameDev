@@ -138,6 +138,8 @@ public:
 	//pugi::xml_node config;
 	//pugi::xml_node configApp;
 
+	uint32 start;
+
 	uint frames;
 	float dt;
 

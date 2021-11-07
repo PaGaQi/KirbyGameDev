@@ -59,4 +59,7 @@ inline const char* const PATH(const char* folder, const char* file)
 	return path;
 }
 
+//FPS
+#define FPS 30
+
 #endif
