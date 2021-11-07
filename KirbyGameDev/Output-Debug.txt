@@ -1,0 +1,151 @@
+﻿'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntdll.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\KernelBase.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ucrtbase.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\SDL2.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\gdi32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\win32u.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\gdi32full.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp_win.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\user32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\imm32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcrt.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ole32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\rpcrt4.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\combase.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\oleaut32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shell32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\SDL2_image.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\SDL2_mixer.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp140.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\vcruntime140.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\version.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winmm.dll'. Symbols loaded.
+The thread 0x6ee8 has exited with code 0 (0x0).
+
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Main.cpp(30) : Engine starting ...
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Main.cpp(42) : CREATION PHASE ===============================
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Main.cpp(55) : AWAKE PHASE ===============================
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Window.cpp(25) : Init SDL window & surface'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\uxtheme.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msctf.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\sechost.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel.appcore.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\bcryptprimitives.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\clbcatq.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\TextInputFramework.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\CoreUIComponents.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\CoreMessaging.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ws2_32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\SHCore.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntmarta.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\advapi32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\WinTypes.dll'. Symbols loaded.
+
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Input.cpp(30) : Init SDL input event system
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Textures.cpp(23) : Init Image library
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Audio.cpp(28) : Loading Audio Mixer'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libpng16-16.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\zlib1.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\XAudio2_7.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libvorbisfile-3.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libogg-0.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libvorbis-0.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\MMDevAPI.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\devobj.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\cfgmgr32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ResourcePolicyClient.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\AudioSes.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\powrprof.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\umpdc.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\Windows.UI.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\InputHost.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\WindowManagementAPI.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\propsys.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\twinapi.appcore.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\twinapi.appcore.dll'. Symbols loaded.
+'Game.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\twinapi.appcore.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\twinapi.appcore.dll'
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\twinapi.appcore.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\avrt.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libmodplug-1.dll'. Module was built without symbols.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winmmbase.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\wdmaud.drv'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ksuser.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msacm32.drv'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msacm32.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\midimap.dll'. Symbols loaded.
+The thread 0x724 has exited with code 0 (0x0).
+
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Map.cpp(24) : Loading Map Parser
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Render.cpp(26) : Create SDL rendering context'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\d3d9.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dwmapi.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\windows.storage.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\wldp.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdumdim32.dll'. 
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igd9dxva32.dll'. 
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdgmm32.dll'. 
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igd9dxva32.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdgmm32.dll'
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igd9dxva32.dll'. 
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdgmm32.dll'. 
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shlwapi.dll'. Symbols loaded.
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\nvlti.inf_amd64_c73f751c0eb84f48\nvdlist.dll'. 
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\nvlti.inf_amd64_c73f751c0eb84f48\nvdlist.dll'
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\nvlti.inf_amd64_c73f751c0eb84f48\nvdlist.dll'. 
+The thread 0x5270 has exited with code 0 (0x0).
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\nvlti.inf_amd64_c73f751c0eb84f48\nvdlist.dll'
+The thread 0x5880 has exited with code 0 (0x0).
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdinfo32.dll'. 
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igc32.dll'. 
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igc32.dll'
+'Game.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igc32.dll'. 
+'Game.exe' (Win32): Loaded 'C:\Windows\SysWOW64\DXCore.dll'. Symbols loaded.
+
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Main.cpp(68) : START PHASE ===============================
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Textures.cpp(42) : start textures
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(27) : Creating Physics 2D environment
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Render.cpp(58) : render start
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Main.cpp(72) : UPDATE PHASE ===============================
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Textures.cpp(42) : start textures
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Audio.cpp(137) : Successfully playing Assets/audio/music/Kirb.ogg
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(27) : Creating Physics 2D environment
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Render.cpp(58) : render start
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Main.cpp(89) : CLEANUP PHASE ===============================
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Render.cpp(86) : Destroying SDL render'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdinfo32.dll'
+The thread 0x8f7c has exited with code 0 (0x0).
+The thread 0x8e08 has exited with code 0 (0x0).
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igc32.dll'
+The thread 0x63fc has exited with code 0 (0x0).
+The thread 0x8338 has exited with code 0 (0x0).
+The thread 0x5134 has exited with code 0 (0x0).
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igd9dxva32.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdgmm32.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_a5d0ffe42e074935\igdumdim32.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\dwmapi.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\wldp.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\shlwapi.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\windows.storage.dll'
+'Game.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\d3d9.dll'
+
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Map.cpp(103) : Unloading map
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Scene.cpp(211) : Freeing scene
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Audio.cpp(67) : Freeing sound FX, closing Mixer and Audio subsystemThe thread 0x8fa4 has exited with code 0 (0x0).
+The thread 0x7e58 has exited with code 0 (0x0).
+'Game.exe' (Win32): Unloaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libmodplug-1.dll'
+'Game.exe' (Win32): Unloaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libvorbis-0.dll'
+'Game.exe' (Win32): Unloaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libogg-0.dll'
+'Game.exe' (Win32): Unloaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libvorbisfile-3.dll'
+
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Textures.cpp(50) : Freeing textures and Image library'Game.exe' (Win32): Unloaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\zlib1.dll'
+'Game.exe' (Win32): Unloaded 'C:\GitHub\KirbyGameDev\KirbyGameDev\Output\libpng16-16.dll'
+
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Input.cpp(139) : Quitting SDL event subsystem
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Window.cpp(72) : Destroying SDL window and quitting all SDL systems
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Main.cpp(110) : ... Bye! :)
+The thread 0x7d68 has exited with code 0 (0x0).
+The thread 0x7e28 has exited with code 0 (0x0).
+The thread 0x4c34 has exited with code 0 (0x0).
+The thread 0x4428 has exited with code 0 (0x0).
+The thread 0x8998 has exited with code 0 (0x0).
+The thread 0x6d28 has exited with code 0 (0x0).
+The program '[12252] Game.exe' has exited with code 0 (0x0).

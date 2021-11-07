@@ -6,8 +6,10 @@
 #include "Animation.h"
 
 #include <Box2D/Box2D/Box2D.h>
+#include "SDL/include/SDL.h"
 
 struct SDL_Texture;
+
 
 class Player : public Module
 {
@@ -48,12 +50,15 @@ public:
 	bool direction;
 	bool godMode;
 	bool isDead;
+	bool isJumping;
 
 	SDL_Rect playerRect;
 	SDL_Rect playerCrop;
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* playerSprites = nullptr;
+
+	
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction

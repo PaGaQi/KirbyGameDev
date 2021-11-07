@@ -41,11 +41,12 @@ bool Scene::Start()
 	}
 	if (app->currentScene == LEVEL_1)
 	{
+		Level1Platforms = app->tex->Load("Assets/maps/Level1Platforms.png");
 		app->map->Load("KirbyMapBackground.tmx");
 		app->map->Load("KirbyMapForeground.tmx");
 		app->audio->PlayMusic("Assets/audio/music/Kirb.ogg");
 
-		int Platform1_vertex[8] = {
+		/*int Platform1_vertex[8] = {
 		0, 479,
 		0, 352,
 		192, 352,
@@ -100,15 +101,15 @@ bool Scene::Start()
 		128, 256
 		};
 
-		/*
+		
 		Platform1 = app->physics->CreateChain(0, 0, Platform1_vertex, 8 );
 		Platform2 = app->physics->CreateChain(0, 0, Platform2_vertex, 8 );
 		Platform3 = app->physics->CreateChain(0, 0, Platform3_vertex, 8 );
 		Platform4 = app->physics->CreateChain(0, 0, Platform4_vertex, 8 );
 		Platform5 = app->physics->CreateChain(0, 0, Platform5_vertex, 16 );
 		Platform6 = app->physics->CreateChain(0, 0, Platform6_vertex, 12);
-		PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);
-		*/
+		PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);*/
+		
 
 
 

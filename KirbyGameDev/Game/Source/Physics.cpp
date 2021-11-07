@@ -1,16 +1,214 @@
 #include "App.h"
 #include "Physics.h"
+#include "Input.h"
+#include "Render.h"
 
 #include "Defs.h"
 #include "Log.h"
 
+#include "SDL/include/SDL.h"
 
-void PhysBody::GetPosition(int& x, int& y) const
+
+
+
+Physics::Physics() : Module()
 {
-	b2Vec2 pos = body->GetPosition();
-	x = METERS_TO_PIXELS(pos.x) - (width);
-	y = METERS_TO_PIXELS(pos.y) - (height);
+	world = NULL;
+	mouseJoint = NULL;
+	ground = NULL;
+	debug = true;
+
 }
+
+Physics::~Physics() {}
+
+bool Physics::Start()
+{
+	LOG("Creating Physics 2D environment");
+
+	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
+	world->SetContactListener(this);
+
+	// needed to create joints like mouse joint
+	b2BodyDef bd;
+	ground = world->CreateBody(&bd);
+
+	// big static circle as "ground" in the middle of the screen
+	int x = SCREEN_WIDTH / 2;
+	int y = SCREEN_HEIGHT / 1.5f;
+	int diameter = SCREEN_WIDTH / 2;
+
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* big_ball = world->CreateBody(&body);
+
+	int Platform1_vertex[8] = {
+		0, 479,
+		0, 352,
+		192, 352,
+		192, 479
+	};
+
+	int Platform2_vertex[8] = {
+	224, 480,
+	224, 352,
+	256, 352,
+	256, 480
+	};
+
+	int Platform3_vertex[8] = {
+	288, 480,
+	288, 352,
+	384, 352,
+	384, 480
+	};
+
+	int Platform4_vertex[8] = {
+	448, 479,
+	448, 320,
+	576, 320,
+	576, 480
+	};
+
+	int Platform5_vertex[16] = {
+	736, 478,
+	736, 320,
+	1024, 320,
+	1024, 288,
+	1120, 289,
+	1120, 224,
+	1280, 224,
+	1280, 481
+	};
+
+	int Platform6_vertex[12] = {
+	1440, 480,
+	1440, 288,
+	1472, 288,
+	1472, 320,
+	1536, 320,
+	1536, 479
+	};
+
+	int PlatformSky_vertex[8] = {
+	32, 256,
+	32, 224,
+	128, 224,
+	128, 256
+	};
+
+
+	Platform1 = app->physics->CreateChain(0, 0, Platform1_vertex, 8);
+	Platform2 = app->physics->CreateChain(0, 0, Platform2_vertex, 8);
+	Platform3 = app->physics->CreateChain(0, 0, Platform3_vertex, 8);
+	Platform4 = app->physics->CreateChain(0, 0, Platform4_vertex, 8);
+	Platform5 = app->physics->CreateChain(0, 0, Platform5_vertex, 16);
+	Platform6 = app->physics->CreateChain(0, 0, Platform6_vertex, 12);
+	PlatformSky = app->physics->CreateChain(0, 0, PlatformSky_vertex, 8);
+	
+	return true;
+}
+bool  Physics::PreUpdate()
+{
+	
+
+	return true;
+}
+
+bool Physics::PostUpdate()
+{
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		debug = !debug;
+
+	if (!debug)
+		return true;
+
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+	{
+		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+		{
+			switch (f->GetType())
+			{
+				// Draw circles ------------------------------------------------
+			case b2Shape::e_circle:
+			{
+				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
+				b2Vec2 pos = f->GetBody()->GetPosition();
+				app->render->DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), METERS_TO_PIXELS(shape->m_radius), 255, 255, 255);
+			}
+			break;
+
+			// Draw polygons ------------------------------------------------
+			case b2Shape::e_polygon:
+			{
+				b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
+				int32 count = polygonShape->GetVertexCount();
+				b2Vec2 prev, v;
+
+				for (int32 i = 0; i < count; ++i)
+				{
+					v = b->GetWorldPoint(polygonShape->GetVertex(i));
+					if (i > 0)
+						app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+
+					prev = v;
+				}
+
+				v = b->GetWorldPoint(polygonShape->GetVertex(0));
+				app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+			}
+			break;
+
+			// Draw chains contour -------------------------------------------
+			case b2Shape::e_chain:
+			{
+				b2ChainShape* shape = (b2ChainShape*)f->GetShape();
+				b2Vec2 prev, v;
+
+				for (int32 i = 0; i < shape->m_count; ++i)
+				{
+					v = b->GetWorldPoint(shape->m_vertices[i]);
+					if (i > 0)
+						app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
+					prev = v;
+				}
+
+				v = b->GetWorldPoint(shape->m_vertices[0]);
+				app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
+			}
+			break;
+
+			// Draw a single segment(edge) ----------------------------------
+			case b2Shape::e_edge:
+			{
+				b2EdgeShape* shape = (b2EdgeShape*)f->GetShape();
+				b2Vec2 v1, v2;
+
+				v1 = b->GetWorldPoint(shape->m_vertex0);
+				v1 = b->GetWorldPoint(shape->m_vertex1);
+				app->render->DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
+			}
+			break;
+			}
+		}
+
+		return true;
+	}
+}
+
+bool Physics::CleanUp()
+{
+	delete world;
+
+	return true;
+}
+
+
+
+
 
 float PhysBody::GetRotation() const
 {
@@ -68,33 +266,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 }
 
 
-Physics::Physics()
-{
-	world = NULL;
-	mouseJoint = NULL;
-	ground = NULL;
-	debug = true;
 
-}
-
-Physics::~Physics(){}
-
-bool Physics::Start()
-{
-	return true;
-}
-bool  Physics::PreUpdate()
-{
-	return true;
-}
-bool Physics::PostUpdate()
-{
-	return true;
-}
-bool Physics::CleanUp()
-{
-	return true;
-}
 
 /*PhysBody* Physics::CreateCircle(int x, int y, int radius, b2BodyType type)
 {

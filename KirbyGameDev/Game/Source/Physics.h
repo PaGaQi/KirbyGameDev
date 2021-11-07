@@ -55,6 +55,18 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 
 	// b2ContactListener ---
+	PhysBody* backgrpundColliders;
+
+	SDL_Texture* Level1Platforms;
+
+	PhysBody* Platform1;
+	PhysBody* Platform2;
+	PhysBody* Platform3;
+	PhysBody* Platform4;
+	PhysBody* Platform5;
+	PhysBody* Platform6;
+	PhysBody* PlatformSky;
+	
 	//void BeginContact(b2Contact* contact);
 	
 

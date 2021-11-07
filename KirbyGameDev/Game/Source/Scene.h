@@ -2,8 +2,11 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Point.h"
+#include "Physics.h"
 
 struct SDL_Texture;
+class PhysBody;
 
 class Scene : public Module
 {
@@ -32,10 +35,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
 private:
 	SDL_Texture* img;
 
 	SDL_Texture* menuBackground;
+	SDL_Texture* Level1Platforms;
 	
 	PhysBody* Platform1;
 	PhysBody* Platform2;

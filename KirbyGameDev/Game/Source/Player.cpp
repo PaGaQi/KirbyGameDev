@@ -81,7 +81,7 @@ Player::Player()
 	jumpRight.loop = true;
 	jumpRight.speed = 0.1f;
 
-	//Right Jump Animation---------------------------
+	//Left Jump Animation---------------------------
 	jumpLeft.PushBack({ 0, 170, 32, 32 });
 	jumpLeft.PushBack({ 34, 170, 32, 32 });
 	jumpLeft.PushBack({ 68, 170, 32, 32 });
@@ -143,6 +143,15 @@ bool Player::PreUpdate()
 		playerRect.x--;
 		direction = 1;
 		currentAnimation = &walkLeft;
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		playerRect.y--;
+		direction = 1;
+		currentAnimation = &jumpLeft;
+		
+
+
 	}
 	
 	else if (direction == 0)
