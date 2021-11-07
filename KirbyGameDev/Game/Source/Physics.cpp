@@ -10,7 +10,7 @@ Physics :: Physics()
 {
 	world = NULL;
 	mouseJoint = NULL;
-	debug = true;
+	debug = false;
 }
 
 // Destructor
