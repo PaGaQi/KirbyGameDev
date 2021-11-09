@@ -1,5 +1,4 @@
 #include "App.h"
-#include "Point.h"
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -7,7 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
-#include "Physics.h"
+#include "Menu.h"
 #include "Box2D/Box2D/Box2D.h"
 
 #include "Defs.h"
@@ -34,24 +33,25 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	if (app->currentScene == TITLE)
-	{		
-		menuBackground = app->tex->Load("Assets/maps/TitleScreenVer1.png");
-
-	}
-	if (app->currentScene == LEVEL_1)
+	switch (app->currentScene)
 	{
-		Level1Platforms = app->tex->Load("Assets/maps/Level1Platforms.png");
-		app->map->Load("KirbyMapBackground.tmx");
-		app->map->Load("KirbyMapForeground.tmx");
-		app->audio->PlayMusic("Assets/audio/music/Kirb.ogg");
+		case TITLE:
+		{
+			menuBackground = app->tex->Load("Assets/maps/TitleScreenVer1.png");
+			app->audio->PlayMusic("Assets/audio/music/01 - Title.ogg");
+		}
+		break;
 
-		return true;
-	}
-	
+		case LEVEL_1:
+		{
+			app->menu->CleanUp();
+			app->map->Load("KirbyMapBackground.tmx");			
+			app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
+		}
+		break;
+	}	
+
 	return true;
-	// L03: DONE: Load map
-	
 }
 
 // Called each loop iteration
@@ -79,45 +79,27 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	/*if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 5;
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += 5;
-
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 5;
-
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 5;*/
 	
-	if (app->currentScene == TITLE)
+	switch (app->currentScene)
+	{
+	case TITLE:
 	{
 		if (app->input->GetKey(SDL_SCANCODE_RETURN))
 		{
 			app->ChangeScene(LEVEL_1);
 		}
-	}
 
-	if (app->currentScene == LEVEL_1)
-	{
-		if (app->player->isDead == 1)
-		{
-			app->ChangeScene(TITLE);
-		}
-	}
-
-	if (app->currentScene == TITLE)
-	{
 		app->render->DrawTexture(menuBackground, 0, 0);
 	}
-	if (app->currentScene == LEVEL_1)
-	{
-		app->map->Draw();
-	}
+	break;
 
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
-	//app->render->DrawTexture()
+	case LEVEL_1:
+	{
+			app->scene->CleanUp();
+		//app->map->Draw();
+	}
+	break;
+	}
 
 	// Draw map
 	app->map->Draw();
@@ -150,6 +132,22 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	switch (app->currentScene)
+	{
+	case TITLE:
+	{
+		
+	}
+	break;
+
+	case LEVEL_1:
+	{
+		LOG("Unloading Background Texture");
+		app->tex->UnLoad(menuBackground);
+	}
+	break;
+	}
 
 	return true;
 }

@@ -46,6 +46,9 @@
     <ClCompile Include="Source\Menu.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Level01.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -114,6 +117,9 @@
     <ClInclude Include="Source\Menu.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Level01.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -130,6 +136,9 @@
     </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{263ce925-26fe-478a-ab80-862431fefeff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{88855698-e938-4763-880a-0bc7f2e0208c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

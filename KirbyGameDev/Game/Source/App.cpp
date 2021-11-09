@@ -33,6 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	physics = new Physics();
+	menu = new Menu();
 	
 
 
@@ -46,6 +47,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(scene);
 	AddModule(map);
+	AddModule(menu);
 
 
 	// Render last to swap buffer

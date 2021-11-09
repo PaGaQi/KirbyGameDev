@@ -56,7 +56,6 @@ public:
 	bool deadDirection;
 
 	SDL_Rect playerRect;
-	SDL_Rect playerCrop;
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* playerSprites = nullptr;

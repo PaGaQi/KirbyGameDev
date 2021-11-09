@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Level01.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Level01.h" />
     <ClInclude Include="Source\Menu.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Map.h" />

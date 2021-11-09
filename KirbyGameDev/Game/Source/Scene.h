@@ -5,9 +5,6 @@
 #include "Point.h"
 #include "Physics.h"
 
-struct SDL_Texture;
-class PhysBody;
-
 class Scene : public Module
 {
 public:

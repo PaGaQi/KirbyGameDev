@@ -107,7 +107,6 @@ Player::Player()
 	deadDirection = 1;
 
 	playerRect = { 0, 320, 32, 32 };
-	playerCrop = { 0, 0, 32, 32 };
 	playerPhys;
 
 }
@@ -126,8 +125,7 @@ bool Player::Start()
 		direction = 0;
 
 		b2Vec2 playerPos = { 0, 0 };
-		b2Vec2 playerVel = { 0, 0 };
-	
+		b2Vec2 playerVel = { 0, 0 };	
 	}
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle(32, 320, 14, b2_dynamicBody);

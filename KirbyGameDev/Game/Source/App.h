@@ -30,6 +30,7 @@ enum sceneType
 {
 	TITLE,
 	LEVEL_1,
+	DEATH,
 	
 
 };
