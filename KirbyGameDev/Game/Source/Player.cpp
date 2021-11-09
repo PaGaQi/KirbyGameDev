@@ -1,4 +1,5 @@
 #include "App.h"
+#include "Audio.h"
 #include "Player.h"
 #include "Module.h"
 #include "Render.h"
@@ -125,10 +126,14 @@ bool Player::Start()
 		direction = 0;
 
 		b2Vec2 playerPos = { 0, 0 };
-		b2Vec2 playerVel = { 0, 0 };	
+		b2Vec2 playerVel = { 0, 0 };
+
+		app->audio->LoadFx("Assets/audio/sfx/jump");
 	}
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle(32, 320, 14, b2_dynamicBody);
+
+		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 
 	return true;
 }
@@ -180,12 +185,14 @@ bool Player::PreUpdate()
 	}
 	if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) &&(direction == 0))
 	{
+		app->audio->PlayFx(jumpSFX);
 		playerVel.y = -20;
 		direction = 0;
 		currentAnimation = &jumpRight;
 	}
 	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (direction == 1))
 	{
+		app->audio->PlayFx(jumpSFX);
 		playerVel.y = -20;
 		direction = 1;
 		currentAnimation = &jumpLeft;
@@ -220,10 +227,11 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
-		if (!godMode) godMode = 1;
-		else godMode = 0;
+		godMode = !godMode;
 	}	
 	
+
+
 
 	currentAnimation->Update();
 
@@ -238,8 +246,7 @@ bool Player::PostUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		if (!isDead) isDead = 1;
-		else isDead = 0;
+		isDead = !isDead;
 	}
 	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
 	return true;
@@ -247,5 +254,11 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(b2Body* bodyA, b2Body* bodyB)
 {
+	LOG("SOMETHING IS COLLIDING");
+
+	if ((bodyA == playerPhys->body) && (bodyB->GetType() == b2_staticBody))
+	{
+		LOG("PLAYER IS COLLIDING");
+	}
 
 }

@@ -29,7 +29,6 @@ Menu::Menu()
 	welcomeKirby.speed = 0.2f;
 
 	titleKirby = { SCREEN_WIDTH / 2 - 62, SCREEN_HEIGHT / 2 - 55, 124, 110 };
-	shitRect = { 10, 10, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 }
 
@@ -51,10 +50,10 @@ bool Menu::Start()
 		{
 			LOG("Loading Menu Animation");
 
-			menuKirby = app->tex->Load("Assets/textures/TitleAnimation.png");
-			titleShit = app->tex->Load("Assets/maps/Shit.png");
+			menuKirby = app->tex->Load("Assets/textures/TitleAnimation.png");		
 		}
 		break;
+
 		case (DEATH):
 		{
 
@@ -82,7 +81,7 @@ bool Menu::Update(float dt)
 bool Menu::PostUpdate() 
 {
 	app->render->DrawTexture(menuKirby, titleKirby.x, titleKirby.y, &currentAnimation->GetCurrentFrame());
-	app->render->DrawTexture(titleShit, shitRect.x, shitRect.y, &shitRect);
+
 	return true;
 }
 
@@ -90,7 +89,6 @@ bool Menu::PostUpdate()
 bool Menu::CleanUp() 
 {
 	app->tex->UnLoad(menuKirby);
-	app->tex->UnLoad(titleShit);
 
 	return true;
 }

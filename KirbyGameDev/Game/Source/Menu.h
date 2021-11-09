@@ -31,8 +31,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
-
 private:
 	
 	Animation* currentAnimation;
@@ -40,9 +38,6 @@ private:
 	Animation welcomeKirby;	
 	SDL_Texture* menuKirby;
 	SDL_Rect titleKirby;
-	
-	SDL_Texture* titleShit;
-	SDL_Rect shitRect;
 
 	SDL_Texture* deathScreen;
 	Animation losingKirby;

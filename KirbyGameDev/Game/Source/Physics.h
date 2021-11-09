@@ -55,7 +55,7 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 
 	// b2ContactListener ---
-	PhysBody* backgrpundColliders;
+	PhysBody* backgroundColliders;
 
 
 	PhysBody* Platform1;
@@ -66,7 +66,7 @@ public:
 	PhysBody* Platform6;
 	PhysBody* PlatformSky;
 	
-	//void BeginContact(b2Contact* contact);
+	void BeginContact(b2Contact* contact);
 	
 
 	List<PhysBody*> groundColliders;

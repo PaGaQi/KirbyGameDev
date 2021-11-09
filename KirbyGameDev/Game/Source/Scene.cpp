@@ -37,7 +37,7 @@ bool Scene::Start()
 	{
 		case TITLE:
 		{
-			menuBackground = app->tex->Load("Assets/maps/TitleScreenVer1.png");
+			menuBackground = app->tex->Load("Assets/maps/TitleScreenVer2.png");
 			app->audio->PlayMusic("Assets/audio/music/01 - Title.ogg");
 		}
 		break;
@@ -87,6 +87,7 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RETURN))
 		{
 			app->ChangeScene(LEVEL_1);
+			app->scene->CleanUp();
 		}
 
 		app->render->DrawTexture(menuBackground, 0, 0);
@@ -95,7 +96,6 @@ bool Scene::Update(float dt)
 
 	case LEVEL_1:
 	{
-			app->scene->CleanUp();
 		//app->map->Draw();
 	}
 	break;
