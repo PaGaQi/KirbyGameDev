@@ -50,13 +50,17 @@ bool Menu::Start()
 		{
 			LOG("Loading Menu Animation");
 
-			menuKirby = app->tex->Load("Assets/textures/TitleAnimation.png");		
+			menuKirby = app->tex->Load("Assets/textures/TitleAnimation.png");
+			menuBackground = app->tex->Load("Assets/maps/TitleScreenVer2.png");
+			titleMenu = true;
 		}
 		break;
 
 		case (DEATH):
 		{
-
+			app->tex->UnLoad(menuBackground);
+			menuBackground = app->tex->Load("Assets/maps/DeathScreen.png");
+			titleMenu = false;
 		}
 		break;
 	}
@@ -66,30 +70,34 @@ bool Menu::Start()
 
 bool Menu::PreUpdate() 
 {
-	currentAnimation = &welcomeKirby;
+	if (titleMenu) currentAnimation = &welcomeKirby;
 	return true;
 }
 
 
 bool Menu::Update(float dt) 
 {
-	currentAnimation->Update();
+	app->render->DrawTexture(menuBackground, 0, 0);
+	
+	if (titleMenu) currentAnimation->Update();
+	
 	return true;
 }
 
 
 bool Menu::PostUpdate() 
 {
-	app->render->DrawTexture(menuKirby, titleKirby.x, titleKirby.y, &currentAnimation->GetCurrentFrame());
+	if (titleMenu) app->render->DrawTexture(menuKirby, titleKirby.x, titleKirby.y, &currentAnimation->GetCurrentFrame());
 
 	return true;
 }
 
 
 bool Menu::CleanUp() 
-{
+{	
 	app->tex->UnLoad(menuKirby);
-
+	app->tex->UnLoad(menuBackground);	
+	
 	return true;
 }
 

@@ -37,16 +37,26 @@ bool Scene::Start()
 	{
 		case TITLE:
 		{
-			menuBackground = app->tex->Load("Assets/maps/TitleScreenVer2.png");
+			//menuBackground = app->tex->Load("Assets/maps/TitleScreenVer2.png");
 			app->audio->PlayMusic("Assets/audio/music/01 - Title.ogg");
 		}
 		break;
 
 		case LEVEL_1:
 		{
+			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
+			app->scene->CleanUp();
 			app->map->Load("KirbyMapBackground.tmx");			
 			app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
+		}
+		break;
+
+		case DEATH:
+		{
+			app->menu->CleanUp();
+			app->player->CleanUp();	
+			app->audio->PlayMusic("music_spy.ogg");
 		}
 		break;
 	}	
@@ -72,43 +82,42 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-    // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		app->LoadGameRequest();
-
-	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		app->SaveGameRequest();
-
-	
 	switch (app->currentScene)
 	{
 	case TITLE:
 	{
-		if (app->input->GetKey(SDL_SCANCODE_RETURN))
-		{
-			app->ChangeScene(LEVEL_1);
-			app->scene->CleanUp();
-		}
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->ChangeScene(LEVEL_1);
 
-		app->render->DrawTexture(menuBackground, 0, 0);
+		//app->render->DrawTexture(menuBackground, 0, 0);
 	}
 	break;
 
 	case LEVEL_1:
 	{
-		//app->map->Draw();
+		app->map->Draw();
 	}
 	break;
+
+	case DEATH:
+	{
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->ChangeScene(TITLE);
+	}
 	}
 
+
+
+
 	// Draw map
-	app->map->Draw();
+	//app->map->Draw();
 
 	// L03: DONE 7: Set the window title with map/tileset info
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+	SString title("Kirby's Shitty Adventure");
+	/*
+	("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
 				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 				   app->map->mapData.tilesets.count());
+	*/
 
 	app->win->SetTitle(title.GetString());
 
@@ -131,7 +140,7 @@ bool Scene::PostUpdate()
 // Called before quitting
 bool Scene::CleanUp()
 {
-	LOG("Freeing scene");
+	LOG("Freeing Scene");
 
 	switch (app->currentScene)
 	{
@@ -145,6 +154,13 @@ bool Scene::CleanUp()
 	{
 		LOG("Unloading Background Texture");
 		app->tex->UnLoad(menuBackground);
+	}
+	break;
+
+	case DEATH:
+	{
+		LOG("Unloading Background Music");
+		app->audio->CleanUp();
 	}
 	break;
 	}

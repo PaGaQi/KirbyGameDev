@@ -63,7 +63,7 @@ Player::Player()
 	walkRight.PushBack({ 102, 34, 32, 32 });
 
 	walkRight.loop = true;
-	walkRight.speed = 0.1f;
+	walkRight.speed = 0.2f;
 
 	////Left Walk Animation---------------------------
 	walkLeft.PushBack({ 0, 136, 32, 32 });
@@ -72,7 +72,7 @@ Player::Player()
 	walkLeft.PushBack({ 102, 136, 32, 32 });
 
 	walkLeft.loop = true;
-	walkLeft.speed = 0.1f;
+	walkLeft.speed = 0.2f;
 
 	//Right Jump Animation---------------------------
 	
@@ -96,6 +96,9 @@ Player::Player()
 	jumpLeft.loop = true;
 	jumpLeft.speed = 0.1f;
 
+	//Left Fall Animation
+	fallLeft.PushBack({ 136, 170, 32, 32 });
+	
 	//Death Animation-------------------------------
 	death.PushBack({ 0, 204, 32, 32 });
 	death.PushBack({ 34, 204, 32, 32 });
@@ -110,131 +113,117 @@ Player::Player()
 	playerRect = { 0, 320, 32, 32 };
 	playerPhys;
 
+	lastY = 480;
 }
 
-Player::~Player()
-{}
+Player::~Player() {}
 
 // Load assets
 bool Player::Start()
 {
-	if (app->currentScene != TITLE) 
-	{
+	if (app->currentScene == LEVEL_1) 
+	{		
 		LOG("Loading player sprites");
-
 		playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
 		direction = 0;
 
+		playerRect = { 0, 320, 32, 32 };
 		b2Vec2 playerPos = { 0, 0 };
 		b2Vec2 playerVel = { 0, 0 };
 
-		app->audio->LoadFx("Assets/audio/sfx/jump");
-	}
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle(32, 320, 14, b2_dynamicBody);
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
+		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
+		isDead = false;
+	}		
 
-	return true;
-}
-
-
-// Unload assets
-bool Player::CleanUp()
-{
-		
 	return true;
 }
 
 // Called each loop iteration
 bool Player::PreUpdate()
 {
-	if (isDead == 1)
+
+	if (isDead == 1)													//Death Animation
 	{
 		currentAnimation = &death;		
 
-		if (deadDirection == 1) playerRect.y -= 5;
-		if (playerRect.y == 320) deadDirection = 0;
-		if (deadDirection == 0) playerRect.y += 5;
+		if ((playerRect.y >= (lastY - 128)) && (deadDirection == 1)) playerRect.y -= 2;
+		if ((playerRect.y <= lastY - 128) && (deadDirection == 1)) deadDirection = 0;
+		if (deadDirection == 0) playerRect.y += 2;
+
+		if (playerRect.y == 485) app->ChangeScene(DEATH);
 	}	
 	
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)			//Walking Right
 	{		
 		playerVel = { 6, 0 };
 		direction = 0;
 		playerRect.x += 8;
 		currentAnimation = &walkRight;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+
+	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)			//Walking Left
 	{
 		playerVel = { -6, 0 };
+		direction = 1;
 		playerRect.x -= 8;
-		direction = 1;
-		currentAnimation = &walkLeft;
+		currentAnimation = &walkLeft;		
 	}
 
-	else if (direction == 0)
+	else																//IDLE ANIMATIONS
 	{
 		playerVel = { 0, 0 };
-		currentAnimation = &idleRight;
+
+		//if (playerVel.y > 0) currentAnimation = &fallLeft;
+		if (direction == 0)currentAnimation = &idleRight;
+		else if (direction == 1) currentAnimation = &idleLeft;		
 	}
-	else if (direction == 1)
-	{
-		playerVel = { 0, 0 };
-		currentAnimation = &idleLeft;
-	}
-	if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) &&(direction == 0))
+	
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)				//JUMPING ANIMATIONS
 	{
 		app->audio->PlayFx(jumpSFX);
-		playerVel.y = -20;
-		direction = 0;
-		currentAnimation = &jumpRight;
-	}
-	else if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (direction == 1))
-	{
-		app->audio->PlayFx(jumpSFX);
-		playerVel.y = -20;
-		direction = 1;
-		currentAnimation = &jumpLeft;
-	}
-		
-
-	if (godMode == true)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		{
-			playerRect.y -= 8;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			playerRect.y += 8;
-		}
+		playerVel.y = -40;
+		if (direction == 0) currentAnimation = &jumpRight;
+		else if (direction == 1) currentAnimation = &jumpLeft;
 	}
 
-	if (!godMode) playerPhys->body->SetLinearVelocity(playerVel);
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	{
+		playerVel.y = -15;
+		if (direction == 0) currentAnimation = &jumpRight;
+		else if (direction == 1) currentAnimation = &jumpLeft;
+	}
+
+
+	if (godMode == true)												//GOD MODE
+	{
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) playerRect.y -= 8;		
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) playerRect.y += 8;		
+	}
+
 	return true;
 }
 
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	if (!godMode)
+	if ((!godMode) && (!isDead) && (playerPhys != nullptr))
 	{
 		playerPos = playerPhys->body->GetPosition();
 		playerRect.x = METERS_TO_PIXELS(playerPos.x) - 16;
 		playerRect.y = METERS_TO_PIXELS(playerPos.y) - 16;
+		
+		playerPhys->body->SetLinearVelocity(playerVel);
+
+		lastY = playerRect.y;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		godMode = !godMode;
-	}	
-	
-
-
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) godMode = !godMode;
 
 	currentAnimation->Update();
-
 
 	return true;
 }
@@ -242,12 +231,19 @@ bool Player::Update(float dt)
 // Called each loop iteration
 bool Player::PostUpdate()
 {
+	
 	if ((playerRect.x > 254) && (playerRect.x < 1280)) app->render->camera.x = 256 - playerRect.x;  //The right camera limit is the level width - 256
 
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) isDead = !isDead;
+
+	//if (!isDead) lastY = playerRect.y;
+
+	if ((playerRect.y >= 481) && (!isDead))
 	{
-		isDead = !isDead;
+		isDead = true;
+		app->audio->PlayFx(deathSFX);		
 	}
+
 	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
 	return true;
 }
@@ -256,9 +252,15 @@ void Player::OnCollision(b2Body* bodyA, b2Body* bodyB)
 {
 	LOG("SOMETHING IS COLLIDING");
 
-	if ((bodyA == playerPhys->body) && (bodyB->GetType() == b2_staticBody))
-	{
+	if ((bodyA == playerPhys->body) && (bodyB->GetType() == b2_staticBody)) 
 		LOG("PLAYER IS COLLIDING");
-	}
+}
 
+bool Player::CleanUp()
+{
+	app->tex->UnLoad(playerSprites);
+	
+	delete playerPhys;
+	
+	return true;
 }

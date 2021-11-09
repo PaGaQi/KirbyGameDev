@@ -33,6 +33,10 @@ public:
 
 private:
 	
+	bool titleMenu;
+
+	SDL_Texture* menuBackground;
+
 	Animation* currentAnimation;
 
 	Animation welcomeKirby;	
@@ -40,6 +44,6 @@ private:
 	SDL_Rect titleKirby;
 
 	SDL_Texture* deathScreen;
-	Animation losingKirby;
+	Animation losingKirby;  //Maybe I'll add a kirby animation for the game over screen, who knows.
 
 };

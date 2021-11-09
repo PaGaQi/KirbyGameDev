@@ -47,12 +47,13 @@ public:
 	// Position of the player in the map
 	int x;
 	int y;
+	int lastY;
+
 	bool isMoving;
 	bool direction;
 	bool godMode;
 	bool isDead;
 	bool isJumping;
-
 	bool deadDirection;
 
 	SDL_Rect playerRect;
@@ -72,7 +73,7 @@ public:
 	Animation jumpRight;
 	Animation jumpLeft;
 	//Animation fallRight;
-	//Animation fallLeft;
+	Animation fallLeft;
 	//Animation peakRight;
 	//Animation peakLeft;
 	Animation walkLeft;
@@ -87,6 +88,7 @@ public:
 
 
 	int jumpSFX;
+	int deathSFX;
 };
 
 #endif
