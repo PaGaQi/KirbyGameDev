@@ -154,7 +154,11 @@ bool Player::PreUpdate()
 		if ((playerRect.y <= lastY - 128) && (deadDirection == 1)) deadDirection = 0;
 		if (deadDirection == 0) playerRect.y += 2;
 
-		if (playerRect.y == 485) app->ChangeScene(DEATH);
+		if ((playerRect.y >= 483) && (app->currentScene == LEVEL_1))
+		{
+			app->ChangeScene(DEATH);
+			playerRect.y = 0;
+		}
 	}	
 	
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)			//Walking Right
@@ -232,7 +236,10 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	
-	if ((playerRect.x > 254) && (playerRect.x < 1280)) app->render->camera.x = 256 - playerRect.x;  //The right camera limit is the level width - 256
+	if ((playerRect.x > 254) && (playerRect.x < 1280) && (app->currentScene == LEVEL_1))
+	{
+		app->render->camera.x = 256 - playerRect.x;  //The right camera limit is the level width - 256
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) isDead = !isDead;
 
@@ -259,8 +266,6 @@ void Player::OnCollision(b2Body* bodyA, b2Body* bodyB)
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(playerSprites);
-	
-	delete playerPhys;
 	
 	return true;
 }

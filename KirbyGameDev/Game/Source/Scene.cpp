@@ -86,9 +86,11 @@ bool Scene::Update(float dt)
 	{
 	case TITLE:
 	{
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->ChangeScene(LEVEL_1);
-
-		//app->render->DrawTexture(menuBackground, 0, 0);
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			app->ChangeScene(LEVEL_1);
+			app->render->camera.x = 0;
+		}		
 	}
 	break;
 
@@ -100,7 +102,12 @@ bool Scene::Update(float dt)
 
 	case DEATH:
 	{
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->ChangeScene(TITLE);
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			app->ChangeScene(TITLE);
+			app->menu->Start();
+			app->render->camera.x = 0;
+		}
 	}
 	}
 

@@ -52,7 +52,7 @@ bool Menu::Start()
 
 			menuKirby = app->tex->Load("Assets/textures/TitleAnimation.png");
 			menuBackground = app->tex->Load("Assets/maps/TitleScreenVer2.png");
-			titleMenu = true;
+			titleMenu = true;		
 		}
 		break;
 
@@ -60,7 +60,12 @@ bool Menu::Start()
 		{
 			app->tex->UnLoad(menuBackground);
 			menuBackground = app->tex->Load("Assets/maps/DeathScreen.png");
+			
+			app->render->camera.x = 0;
+
 			titleMenu = false;
+			
+		
 		}
 		break;
 	}
@@ -78,7 +83,8 @@ bool Menu::PreUpdate()
 bool Menu::Update(float dt) 
 {
 	app->render->DrawTexture(menuBackground, 0, 0);
-	
+
+
 	if (titleMenu) currentAnimation->Update();
 	
 	return true;
