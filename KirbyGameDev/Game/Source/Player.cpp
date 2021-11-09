@@ -7,8 +7,8 @@
 #include "Animation.h"
 #include <Box2D/Box2D/Box2D.h>
 #include "Physics.h"
+#include "Log.h"
 
-#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
 Player::Player()
 {
@@ -108,6 +108,7 @@ Player::Player()
 
 	playerRect = { 0, 320, 32, 32 };
 	playerCrop = { 0, 0, 32, 32 };
+	playerPhys;
 
 }
 
@@ -117,16 +118,19 @@ Player::~Player()
 // Load assets
 bool Player::Start()
 {
-	//LOG("Loading player textures");
+	if (app->currentScene != TITLE) 
+	{
+		LOG("Loading player sprites");
 
-	playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
+		playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
+		direction = 0;
 
-	direction = 0;
-
-	b2Vec2 playerPos = { 0, 0 };
-	b2Vec2 playerVel = { 0, 0 };
-
-	playerPhys = app->physics->CreateCircle(32, 320, 14, b2_dynamicBody);
+		b2Vec2 playerPos = { 0, 0 };
+		b2Vec2 playerVel = { 0, 0 };
+	
+	}
+		LOG("Creating player hitbox");
+		playerPhys = app->physics->CreateCircle(32, 320, 14, b2_dynamicBody);
 
 	return true;
 }
@@ -151,10 +155,8 @@ bool Player::PreUpdate()
 		if (deadDirection == 0) playerRect.y += 5;
 	}	
 	
-	
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{		
-		app->render->camera.x -= 4;
 		playerVel = { 6, 0 };
 		direction = 0;
 		playerRect.x += 8;
@@ -162,7 +164,6 @@ bool Player::PreUpdate()
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		app->render->camera.x += 4;
 		playerVel = { -6, 0 };
 		playerRect.x -= 8;
 		direction = 1;
@@ -235,6 +236,8 @@ bool Player::Update(float dt)
 // Called each loop iteration
 bool Player::PostUpdate()
 {
+	if ((playerRect.x > 254) && (playerRect.x < 1280)) app->render->camera.x = 256 - playerRect.x;  //The right camera limit is the level width - 256
+
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		if (!isDead) isDead = 1;

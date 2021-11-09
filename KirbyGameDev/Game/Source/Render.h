@@ -52,6 +52,9 @@ public:
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;
+
+	int cameraBeginLimit = 0;
+	int cameraEndLimit = 0;
 };
 
 #endif // __RENDER_H__
