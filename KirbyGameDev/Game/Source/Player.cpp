@@ -113,7 +113,7 @@ Player::Player()
 	playerRect = { 0, 320, 32, 32 };
 	playerPhys;
 
-	lastY = 480;
+	lastY;
 }
 
 Player::~Player() {}
@@ -125,7 +125,9 @@ bool Player::Start()
 	{		
 		LOG("Loading player sprites");
 		playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
-		direction = 0;
+		
+		direction = 0;	
+		lastY = 480;
 
 		playerRect = { 0, 320, 32, 32 };
 		b2Vec2 playerPos = { 0, 0 };
@@ -145,7 +147,6 @@ bool Player::Start()
 // Called each loop iteration
 bool Player::PreUpdate()
 {
-
 	if (isDead == 1)													//Death Animation
 	{
 		currentAnimation = &death;		
@@ -243,12 +244,11 @@ bool Player::PostUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) isDead = !isDead;
 
-	//if (!isDead) lastY = playerRect.y;
-
 	if ((playerRect.y >= 481) && (!isDead))
 	{
 		isDead = true;
-		app->audio->PlayFx(deathSFX);		
+		app->audio->PlayFx(deathSFX);
+		deadDirection = 1;
 	}
 
 	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());

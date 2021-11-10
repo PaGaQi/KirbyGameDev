@@ -44,7 +44,7 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Level01.cpp">
-      <Filter>Levels</Filter>
+      <Filter>zz_Levels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Level01.h">
-      <Filter>Levels</Filter>
+      <Filter>zz_Levels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,7 +131,7 @@
     <Filter Include="Source">
       <UniqueIdentifier>{263ce925-26fe-478a-ab80-862431fefeff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Levels">
+    <Filter Include="zz_Levels">
       <UniqueIdentifier>{88855698-e938-4763-880a-0bc7f2e0208c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

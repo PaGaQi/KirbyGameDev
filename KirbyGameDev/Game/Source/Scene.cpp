@@ -46,7 +46,7 @@ bool Scene::Start()
 		{
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
-			app->scene->CleanUp();
+			//app->scene->CleanUp();
 			app->map->Load("KirbyMapBackground.tmx");			
 			app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
 		}
@@ -55,7 +55,7 @@ bool Scene::Start()
 		case DEATH:
 		{
 			app->menu->CleanUp();
-			app->player->CleanUp();	
+			app->player->CleanUp();			
 			app->audio->PlayMusic("music_spy.ogg");
 		}
 		break;
@@ -90,6 +90,7 @@ bool Scene::Update(float dt)
 		{
 			app->ChangeScene(LEVEL_1);
 			app->render->camera.x = 0;
+			app->scene->Start();
 		}		
 	}
 	break;
@@ -111,14 +112,10 @@ bool Scene::Update(float dt)
 	}
 	}
 
-
-
-
 	// Draw map
 	//app->map->Draw();
 
-	// L03: DONE 7: Set the window title with map/tileset info
-	SString title("Kirby's Shitty Adventure");
+	SString title("Kirby's Shit Adventure");
 	/*
 	("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,

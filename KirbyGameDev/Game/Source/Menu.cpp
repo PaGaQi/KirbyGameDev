@@ -48,7 +48,7 @@ bool Menu::Start()
 	{
 		case (TITLE):
 		{
-			LOG("Loading Menu Animation");
+			LOG("Loading Title Animation");
 
 			menuKirby = app->tex->Load("Assets/textures/TitleAnimation.png");
 			menuBackground = app->tex->Load("Assets/maps/TitleScreenVer2.png");
@@ -58,6 +58,8 @@ bool Menu::Start()
 
 		case (DEATH):
 		{
+			LOG("Loading Death Menu");
+
 			app->tex->UnLoad(menuBackground);
 			menuBackground = app->tex->Load("Assets/maps/DeathScreen.png");
 			
@@ -83,7 +85,6 @@ bool Menu::PreUpdate()
 bool Menu::Update(float dt) 
 {
 	app->render->DrawTexture(menuBackground, 0, 0);
-
 
 	if (titleMenu) currentAnimation->Update();
 	
