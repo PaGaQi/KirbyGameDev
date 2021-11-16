@@ -66,7 +66,7 @@ public:
 	PhysBody* Platform6;
 	PhysBody* PlatformSky;
 	
-	void BeginContact(b2Contact* contact);
+	//void BeginContact(b2Contact* contact);
 	
 
 	List<PhysBody*> groundColliders;

@@ -397,6 +397,7 @@ int PhysBody :: RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& 
 	return ret;
 }
 
+/*
 void Physics::BeginContact(b2Contact* contact)
 {
 	PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData();
@@ -408,4 +409,5 @@ void Physics::BeginContact(b2Contact* contact)
 	if (physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
 }
+*/
 
