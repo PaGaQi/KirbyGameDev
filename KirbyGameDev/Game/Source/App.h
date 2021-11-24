@@ -4,6 +4,11 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "Defs.h"
+#include "Timer.h"
+#include "PerfTimer.h"
+
+
 
 #include "Box2D/Box2D/Box2D.h"
 
@@ -147,6 +152,19 @@ public:
 	// L02: DONE 1: Create variables to control when to execute the request load / save
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
+
+	PerfTimer ptimer;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+	uint32 framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	//float dt = 0.0f;
 };
 
 extern App* app;

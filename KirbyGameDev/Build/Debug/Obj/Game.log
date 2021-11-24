@@ -1,5 +1,38 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
+  Level01.cpp
+  Menu.cpp
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Main.cpp
+  App.cpp
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Audio.cpp
+  Input.cpp
+  Map.cpp
+  PerfTimer.cpp
+  Physics.cpp
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(35,8): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(177,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(178,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(221,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(385,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(386,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Physics.cpp(392,27): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
   Player.cpp
-C:\Users\paugq\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-C:\Users\paugq\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-  Game.vcxproj -> C:\Users\paugq\Documents\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Scene.cpp
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Render.cpp
+  Textures.cpp
+  Timer.cpp
+  Window.cpp
+  Log.cpp
+  pugixml.cpp
+  Generando código...
+  LINK : no se encontró C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  Game.vcxproj -> C:\Users\juanam15\Documents\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe

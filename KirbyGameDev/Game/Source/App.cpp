@@ -7,6 +7,8 @@
 #include "Player.h"
 #include"Menu.h"
 #include "Scene.h"
+#include "Timer.h"
+#include "PerfTimer.h"
 
 #include "Map.h"
 #include "Physics.h"
@@ -180,7 +182,25 @@ void App::FinishUpdate()
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
+	//if ((1000 / FPS) > SDL_GetTicks() - start) SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
+
+	float secondsSinceStartup = startupTime.ReadSec();
+
+	if (lastSecFrameTime.Read() > 1000) {
+		lastSecFrameTime.Start();
+		framesPerSecond = lastSecFrameCount;
+		lastSecFrameCount = 0;
+		averageFps = (averageFps + framesPerSecond) / 2;
+	}
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+
+	
+	app->win->SetTitle(title);
 	if ((1000 / FPS) > SDL_GetTicks() - start) SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
+	//app->win->SetTitle(title);
 }
 
 // Call modules before each loop iteration
