@@ -174,6 +174,8 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 void App::PrepareUpdate()
 {
 	start = SDL_GetTicks();
+	frameCount++;
+	lastSecFrameCount++;
 }
 
 // ---------------------------------------------
@@ -194,7 +196,7 @@ void App::FinishUpdate()
 	}
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+	sprintf_s(title, 256, "Kirby's Shit Adventure - Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
 		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
 
 	

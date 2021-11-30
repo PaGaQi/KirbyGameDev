@@ -115,7 +115,7 @@ bool Scene::Update(float dt)
 	// Draw map
 	//app->map->Draw();
 
-	SString title("Kirby's Shit Adventure");
+	//SString title("Kirby's Shit Adventure");
 	/*
 	("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
@@ -123,7 +123,7 @@ bool Scene::Update(float dt)
 				   app->map->mapData.tilesets.count());
 	*/
 
-	app->win->SetTitle(title.GetString());
+	//app->win->SetTitle(title.GetString());
 
 	return true;
 }
