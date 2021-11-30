@@ -16,7 +16,7 @@
 
 
 #define CONFIG_FILENAME		"config.xml"
-#define SAVE_STATE_FILENAME "save_game.xml"
+#define SAVE_STATE_FILENAME "savegame.xml"
 
 // Modules
 class Window;
@@ -119,9 +119,6 @@ public:
 	sceneType currentScene = TITLE;
 #define SCREEN_HEIGHT 480
 #define SCREEN_WIDTH 512
-	
-
-	
 
 
 

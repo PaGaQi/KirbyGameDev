@@ -112,18 +112,18 @@ bool Scene::Update(float dt)
 	}
 	}
 
-	// Draw map
-	//app->map->Draw();
-
-	//SString title("Kirby's Shit Adventure");
 	/*
+	/ Draw map
+	app->map->Draw();
+
+	SString title("Kirby's Shit Adventure");
 	("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
 				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 				   app->map->mapData.tilesets.count());
-	*/
 
-	//app->win->SetTitle(title.GetString());
+	app->win->SetTitle(title.GetString());
+	*/
 
 	return true;
 }
