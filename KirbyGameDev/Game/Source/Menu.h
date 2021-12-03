@@ -36,14 +36,31 @@ private:
 	bool titleMenu;
 
 	SDL_Texture* menuBackground;
-
 	Animation* currentAnimation;
 
+	//Menu Animations
 	Animation welcomeKirby;	
 	SDL_Texture* menuKirby;
 	SDL_Rect titleKirby;
 
+	//Death Screen Animations
 	SDL_Texture* deathScreen;
-	Animation losingKirby;  //Maybe I'll add a kirby animation for the game over screen, who knows.
+
+	//HUD Base
+	SDL_Texture* baseHUD;
+	SDL_Rect baseHUDRect;		
+
+	//HUD Lives Animations
+	Animation lifesHUD;
+	Animation damageBarHUD;
+
+	//Abilites HUD
+	Animation* currentAbilityAnim;
+	SDL_Texture* abilityHUD;
+	SDL_Rect abilityHUDRect;
+	Animation abilityNormal;
+	Animation abilityHit;
+	Animation abilityLose;
+	Animation abilityWin;
 
 };

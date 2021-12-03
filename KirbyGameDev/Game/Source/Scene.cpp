@@ -46,7 +46,7 @@ bool Scene::Start()
 		{
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
-			//app->scene->CleanUp();
+			
 			app->map->Load("Test Map.tmx");			
 			app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
 		}
@@ -84,34 +84,39 @@ bool Scene::Update(float dt)
 {
 	switch (app->currentScene)
 	{
-	case TITLE:
-	{
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		case TITLE:
 		{
-			app->ChangeScene(LEVEL_1);
-			app->render->camera.x = 0;
-			app->scene->Start();
-		}		
-	}
-	break;
-
-	case LEVEL_1:
-	{
-		app->map->Draw();
-	}
-	break;
-
-	case DEATH:
-	{
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->ChangeScene(TITLE);
-			app->menu->Start();
-			app->render->camera.x = 0;
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				app->ChangeScene(LEVEL_1);
+				app->render->camera.x = 0;
+				app->scene->Start();
+				return true;
+			}
 		}
-	}
+		break;
+
+		case LEVEL_1:
+		{
+			app->map->Draw();
+			return true;
+		}
+		break;
+
+		case DEATH:
+		{
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				app->ChangeScene(TITLE);
+				app->menu->Start();
+				app->render->camera.x = 0;
+				return true;
+			}
+		}
+		break;
 	}
 
+	return true;
 	/*
 	/ Draw map
 	app->map->Draw();
@@ -123,9 +128,7 @@ bool Scene::Update(float dt)
 				   app->map->mapData.tilesets.count());
 
 	app->win->SetTitle(title.GetString());
-	*/
-
-	return true;
+	*/	
 }
 
 // Called each loop iteration
@@ -148,25 +151,21 @@ bool Scene::CleanUp()
 
 	switch (app->currentScene)
 	{
-	case TITLE:
-	{
-		
-	}
-	break;
+		case LEVEL_1:
+		{
+			LOG("Unloading Background Texture");
+			app->tex->UnLoad(menuBackground);
+			return true;
+		}
+		break;
 
-	case LEVEL_1:
-	{
-		LOG("Unloading Background Texture");
-		app->tex->UnLoad(menuBackground);
-	}
-	break;
-
-	case DEATH:
-	{
-		LOG("Unloading Background Music");
-		app->audio->CleanUp();
-	}
-	break;
+		case DEATH:
+		{
+			LOG("Unloading Background Music");
+			app->audio->CleanUp();
+			return true;
+		}
+		break;
 	}
 
 	return true;

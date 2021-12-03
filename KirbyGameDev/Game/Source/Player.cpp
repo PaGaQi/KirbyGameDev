@@ -127,14 +127,14 @@ bool Player::Start()
 		playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
 		
 		direction = 0;	
-		lastY = 960;
+		lastY = 704;
 
-		playerRect = { 0, 320, 32, 32 };
+		playerRect = { 0, 576, 32, 32 };
 		b2Vec2 playerPos = { 0, 0 };
 		b2Vec2 playerVel = { 0, 0 };
 
 		LOG("Creating player hitbox");
-		playerPhys = app->physics->CreateCircle(32, 320, 14, b2_dynamicBody);
+		playerPhys = app->physics->CreateCircle(32, 576, 14, b2_dynamicBody);
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
@@ -165,7 +165,7 @@ bool Player::PreUpdate()
 			playerRect.y += 2;
 		}
 
-		if ((playerRect.y >= 705) && (app->currentScene == LEVEL_1))
+		if ((playerRect.y >= 708) && (app->currentScene == LEVEL_1))
 		{
 			app->ChangeScene(DEATH);
 			playerRect.y = 0;
@@ -247,7 +247,7 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	
-	if ((playerRect.x > SCREEN_WIDTH / 2) && (playerRect.x < SCREEN_WIDTH * 2.5) && (app->currentScene == LEVEL_1))
+	if ((playerRect.x > SCREEN_WIDTH / 2 - 2) && (playerRect.x < SCREEN_WIDTH * 2.5 + 2) && (app->currentScene == LEVEL_1))
 	{
 		app->render->camera.x = (SCREEN_WIDTH / 2) - playerRect.x;  //The right camera limit is the level width - HALF THE SCREEN WIDTH
 	}
