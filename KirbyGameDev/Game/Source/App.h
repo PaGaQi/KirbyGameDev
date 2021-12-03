@@ -117,8 +117,8 @@ public:
 	Physics* physics;
 
 	sceneType currentScene = TITLE;
-#define SCREEN_HEIGHT 480
-#define SCREEN_WIDTH 512
+#define SCREEN_HEIGHT 960
+#define SCREEN_WIDTH 1024
 
 
 

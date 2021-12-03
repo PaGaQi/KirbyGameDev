@@ -237,14 +237,14 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	
-	if ((playerRect.x > 254) && (playerRect.x < 1280) && (app->currentScene == LEVEL_1))
+	if ((playerRect.x > SCREEN_WIDTH / 2) && (playerRect.x < SCREEN_WIDTH * 2.5) && (app->currentScene == LEVEL_1))
 	{
-		app->render->camera.x = 256 - playerRect.x;  //The right camera limit is the level width - 256
+		app->render->camera.x = (SCREEN_WIDTH / 2) - playerRect.x;  //The right camera limit is the level width - HALF THE SCREEN WIDTH
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) isDead = !isDead;
 
-	if ((playerRect.y >= 481) && (!isDead))
+	if ((playerRect.y >= 705) && (!isDead))
 	{
 		isDead = true;
 		app->audio->PlayFx(deathSFX);
