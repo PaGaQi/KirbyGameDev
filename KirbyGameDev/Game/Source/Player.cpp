@@ -127,7 +127,7 @@ bool Player::Start()
 		playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
 		
 		direction = 0;	
-		lastY = 480;
+		lastY = 960;
 
 		playerRect = { 0, 320, 32, 32 };
 		b2Vec2 playerPos = { 0, 0 };
@@ -151,11 +151,21 @@ bool Player::PreUpdate()
 	{
 		currentAnimation = &death;		
 
-		if ((playerRect.y >= (lastY - 128)) && (deadDirection == 1)) playerRect.y -= 2;
-		if ((playerRect.y <= lastY - 128) && (deadDirection == 1)) deadDirection = 0;
-		if (deadDirection == 0) playerRect.y += 2;
+		if ((playerRect.y >= (lastY - 128)) && (deadDirection == 1))
+		{
+			playerRect.y -= 2;			
+		}
 
-		if ((playerRect.y >= 483) && (app->currentScene == LEVEL_1))
+		if ((playerRect.y <= lastY - 128) && (deadDirection == 1))
+		{
+			deadDirection = 0;		
+		}
+		if (deadDirection == 0)
+		{
+			playerRect.y += 2;
+		}
+
+		if ((playerRect.y >= 705) && (app->currentScene == LEVEL_1))
 		{
 			app->ChangeScene(DEATH);
 			playerRect.y = 0;

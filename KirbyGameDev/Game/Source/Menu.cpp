@@ -13,22 +13,22 @@
 Menu::Menu() 
 {
 	//Menu Animations---------------------------
-	welcomeKirby.PushBack({ 0, 0, 124, 110 });
-	welcomeKirby.PushBack({ 126, 0, 124, 110 });
-	welcomeKirby.PushBack({ 252, 0, 124, 110 });
-	welcomeKirby.PushBack({ 0, 0, 124, 110 });
-	welcomeKirby.PushBack({ 252, 0, 124, 110 });
-	welcomeKirby.PushBack({ 252, 0, 124, 110 });
-	welcomeKirby.PushBack({ 0, 0, 124, 110 });
-	welcomeKirby.PushBack({ 252, 0, 124, 110 });
-	welcomeKirby.PushBack({ 252, 0, 124, 110 });
-	welcomeKirby.PushBack({ 0, 0, 124, 110 });
-	welcomeKirby.PushBack({ 252, 0, 124, 110 });
+	welcomeKirby.PushBack({ 0, 0, 248, 220 });
+	welcomeKirby.PushBack({ 252, 0, 248, 220 });
+	welcomeKirby.PushBack({ 504, 0, 248, 220 });
+	welcomeKirby.PushBack({ 0, 0, 248, 220 });
+	welcomeKirby.PushBack({ 504, 0, 248, 220 });
+	welcomeKirby.PushBack({ 504, 0, 248, 220 });
+	welcomeKirby.PushBack({ 0, 0, 248, 220 });
+	welcomeKirby.PushBack({ 504, 0, 248, 220 });
+	welcomeKirby.PushBack({ 504, 0, 248, 220 });
+	welcomeKirby.PushBack({ 0, 0, 248, 220 });
+	welcomeKirby.PushBack({ 504, 0, 248, 220 });
 
 	welcomeKirby.loop = true;
 	welcomeKirby.speed = 0.2f;
 
-	titleKirby = { SCREEN_WIDTH / 2 - 62, SCREEN_HEIGHT / 2 - 55, 124, 110 };
+	titleKirby = { SCREEN_WIDTH / 2 - 124, SCREEN_HEIGHT / 2 - 110, 248, 220 };
 
 }
 

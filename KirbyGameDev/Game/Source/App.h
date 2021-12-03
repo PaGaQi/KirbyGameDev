@@ -7,6 +7,8 @@
 #include "Defs.h"
 #include "Timer.h"
 #include "PerfTimer.h"
+#include "PugiXml/src/pugixml.hpp"
+#include "PugiXml/src/pugiconfig.hpp"
 
 
 
@@ -117,6 +119,7 @@ public:
 	Physics* physics;
 
 	sceneType currentScene = TITLE;
+
 #define SCREEN_HEIGHT 960
 #define SCREEN_WIDTH 1024
 
