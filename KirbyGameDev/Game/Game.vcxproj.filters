@@ -52,6 +52,9 @@
     <ClCompile Include="Source\PerfTimer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -124,6 +127,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
