@@ -47,7 +47,7 @@ bool Scene::Start()
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
 			//app->scene->CleanUp();
-			app->map->Load("KirbyMapBackground.tmx");			
+			app->map->Load("Test Map.tmx");			
 			app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
 		}
 		break;
