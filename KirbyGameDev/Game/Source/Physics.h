@@ -65,6 +65,7 @@ public:
 	PhysBody* Platform5;
 	PhysBody* Platform6;
 	PhysBody* PlatformSky;
+	PhysBody* Platform8;
 	
 	//void BeginContact(b2Contact* contact);
 	

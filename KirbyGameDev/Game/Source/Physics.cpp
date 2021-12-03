@@ -96,6 +96,25 @@ bool Physics::Start()
 	128, 256
 	};
 
+	/*int Platform8_vertex[8] = {
+	2805, 725,
+	2805, 495,
+	3165, 495,
+	3165, 725
+	};*/
+	/*int Platform8_vertex[8] = {
+	561, 145,
+	561, 99,
+	633, 99,
+	633, 145
+	};*/
+	int Platform8_vertex[8] = {
+	2695, 697,
+	2695, 476,
+	3041, 476,
+	3041, 697
+	};
+
 
 	Platform1 = app->physics->CreateChain(0, 225, Platform1_vertex, 8);
 	Platform2 = app->physics->CreateChain(0, 225, Platform2_vertex, 8);
@@ -104,6 +123,7 @@ bool Physics::Start()
 	Platform5 = app->physics->CreateChain(0, 225, Platform5_vertex, 16);
 	Platform6 = app->physics->CreateChain(0, 225, Platform6_vertex, 12);
 	PlatformSky = app->physics->CreateChain(0, 225, PlatformSky_vertex, 8);
+	Platform8 = app->physics->CreateChain(27.5, 6, Platform8_vertex, 8);
 
 
 	//Background colliders
