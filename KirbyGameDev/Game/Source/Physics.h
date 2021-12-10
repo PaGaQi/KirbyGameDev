@@ -22,8 +22,7 @@
 class PhysBody
 {
 public:
-	PhysBody() 
-	{}
+	PhysBody() {}
 
 	void GetPosition(int& x, int &y) const;
 	float GetRotation() const;
@@ -47,7 +46,7 @@ public:
 	bool Start();
 	bool PreUpdate();
 	bool PostUpdate();
-	bool CleanUp();
+	bool CleanUp();	
 	
 	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type);
 	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type);
@@ -58,7 +57,7 @@ public:
 	// b2ContactListener ---
 	PhysBody* backgroundColliders;
 
-
+	
 	PhysBody* Platform1;
 	PhysBody* Platform2;
 	PhysBody* Platform3;
@@ -69,7 +68,7 @@ public:
 	PhysBody* Platform8;
 	PhysBody* Platform9;
 	
-	//void BeginContact(b2Contact* contact);
+	void BeginContact(b2Contact* contact);
 	
 
 	List<PhysBody*> groundColliders;

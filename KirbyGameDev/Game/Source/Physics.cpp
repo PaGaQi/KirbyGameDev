@@ -4,6 +4,7 @@
 #include "Physics.h"
 #include "Player.h"
 #include "Point.h"
+#include "Scene.h"
 #include "math.h"
 #include "Log.h"
 
@@ -126,16 +127,24 @@ bool Physics::Start()
 	2467.2, 696
 	};
 
-
 	Platform1 = app->physics->CreateChain(0, 225, Platform1_vertex, 8);
+	Platform1->listener = this;
 	Platform2 = app->physics->CreateChain(0, 225, Platform2_vertex, 8);
+	Platform2->listener = this;
 	Platform3 = app->physics->CreateChain(0, 225, Platform3_vertex, 8);
+	Platform3->listener = this;
 	Platform4 = app->physics->CreateChain(0, 225, Platform4_vertex, 8);
+	Platform4->listener = this;
 	Platform5 = app->physics->CreateChain(0, 225, Platform5_vertex, 16);
+	Platform5->listener = this;
 	Platform6 = app->physics->CreateChain(0, 225, Platform6_vertex, 12);
+	Platform6->listener = this;
 	PlatformSky = app->physics->CreateChain(0, 225, PlatformSky_vertex, 8);
+	PlatformSky->listener = this;
 	Platform8 = app->physics->CreateChain(27.5, 6, Platform8_vertex, 8);
+	Platform8->listener = this;
 	Platform9 = app->physics->CreateChain(27.5, 6, Platform9_vertex, 16);
+	Platform9->listener = this;
 
 
 	//Background colliders
@@ -429,17 +438,23 @@ int PhysBody :: RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& 
 	return ret;
 }
 
-/*
 void Physics::BeginContact(b2Contact* contact)
 {
-	PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData();
-	PhysBody* physB = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData();
+	if (app->currentScene == LEVEL_1)
+	{
+		PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData();
+		PhysBody* physB = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData();
 
-	if (physA && physA->listener != NULL)
-		physA->listener->OnCollision(physA, physB);
 
-	if (physB && physB->listener != NULL)
-		physB->listener->OnCollision(physB, physA);
+		LOG("Body A Listener = %s", physA->listener);
+
+		if (physA && physA->listener != NULL) physA->listener->OnCollision(physA, physB);
+
+		//if (physB && physB->listener != NULL) physB->listener->OnCollision(physB, physA);
+	}
+	
+
+
 }
-*/
+
 

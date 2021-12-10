@@ -135,6 +135,7 @@ bool Player::Start()
 
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle(32, 576, 14, b2_dynamicBody);
+		playerPhys->listener = app->player;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
@@ -267,10 +268,11 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(b2Body* bodyA, b2Body* bodyB)
 {
-	LOG("SOMETHING IS COLLIDING");
-
-	if ((bodyA == playerPhys->body) && (bodyB->GetType() == b2_staticBody)) 
-		LOG("PLAYER IS COLLIDING");
+	if (bodyB == nullptr)
+	{
+		LOG("ERROR WITH PLAYER COLLISION");
+	}
+	else LOG("PLAYER COLLISION HAPPENING!!!!!!!!!!");
 }
 
 bool Player::CleanUp()
