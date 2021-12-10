@@ -142,7 +142,10 @@ bool Scene::PostUpdate()
 	return ret;
 }
 
-
+void Scene :: OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	LOG("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nI HATE YOU AAAAAAAAAAAAAAAAAAAA");
+}
 
 // Called before quitting
 bool Scene::CleanUp()
@@ -170,3 +173,4 @@ bool Scene::CleanUp()
 
 	return true;
 }
+
