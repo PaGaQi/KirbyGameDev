@@ -1,6 +1,10 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  Menu.cpp
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Menu.cpp(101): warning C4715: 'Menu::Start': no todas las rutas de acceso de control devuelven un valor
-  Game.vcxproj -> D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe
+﻿C:\visualstudio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  GroundEnemy.cpp
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\GroundEnemy.h(26,26): warning C4305: 'argument': truncation from 'double' to 'float32'
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\GroundEnemy.h(89,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\GroundEnemy.h(90,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\GroundEnemy.h(92,70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\GroundEnemy.h(92,53): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Game.vcxproj -> C:\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe

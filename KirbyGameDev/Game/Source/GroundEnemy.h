@@ -40,10 +40,15 @@ public:
 
 	float startPosX;
 	float startPosY;
+	bool isDead;
+	int lastY;
+	bool direction;
+	
+	SDL_Rect enemyRect;
 
 	GROUND_ENEMY_STATE actualState;
 
-	PhysBody* ColHitbox;
+	PhysBody* enemyPhys;
 
 	GroundEnemy();
 	virtual ~GroundEnemy();
@@ -54,7 +59,7 @@ public:
 	// Called before the first frame
 	bool Start();
 	//bool Update(float dt);
-	//bool PostUpdate();
+	bool PostUpdate();
 	//bool LoadState(pugi::xml_node&);
 	//bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
@@ -66,7 +71,7 @@ public:
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
-	int direction;
+	//int direction;
 
 	void GroundEnemy::SetAnimation(Animation& toChange)
 	{
@@ -84,9 +89,9 @@ public:
 		enemy.startPosX = xPosition;
 		enemy.startPosY = yPosition;
 
-		enemy.ColHitbox = app->physics->CreateCircle(enemy.startPosX, enemy.startPosY, 6, b2_dynamicBody);
-		enemy.ColHitbox->id = 5;
-		enemy.ColHitbox->listener = app->GroundEnemy;
+		enemy.enemyPhys = app->physics->CreateCircle(enemy.startPosX, enemy.startPosY, 6, b2_dynamicBody);
+		enemy.enemyPhys->id = 5;
+		enemy.enemyPhys->listener = app->groundEnemy;
 
 		enemy.actualState = PATROLLING;
 
@@ -106,6 +111,8 @@ public:
 	
 	Animation IdleAnim;
 	
+	int jumpSFX;
+	int deathSFX;
 
 	bool deathAnimAllowed;
 };

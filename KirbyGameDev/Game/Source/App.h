@@ -32,6 +32,7 @@ class Scene;
 class Map;
 class Physics;
 class GroundEnemy;
+class FlyingEnemy;
 
 
 enum sceneType
@@ -118,7 +119,8 @@ public:
 	Scene* scene;
 	Map* map;
 	Physics* physics;
-	GroundEnemy* GroundEnemy;
+	GroundEnemy* groundEnemy;
+	FlyingEnemy* flyingEnemy;
 
 	sceneType currentScene = TITLE;
 

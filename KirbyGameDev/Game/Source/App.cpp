@@ -9,6 +9,8 @@
 #include "Scene.h"
 #include "Timer.h"
 #include "PerfTimer.h"
+#include "GroundEnemy.h"
+#include "FlyingEnemy.h"
 
 #include "Map.h"
 #include "Physics.h"
@@ -36,6 +38,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	physics = new Physics();
 	menu = new Menu();
+	groundEnemy = new GroundEnemy();
+	flyingEnemy = new FlyingEnemy();
 	
 
 
@@ -50,6 +54,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(menu);
+	AddModule(groundEnemy);
+	AddModule(flyingEnemy);
 
 
 	// Render last to swap buffer

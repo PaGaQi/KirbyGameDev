@@ -55,6 +55,9 @@
     <ClCompile Include="Source\GroundEnemy.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FlyingEnemy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -136,6 +139,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\GroundEnemy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FlyingEnemy.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
