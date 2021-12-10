@@ -31,6 +31,7 @@ class Menu;
 class Scene;
 class Map;
 class Physics;
+class GroundEnemy;
 
 
 enum sceneType
@@ -117,6 +118,7 @@ public:
 	Scene* scene;
 	Map* map;
 	Physics* physics;
+	GroundEnemy* GroundEnemy;
 
 	sceneType currentScene = TITLE;
 
