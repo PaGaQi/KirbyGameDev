@@ -121,11 +121,14 @@ bool Menu::PreUpdate()
 
 
 bool Menu::Update(float dt) 
-{
-	app->render->DrawTexture(menuBackground, 0, 0);
+{	
+	if (app->currentScene != LEVEL_1)
+	{
+		app->render->DrawTexture(menuBackground, 0, 0);
 
-	if (titleMenu) currentAnimation->Update();
-	
+		if (titleMenu)currentAnimation->Update();
+	}
+
 	return true;
 }
 

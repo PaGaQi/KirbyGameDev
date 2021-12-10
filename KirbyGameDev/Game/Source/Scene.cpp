@@ -108,7 +108,7 @@ bool Scene::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				app->ChangeScene(TITLE);
-				app->menu->Start();
+				//app->menu->Start();
 				app->render->camera.x = 0;
 				return true;
 			}
