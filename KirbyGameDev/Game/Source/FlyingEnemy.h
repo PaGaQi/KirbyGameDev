@@ -59,6 +59,7 @@ public:
 
 	// Called before the first frame
 	bool Start();
+	//bool PreUpdate();
 	//bool Update(float dt);
 	//bool PostUpdate();
 	//bool LoadState(pugi::xml_node&);
@@ -69,9 +70,8 @@ public:
 	//void SetEnemyState(FLYING_ENEMY_STATE state);
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
-	// The pointer to the current player animation
-	// It will be switched depending on the player's movement direction
-	//Animation* currentAnimation = nullptr;
+
+	Animation* currentAnimation = nullptr;
 	//int direction;
 
 	/*void FlyingEnemy::SetAnimation(Animation& toChange)

@@ -128,22 +128,31 @@ bool Physics::Start()
 
 	Platform1 = app->physics->CreateChain(0, 225, Platform1_vertex, 8);
 	Platform1->listener = this;
+	Platform1->id = 0;
 	Platform2 = app->physics->CreateChain(0, 225, Platform2_vertex, 8);
 	Platform2->listener = this;
+	Platform2->id = 0;
 	Platform3 = app->physics->CreateChain(0, 225, Platform3_vertex, 8);
 	Platform3->listener = this;
+	Platform3->id = 0;
 	Platform4 = app->physics->CreateChain(0, 225, Platform4_vertex, 8);
 	Platform4->listener = this;
+	Platform4->id = 0;
 	Platform5 = app->physics->CreateChain(0, 225, Platform5_vertex, 16);
 	Platform5->listener = this;
+	Platform5->id = 0;
 	Platform6 = app->physics->CreateChain(0, 225, Platform6_vertex, 12);
 	Platform6->listener = this;
+	Platform6->id = 0;
 	PlatformSky = app->physics->CreateChain(0, 225, PlatformSky_vertex, 8);
 	PlatformSky->listener = this;
+	PlatformSky->id = 0;
 	Platform8 = app->physics->CreateChain(27.5, 6, Platform8_vertex, 8);
 	Platform8->listener = this;
+	Platform8->id = 0;
 	Platform9 = app->physics->CreateChain(27.5, 6, Platform9_vertex, 16);
 	Platform9->listener = this;
+	Platform9->id = 0;
 
 
 	//Background colliders

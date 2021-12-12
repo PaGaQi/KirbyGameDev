@@ -18,67 +18,104 @@
 
 GroundEnemy::GroundEnemy()
 {
-	texture = nullptr;
-
-	/*float idleSpeed = ;
-	float movement1Speed = ;
-	float movement2Speed = ;
-	float deathSpeed = ;*/
-
-
 	//ANIMATIONS
 
+	////Left Walk Animation---------------------------
+	walkLeft.PushBack({ 0, 0, 32, 32 });
+	walkLeft.PushBack({ 34, 0, 32, 32 });
+
+	walkLeft.loop = true;
+	walkLeft.speed = 0.2f;
+
+	////Right Walk Animation---------------------------
+	walkRight.PushBack({ 0, 34, 32, 32 });
+	walkRight.PushBack({ 34, 34, 32, 32 });
+
+
+	walkRight.loop = true;
+	walkRight.speed = 0.2f;
 
 }
 
-GroundEnemy::~GroundEnemy()
-{
-
-}
+GroundEnemy::~GroundEnemy() {}
 
 bool GroundEnemy::Awake()
 {
-
 	return true;
 }
 
 bool GroundEnemy::Start()
 {
-
 	if (app->currentScene == LEVEL_1)
 	{
 		LOG("Loading ground enemy");
-		texture = app->tex->Load("Assets/textures/EnemySpritesheet.png");
+		enemySprites = app->tex->Load("Assets/textures/EnemySpritesheet.png");
 
+		currentAnimation = &walkRight;
 		direction = 0;
 		lastY = 704;
 
-		enemyRect = { 0, 576, 33, 33 };
-		b2Vec2 playerPos = { 0, 0 };
-		b2Vec2 playerVel = { 0, 0 };
+		enemyRect = { 2050, 436, 32, 32 };
+		b2Vec2 enemyPos = { 0, 0 };
+		b2Vec2 enemyVel = { 0, 0 };
 
-		LOG("Creating enemy hitbox");
+		LOG("Creating Enemy Hitbox");
 		enemyPhys = app->physics->CreateCircle(2050, 436, 14, b2_dynamicBody);
 		enemyPhys->id = 2;
 		enemyPhys->listener = this;
 
-		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
-		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
 		isDead = false;
+
 	}
 
 	return true;
 }
 
+bool GroundEnemy::PreUpdate()
+{
+	if (app->currentScene == LEVEL_1)
+	{
+		if (direction == 0 && enemyPhys->body->GetLinearVelocity().x == 0)
+		{
+			enemyVel = { 6, 0 };
+			currentAnimation = &walkRight;
+		}
+		else if (direction == 1 && enemyPhys->body->GetLinearVelocity().x == 0)
+		{
+			enemyVel = { -6, 0 };
+			currentAnimation = &walkLeft;
+		}
+	}
+
+	return true;
+}
+
+
 bool GroundEnemy::Update(float dt)
 {
+	if ((!isDead) && (enemyPhys != nullptr))
+	{
+		enemyPos = enemyPhys->body->GetPosition();
+		enemyRect.x = METERS_TO_PIXELS(enemyPos.x) - 16;
+		enemyRect.y = METERS_TO_PIXELS(enemyPos.y) - 16;
+
+		enemyPhys->body->SetLinearVelocity(enemyVel);
+
+		lastY = enemyRect.y;
+	}	
+
+	if (app->currentScene == LEVEL_1) currentAnimation->Update();
+
 	return true;
 }
 
 
 bool GroundEnemy::PostUpdate()
 {
-	//app->render->DrawTexture(texture, positionOfTheObject.x - 5, positionOfTheObject.y, &currentAnimation->GetCurrentFrame());
+	if (app->currentScene == LEVEL_1 && enemySprites != nullptr)
+	{
+		app->render->DrawTexture(enemySprites, enemyRect.x, enemyRect.y, &currentAnimation->GetCurrentFrame());
+	}
 	return true;
 }
 
@@ -89,31 +126,23 @@ bool GroundEnemy::CleanUp()
 	return true;
 }
 
-int GroundEnemy::GetEnemyLifes()
-{
-	return lifes;
-}
-
-void GroundEnemy::SetEnemyLifes(int l)
-{
-	lifes = l;
-}
-
 void GroundEnemy::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	if (bodyB == nullptr)
 	{
 
 	}
-	else
+	else if ((bodyB->id == 1))
 	{
-		if ((bodyA->id == 5) && (bodyB->id == 1))
-		{
+		LOG("PLAYER KILLED BY WADDLE DEE");
 
-			// is hitted by the player
-
-		}
 	}
+	else if ((bodyB->id == 0))
+	{
+		direction = !direction;
+		LOG("ENEMY COLLISION WITH WALL");
+	}
+	
 }
 
 

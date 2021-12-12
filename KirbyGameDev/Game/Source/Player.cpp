@@ -141,6 +141,7 @@ bool Player::Start()
 
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle(32, 576, 14, b2_dynamicBody);
+		//playerPhys->id = 1;
 		playerPhys->listener = this;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
@@ -240,7 +241,6 @@ bool Player::Update(float dt)
 		playerRect.y = METERS_TO_PIXELS(playerPos.y) - 16;
 		
 		playerPhys->body->SetLinearVelocity(playerVel);
-		playerPhys->id = 1;
 
 		lastY = playerRect.y;
 	}
@@ -282,9 +282,11 @@ void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyB == nullptr)
 		{
 		}
-		else if (bodyB->id == 2)
+		else if (bodyB->id == 2 && isDead == false)
 		{
 			isDead = true;
+			app->audio->PlayFx(deathSFX);
+			deadDirection = 1;			
 		}
 		else if (bodyB->id == 3)
 		{

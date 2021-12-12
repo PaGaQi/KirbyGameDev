@@ -32,7 +32,6 @@ FlyingEnemy::~FlyingEnemy()
 
 }
 
-
 bool FlyingEnemy::Start()
 {
 	if (app->currentScene == LEVEL_1)
@@ -45,10 +44,6 @@ bool FlyingEnemy::Start()
 
 	return true;
 }
-
-
-
-
 
 /*
 bool FlyingEnemy::Update(float dt)

@@ -24,32 +24,10 @@ class GroundEnemy : public Module
 private:
 	float x, y;
 	b2Vec2 speed = { 1.3,0 };
-	float maxXspeed;
 
 	b2Vec2 DetectionRange;
-
-	SDL_Texture* texture;
-
-public:
-	iPoint directionPoint; // pixels	
-
-	iPoint positionOfTheObject; // pixels	
-
-	int lifes;
-	bool isAlive;
-
-	float startPosX;
-	float startPosY;
-	bool isDead;
-	int lastY;
-	bool direction;
 	
-	SDL_Rect enemyRect;
-
-	GROUND_ENEMY_STATE actualState;
-
-	PhysBody* enemyPhys;
-
+public:
 	GroundEnemy();
 	virtual ~GroundEnemy();
 
@@ -58,21 +36,16 @@ public:
 
 	// Called before the first frame
 	bool Start();
+	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
 	//bool LoadState(pugi::xml_node&);
 	//bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
-	int GetEnemyLifes();
-	void SetEnemyLifes(int l);
-	void SetEnemyState(GROUND_ENEMY_STATE state);
+	//void SetEnemyState(GROUND_ENEMY_STATE state);
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
-	// The pointer to the current player animation
-	// It will be switched depending on the player's movement direction
-	Animation* currentAnimation = nullptr;
-	//int direction;
-
+	/*
 	void GroundEnemy::SetAnimation(Animation& toChange)
 	{
 		if (currentAnimation != &toChange) {
@@ -99,20 +72,31 @@ public:
 		enemy.isAlive = true;
 		enemy.deathAnimAllowed = false;
 
-
-
 		return &enemy;
 	}
+	*/
+private:
+	iPoint directionPoint; // pixels	
 
-	//// Set of animations
-	//// IDLE animations
-	Animation rightIdleAnim;
-	Animation leftIdleAnim;
-	
-	Animation IdleAnim;
-	
-	int jumpSFX;
-	int deathSFX;
+	iPoint positionOfTheObject; // pixels	
 
-	bool deathAnimAllowed;
+	bool isDead;
+	int lastY;
+	bool direction;
+
+
+	GROUND_ENEMY_STATE actualState;
+
+	b2Vec2 enemyPos;
+	b2Vec2 enemyVel;
+
+	PhysBody* enemyPhys;
+	SDL_Rect enemyRect;
+	SDL_Texture* enemySprites = nullptr;
+
+
+	Animation* currentAnimation = nullptr;
+
+	Animation walkRight;
+	Animation walkLeft;		
 };
