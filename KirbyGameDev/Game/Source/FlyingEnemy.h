@@ -46,6 +46,7 @@ public:
 	bool direction;
 
 	SDL_Rect enemyRect;
+	int statesInt;
 
 	FLYING_ENEMY_STATE actualState;
 
@@ -60,14 +61,14 @@ public:
 	// Called before the first frame
 	bool Start();
 	//bool PreUpdate();
-	//bool Update(float dt);
-	//bool PostUpdate();
-	//bool LoadState(pugi::xml_node&);
-	//bool SaveState(pugi::xml_node&) const;
-	//bool CleanUp();
-	//int GetEnemyLifes();
-	//void SetEnemyLifes(int l);
-	//void SetEnemyState(FLYING_ENEMY_STATE state);
+	bool Update(float dt);
+	bool PostUpdate();
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+	bool CleanUp();
+	int GetEnemyLifes();
+	void SetEnemyLifes(int l);
+	void SetEnemyState(FLYING_ENEMY_STATE state);
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 

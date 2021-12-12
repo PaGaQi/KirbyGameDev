@@ -274,6 +274,11 @@ bool Player::PostUpdate()
 	return true;
 }
 
+bool Player::PlayerWin()
+{
+	return win;
+}
+
 void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	if (app->currentScene == LEVEL_1)

@@ -42,6 +42,8 @@ public:
 	//Collision callback, called when the player intersects with another collider
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
+	bool PlayerWin();
+
 	bool isDead;
 	bool collectibleGet;
 private:
@@ -49,6 +51,7 @@ private:
 	int x;
 	int y;
 	int lastY;
+	bool win;
 
 	bool isMoving;
 	bool direction;
