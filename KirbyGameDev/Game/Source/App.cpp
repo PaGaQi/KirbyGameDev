@@ -11,6 +11,7 @@
 #include "PerfTimer.h"
 #include "GroundEnemy.h"
 #include "FlyingEnemy.h"
+#include "Collectible.h"
 
 #include "Map.h"
 #include "Physics.h"
@@ -40,6 +41,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	menu = new Menu();
 	groundEnemy = new GroundEnemy();
 	flyingEnemy = new FlyingEnemy();
+	collectible = new Collectible();
 	
 
 
@@ -56,6 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(menu);
 	AddModule(groundEnemy);
 	AddModule(flyingEnemy);
+	AddModule(collectible);
 
 
 	// Render last to swap buffer
