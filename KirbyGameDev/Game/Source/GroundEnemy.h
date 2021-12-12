@@ -58,7 +58,7 @@ public:
 
 	// Called before the first frame
 	bool Start();
-	//bool Update(float dt);
+	bool Update(float dt);
 	bool PostUpdate();
 	//bool LoadState(pugi::xml_node&);
 	//bool SaveState(pugi::xml_node&) const;

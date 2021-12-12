@@ -2,10 +2,16 @@
 #include "Collectible.h"
 #include "Log.h"
 #include "Physics.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Animation.h"
 
 Collectible::Collectible()
 {
 	//ANIMATION
+	isMoving = false;
+	collectibleAnimation.PushBack({ 0, 0, 32, 32 });
+	
 }
 Collectible::~Collectible()
 {
@@ -17,7 +23,7 @@ bool Collectible::Awake(pugi::xml_node& config)
 	LOG("Loading Collectible");
 
 	position.x = 0;
-	position.y = 590;
+	position.y = 45;
 
 	return true;
 }
@@ -30,7 +36,7 @@ bool Collectible::Start()
 
 	if (app->currentScene == LEVEL_1)
 	{
-		collectiblePhysbody = app->physics->CreateCircle(position.x, position.y, 25, b2_dynamicBody);
+		collectiblePhysbody = app->physics->CreateCircle(position.x, position.y, 25, b2_kinematicBody);
 
 		collectiblePhysbody->body->GetFixtureList()->SetFriction(5.0f);
 
@@ -43,7 +49,7 @@ bool Collectible::Start()
 		sensorFix.isSensor = true;
 
 		collectibleSensor = collectiblePhysbody->body->CreateFixture(&sensorFix);
-		//collectibleTexture = app->tex->Load("Assets/sprites/Collectible.png");
+		collectibleTexture = app->tex->Load("Assets/sprites/Collectible.png");
 		collectiblePhysbody->listener = this;
 
 	}
@@ -76,7 +82,7 @@ bool Collectible::PostUpdate()
 	if (app->currentScene == LEVEL_1 && draw)
 	{
 		SDL_Rect section = currentAnimation->GetCurrentFrame();
-		//app->render->DrawTexture(collectibleTexture, 0, 576);
+		app->render->DrawTexture(collectibleTexture, 0, 576);
 	
 	}
 

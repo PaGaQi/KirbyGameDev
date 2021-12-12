@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Menu.h"
 #include "Box2D/Box2D/Box2D.h"
+#include "Collectible.h"
 
 #include "Defs.h"
 #include "Log.h"

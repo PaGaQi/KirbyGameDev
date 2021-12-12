@@ -21,6 +21,8 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+	
+	bool isMoving;
 
 	bool LoadState(pugi::xml_node&);
 	//bool SaveState(pugi::xml_node&) const;
@@ -30,6 +32,7 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void Destroy();
 private:
+	
 	bool Destroyed = false;
 	bool draw = true;
 	Point <int> position;
@@ -38,7 +41,7 @@ private:
 
 	SDL_Texture* collectibleTexture;
 
-	Animation* currentAnimation;
+	Animation* currentAnimation = nullptr;
 
 	Animation collectibleAnimation;
 };

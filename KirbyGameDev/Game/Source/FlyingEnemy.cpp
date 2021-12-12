@@ -16,6 +16,7 @@
 #include "Audio.h"
 #include "FlyingEnemy.h"
 #include "Animation.h"
+#include "PathFinding.h"
 #include "SDL/include/SDL.h"
 
 FlyingEnemy::FlyingEnemy()

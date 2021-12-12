@@ -13,6 +13,7 @@
 #include "FlyingEnemy.h"
 #include "Collectible.h"
 
+
 #include "Map.h"
 #include "Physics.h"
 
@@ -42,6 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	groundEnemy = new GroundEnemy();
 	flyingEnemy = new FlyingEnemy();
 	collectible = new Collectible();
+	pathfinding = new PathFinding();
 	
 
 
@@ -59,6 +61,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(groundEnemy);
 	AddModule(flyingEnemy);
 	AddModule(collectible);
+	AddModule(pathfinding);
 
 
 	// Render last to swap buffer

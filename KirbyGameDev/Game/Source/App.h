@@ -7,6 +7,7 @@
 #include "Defs.h"
 #include "Timer.h"
 #include "PerfTimer.h"
+#include "PathFinding.h"
 #include "PugiXml/src/pugixml.hpp"
 #include "PugiXml/src/pugiconfig.hpp"
 
@@ -34,6 +35,7 @@ class Physics;
 class GroundEnemy;
 class FlyingEnemy;
 class Collectible;
+class Pathfinding;
 
 
 enum sceneType
@@ -123,6 +125,7 @@ public:
 	GroundEnemy* groundEnemy;
 	FlyingEnemy* flyingEnemy;
 	Collectible* collectible;
+	PathFinding* pathfinding;
 
 	sceneType currentScene = TITLE;
 

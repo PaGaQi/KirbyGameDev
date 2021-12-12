@@ -7,6 +7,7 @@
 #include "Module.h"
 #include "Textures.h"
 #include "Animation.h"
+#include "PathFinding.h"
 
 struct SDL_Texture;
 

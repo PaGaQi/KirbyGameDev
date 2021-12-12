@@ -68,6 +68,10 @@ bool GroundEnemy::Start()
 	return true;
 }
 
+bool GroundEnemy::Update(float dt)
+{
+	return true;
+}
 
 
 bool GroundEnemy::PostUpdate()
