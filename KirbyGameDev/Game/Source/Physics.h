@@ -2,8 +2,6 @@
 #include "Module.h"
 #include "Box2D/Box2D/Box2D.h"
 #include "App.h"
-#include "Player.h"
-
 
 
 #define GRAVITY_X 0.0f
@@ -23,6 +21,7 @@ class PhysBody
 {
 public:
 	PhysBody() {}
+	~PhysBody() {}
 
 	void GetPosition(int& x, int &y) const;
 	float GetRotation() const;
@@ -37,7 +36,7 @@ public:
 };
 
 // Module --------------------------------------
-class Physics : public Module, public b2ContactListener // TODO
+class Physics : public Module, public b2ContactListener 
 {
 public:
 	Physics();

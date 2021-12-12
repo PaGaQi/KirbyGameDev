@@ -67,7 +67,7 @@ public:
 	//int GetEnemyLifes();
 	//void SetEnemyLifes(int l);
 	//void SetEnemyState(FLYING_ENEMY_STATE state);
-	//void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
@@ -110,10 +110,7 @@ public:
 	Animation rightIdleAnim;
 	Animation leftIdleAnim;
 
-	Animation IdleAnim;
 
-	int jumpSFX;
-	int deathSFX;
 
 	bool deathAnimAllowed;
 };

@@ -2,11 +2,11 @@
 #include "Audio.h"
 #include "Player.h"
 #include "Module.h"
+#include "Map.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Animation.h"
-#include <Box2D/Box2D/Box2D.h>
 #include "Physics.h"
 #include "Log.h"
 
@@ -97,7 +97,7 @@ Player::Player()
 	jumpLeft.speed = 0.1f;
 
 	//Left Fall Animation
-	fallLeft.PushBack({ 136, 170, 32, 32 });
+	//fallLeft.PushBack({ 136, 170, 32, 32 });
 	
 	//Death Animation-------------------------------
 	death.PushBack({ 0, 204, 32, 32 });
@@ -111,12 +111,18 @@ Player::Player()
 	deadDirection = 1;
 
 	playerRect = { 0, 320, 32, 32 };
-	playerPhys;
+	//playerPhys;
 
 	lastY;
 }
 
 Player::~Player() {}
+
+bool Player::Awake(pugi::xml_node&)
+{
+	
+	return true;
+}
 
 // Load assets
 bool Player::Start()
@@ -135,11 +141,13 @@ bool Player::Start()
 
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle(32, 576, 14, b2_dynamicBody);
-		playerPhys->listener = app->player;
+		playerPhys->listener = this;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
 		isDead = false;
+		collectibleGet = false;
+	
 	}		
 
 	return true;
@@ -233,6 +241,7 @@ bool Player::Update(float dt)
 		playerRect.y = METERS_TO_PIXELS(playerPos.y) - 16;
 		
 		playerPhys->body->SetLinearVelocity(playerVel);
+		playerPhys->id = 1;
 
 		lastY = playerRect.y;
 	}
@@ -266,13 +275,19 @@ bool Player::PostUpdate()
 	return true;
 }
 
-void Player::OnCollision(b2Body* bodyA, b2Body* bodyB)
+void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	LOG("%i, %i", METERS_TO_PIXELS(playerPhys->body->GetPosition().x), METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
 	if (bodyB == nullptr)
+	{}
+	else if (bodyB->id == 2)
 	{
-		LOG("ERROR WITH PLAYER COLLISION");
+		isDead = true;
 	}
-	else LOG("PLAYER COLLISION HAPPENING!!!!!!!!!!");
+	else if (bodyB->id == 3)
+	{
+		collectibleGet = true;
+	}
 }
 
 bool Player::CleanUp()

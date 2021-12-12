@@ -2,7 +2,6 @@
 #include "Input.h"
 #include "Render.h"
 #include "Physics.h"
-#include "Player.h"
 #include "Point.h"
 #include "Scene.h"
 #include "math.h"
@@ -445,15 +444,22 @@ void Physics::BeginContact(b2Contact* contact)
 		PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData();
 		PhysBody* physB = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData();
 
+		if (physA && physA->listener != NULL)
+		{
+			physA->listener->OnCollision(physA, physB);
+			//LOG("Body A = (%i, %i)", METERS_TO_PIXELS(physA->body->GetPosition().x), METERS_TO_PIXELS(physA->body->GetPosition().y));
+			//LOG("Body B = (%i, %i)", METERS_TO_PIXELS(physB->body->GetPosition().x), METERS_TO_PIXELS(physB->body->GetPosition().y));
+		}
 
-		LOG("Body A Listener = %s", physA->listener);
+		if (physB && physB->listener != NULL)
+		{
+			physB->listener->OnCollision(physB, physA);
+			//LOG("Body A = (%i, %i)", METERS_TO_PIXELS(physA->body->GetPosition().x), METERS_TO_PIXELS(physA->body->GetPosition().y));
+			//LOG("Body B = (%i, %i)", METERS_TO_PIXELS(physB->body->GetPosition().x), METERS_TO_PIXELS(physB->body->GetPosition().y));		
+		}
 
-		if (physA && physA->listener != NULL) physA->listener->OnCollision(physA, physB);
 
-		//if (physB && physB->listener != NULL) physB->listener->OnCollision(physB, physA);
 	}
-	
-
 
 }
 

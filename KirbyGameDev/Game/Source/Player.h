@@ -1,21 +1,20 @@
-#ifndef __PLAYER_H__
-#define __PLAYER_H__
+#pragma once
 
-
+#include "App.h"
 #include "Module.h"
 #include "Animation.h"
 #include "Physics.h"
-
-#include <Box2D/Box2D/Box2D.h>
-#include "SDL/include/SDL.h"
+#include "Point.h"
 
 struct SDL_Texture;
 
+class PhysBody;
 
 class Player : public Module
 {
 public:
 
+	PhysBody* playerPhys;
 
 	Player();
 
@@ -23,7 +22,7 @@ public:
 	virtual ~Player();
 	
 	// Called before render is available
-	//bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start() override;
@@ -41,9 +40,11 @@ public:
 	virtual bool CleanUp();
 
 	//Collision callback, called when the player intersects with another collider
-	void OnCollision(b2Body* bodyA, b2Body* bodyB);
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
-
+	bool isDead;
+	bool collectibleGet;
+private:
 	// Position of the player in the map
 	int x;
 	int y;
@@ -52,16 +53,13 @@ public:
 	bool isMoving;
 	bool direction;
 	bool godMode;
-	bool isDead;
 	bool isJumping;
 	bool deadDirection;
 
 	SDL_Rect playerRect;
 
 	// The player spritesheet loaded into an SDL_Texture
-	SDL_Texture* playerSprites = nullptr;
-
-	
+	SDL_Texture* playerSprites = nullptr;	
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
@@ -80,7 +78,6 @@ public:
 	Animation walkRight;
 	Animation death;
 
-	PhysBody* playerPhys;
 	
 
 	b2Vec2 playerPos;
@@ -91,4 +88,3 @@ public:
 	int deathSFX;
 };
 
-#endif

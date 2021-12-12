@@ -57,8 +57,10 @@ bool GroundEnemy::Start()
 		b2Vec2 playerPos = { 0, 0 };
 		b2Vec2 playerVel = { 0, 0 };
 
-		LOG("Creating player hitbox");
-		enemyPhys = app->physics->CreateCircle(90, 576, 14, b2_dynamicBody);
+		LOG("Creating enemy hitbox");
+		enemyPhys = app->physics->CreateCircle(2050, 436, 14, b2_dynamicBody);
+		enemyPhys->id = 2;
+		enemyPhys->listener = this;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");

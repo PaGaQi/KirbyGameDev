@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "Player.h"
 #include "Map.h"
 #include "Menu.h"
 #include "Box2D/Box2D/Box2D.h"
@@ -34,6 +35,8 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	app->map->Load("Test Map.tmx");	
+
 	switch (app->currentScene)
 	{
 		case TITLE:
@@ -48,7 +51,6 @@ bool Scene::Start()
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
 			
-			app->map->Load("Test Map.tmx");			
 			app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
 		}
 		break;
@@ -145,7 +147,7 @@ bool Scene::PostUpdate()
 
 void Scene :: OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	LOG("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nI HATE YOU AAAAAAAAAAAAAAAAAAAA");
+	
 }
 
 // Called before quitting

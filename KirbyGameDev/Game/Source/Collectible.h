@@ -4,11 +4,12 @@
 #include "App.h"
 #include "Point.h"
 #include "Animation.h"
+#include "SDL/include/SDL.h"
 
 
 class PhysBody;
 
-class Collectible : public Module, public b2ContactListener
+class Collectible : public Module
 {
 public:
 	Collectible();
@@ -36,7 +37,7 @@ private:
 	bool Destroyed = false;
 	bool draw = true;
 	Point <int> position;
-	PhysBody* collectiblePhysbody;
+	PhysBody* collectiblePhys;
 	b2Fixture* collectibleSensor;
 
 	SDL_Texture* collectibleTexture;
