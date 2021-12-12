@@ -141,7 +141,7 @@ bool Player::Start()
 
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle(32, 576, 14, b2_dynamicBody);
-		//playerPhys->id = 1;
+		playerPhys->id = 1;
 		playerPhys->listener = this;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");

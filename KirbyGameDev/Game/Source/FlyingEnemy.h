@@ -29,29 +29,8 @@ private:
 
 	b2Vec2 DetectionRange;
 
-	SDL_Texture* texture;
-
+	
 public:
-	iPoint directionPoint; // pixels	
-
-	iPoint positionOfTheObject; // pixels	
-
-	int lifes;
-	bool isAlive;
-
-	float startPosX;
-	float startPosY;
-	bool isDead;
-	int lastY;
-	bool direction;
-
-	SDL_Rect enemyRect;
-	int statesInt;
-
-	FLYING_ENEMY_STATE actualState;
-
-	PhysBody* enemyPhys;
-
 	FlyingEnemy();
 	virtual ~FlyingEnemy();
 
@@ -60,19 +39,16 @@ public:
 
 	// Called before the first frame
 	bool Start();
-	//bool PreUpdate();
+	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
-	bool CleanUp();
-	int GetEnemyLifes();
-	void SetEnemyLifes(int l);
+	//bool LoadState(pugi::xml_node&);
+	//bool SaveState(pugi::xml_node&) const;
+	bool CleanUp();	
 	void SetEnemyState(FLYING_ENEMY_STATE state);
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 
-	Animation* currentAnimation = nullptr;
 	//int direction;
 
 	/*void FlyingEnemy::SetAnimation(Animation& toChange)
@@ -82,7 +58,7 @@ public:
 			toChange.Reset();
 			currentAnimation = &toChange;
 		}
-	}*/
+	}
 
 	FlyingEnemy* CreateFlyingEnemy(int xPosition, int yPosition)
 	{
@@ -97,21 +73,39 @@ public:
 
 		enemy.actualState = PATROLLIN;
 
-		enemy.lifes = 2;
-		enemy.isAlive = true;
 		enemy.deathAnimAllowed = false;
 
 
 
 		return &enemy;
 	}
+	*/
 
-	//// Set of animations
-	//// IDLE animations
-	Animation rightIdleAnim;
-	Animation leftIdleAnim;
+	iPoint directionPoint; // pixels	
+
+	iPoint positionOfTheObject; // pixels	
+
+	float startPosX;
+	float startPosY;
+	bool isDead;
+	int lastY;
+	bool direction;
+	int statesInt;
 
 
+	FLYING_ENEMY_STATE actualState;
 
-	bool deathAnimAllowed;
+	b2Vec2 enemyPos;
+	b2Vec2 enemyVel;
+
+	SDL_Rect enemyRect;
+	
+	PhysBody* enemyPhys;
+
+	Animation* currentAnimation;
+
+	Animation flyRight;
+	Animation flyLeft;
+
+	SDL_Texture* enemySprites;
 };

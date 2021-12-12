@@ -52,8 +52,7 @@ bool GroundEnemy::Start()
 		enemySprites = app->tex->Load("Assets/textures/EnemySpritesheet.png");
 
 		currentAnimation = &walkRight;
-		direction = 0;
-		lastY = 704;
+		direction = 0;		
 
 		enemyRect = { 2050, 436, 32, 32 };
 		b2Vec2 enemyPos = { 0, 0 };
@@ -75,12 +74,12 @@ bool GroundEnemy::PreUpdate()
 {
 	if (app->currentScene == LEVEL_1)
 	{
-		if (direction == 0 && enemyPhys->body->GetLinearVelocity().x == 0)
+		if (direction == 0) // && enemyPhys->body->GetLinearVelocity().x == 0)
 		{
 			enemyVel = { 6, 0 };
 			currentAnimation = &walkRight;
 		}
-		else if (direction == 1 && enemyPhys->body->GetLinearVelocity().x == 0)
+		else if (direction == 1) // && enemyPhys->body->GetLinearVelocity().x == 0)
 		{
 			enemyVel = { -6, 0 };
 			currentAnimation = &walkLeft;
