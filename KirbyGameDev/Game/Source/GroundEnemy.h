@@ -13,8 +13,8 @@ struct SDL_Texture;
 
 enum GROUND_ENEMY_STATE
 {
-	PATROLLING,
-	CHASING_PLAYER,
+	WALKING,
+	ATTACK,
 	DEATHS
 };
 
@@ -93,7 +93,7 @@ public:
 		enemy.enemyPhys->id = 5;
 		enemy.enemyPhys->listener = app->groundEnemy;
 
-		enemy.actualState = PATROLLING;
+		enemy.actualState = WALKING;
 
 		enemy.lifes = 2;
 		enemy.isAlive = true;

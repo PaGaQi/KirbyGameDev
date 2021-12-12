@@ -58,6 +58,12 @@
     <ClCompile Include="Source\FlyingEnemy.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Collectible.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PathFinding.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -142,6 +148,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\FlyingEnemy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collectible.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PathFinding.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
