@@ -59,6 +59,10 @@ bool Menu::Awake()
 
 bool Menu::Start() 
 {
+	//HUD Elements
+	baseHUD = app->tex->Load("Assets/textures/HUD Base.png");
+	abilityHUD = app->tex->Load("Assets/textures/HUD Sprites.png");
+
 	switch (app->currentScene)
 	{
 		case (TITLE):
@@ -87,8 +91,7 @@ bool Menu::Start()
 
 		case (LEVEL_1):
 		{
-			LOG("Loading Player HUD");			
-			
+			LOG("Loading Player HUD");				
 			baseHUD = app->tex->Load("Assets/textures/HUD Base.png");
 			abilityHUD = app->tex->Load("Assets/textures/HUD Sprites.png");
 

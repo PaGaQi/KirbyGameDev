@@ -223,7 +223,7 @@ PhysBody* Physics :: CreateRectangle(int x, int y, int width, int height, b2Body
 PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height)
 {
 	b2BodyDef body;
-	body.type = b2_staticBody;
+	body.type = b2_kinematicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);

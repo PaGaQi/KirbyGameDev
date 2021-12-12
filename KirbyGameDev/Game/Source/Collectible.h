@@ -28,21 +28,24 @@ public:
 	bool LoadState(pugi::xml_node&);
 	//bool SaveState(pugi::xml_node&) const;
 
-	void Die();
+	void Disappear();
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void Destroy();
 private:
 	
-	bool Destroyed = false;
-	bool draw = true;
+	bool drawCollectible = true;
+
+
 	Point <int> position;
 	PhysBody* collectiblePhys;
 	b2Fixture* collectibleSensor;
 
-	SDL_Texture* collectibleTexture;
+
+	SDL_Rect collectRect;
+	SDL_Texture* collectTexture;
 
 	Animation* currentAnimation = nullptr;
-
-	Animation collectibleAnimation;
+	Animation collectAnim;
+	Animation disappearAnim;
 };

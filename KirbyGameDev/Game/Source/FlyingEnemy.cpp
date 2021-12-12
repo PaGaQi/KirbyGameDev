@@ -40,7 +40,7 @@ bool FlyingEnemy::Start()
 		LOG("Creating enemy hitbox");
 		enemyPhys = app->physics->CreateCircle(1500, 500, 14, b2_dynamicBody);
 		enemyPhys->id = 2;
-		enemyPhys->listener = this;	
+		enemyPhys->listener = this;
 	}
 
 	return true;

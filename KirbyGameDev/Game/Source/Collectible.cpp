@@ -10,8 +10,17 @@
 Collectible::Collectible()
 {
 	//ANIMATION
-	isMoving = false;
-	collectibleAnimation.PushBack({ 0, 0, 32, 32 });
+	collectAnim.PushBack({ 0, 0, 32, 32 });
+	collectAnim.PushBack({ 34, 0, 32, 32 });
+	collectAnim.PushBack({ 68, 0, 32, 32 });
+	collectAnim.PushBack({ 102, 0, 32, 32 });
+
+	collectAnim.loop = true;
+	collectAnim.speed = 0.07f;
+
+
+	collectRect;
+
 	
 }
 Collectible::~Collectible()
@@ -24,7 +33,7 @@ bool Collectible::Awake(pugi::xml_node& config)
 	LOG("Loading Collectible");
 
 	position.x = 85;
-	position.y = 420;
+	position.y = 430;
 
 	return true;
 }
@@ -35,25 +44,28 @@ bool Collectible::Start()
 
 	if (app->currentScene == LEVEL_1)
 	{
-		collectiblePhys = app->physics->CreateCircle(position.x, position.y, 25, b2_kinematicBody);
-		collectiblePhys->listener = this;
-		collectiblePhys->id = 3;
-
-		/*
-		collectiblePhysbody->body->GetFixtureList()->SetFriction(5.0f);
-
-		b2PolygonShape sensorShape;
-		sensorShape.SetAsBox(PIXEL_TO_METERS(30), PIXEL_TO_METERS(30));
-
-
-		b2FixtureDef sensorFix;
-		sensorFix.shape = &sensorShape;
-		sensorFix.isSensor = true;
-
-		collectibleSensor = collectiblePhysbody->body->CreateFixture(&sensorFix);
-		collectibleTexture = app->tex->Load("Assets/sprites/Collectible.png");
-		*/
+		LOG("Loading Collectible Sprite");
+		collectTexture = app->tex->Load("Assets/textures/Collectible.png");
 		
+		collectRect = { position.x, position.y, 32, 32};
+		
+		LOG("Creating Collectible Hitbox");
+		collectiblePhys = app->physics->CreateRectangleSensor(position.x, position.y, 16, b2_kinematicBody);
+		collectiblePhys->listener = this;
+		collectiblePhys->id = 3;	
+
+		
+		drawCollectible = true;
+		
+		b2PolygonShape sensorShape;
+		sensorShape.SetAsBox(PIXEL_TO_METERS(16), PIXEL_TO_METERS(16));
+
+		b2FixtureDef collectSensor;
+		collectSensor.shape = &sensorShape;
+		collectSensor.isSensor = true;
+
+		collectibleSensor = collectiblePhys->body->CreateFixture(&collectSensor);	
+		currentAnimation = &collectAnim;
 	}
 
 	return ret;
@@ -61,53 +73,67 @@ bool Collectible::Start()
 
 void Collectible::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	if (bodyB == nullptr)
+	if (app->currentScene == LEVEL_1)
 	{
-		LOG("NOT COLLECTIBLE COLLISION");
+		if (bodyB == nullptr)
+		{}
+		else if (bodyB->id == 1)
+		{
+			drawCollectible = false;
+		}
 	}
-	else LOG("COLLECTIBLE COLLISION");
 }
 
 bool Collectible::PreUpdate()
 {
-	currentAnimation = &collectibleAnimation;
-	if (Destroyed) Die();
+	if (app->currentScene == LEVEL_1)
+	{
+		if (drawCollectible == true)
+		{
+			currentAnimation = &collectAnim;		
+		}		
+	}
+	
 	return true;
 }
 
 bool Collectible::Update(float dt)
 {
+	if (drawCollectible == true && app->currentScene == LEVEL_1) currentAnimation->Update();
+	else if (app->currentScene != LEVEL_1)
+	{
+		drawCollectible = false;	
+	}
+	
 	return true;
 }
 
 bool Collectible::PostUpdate()
 {
-	if (app->currentScene == LEVEL_1 && draw)
-	{
-		SDL_Rect section = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(collectibleTexture, 0, 576);
+	if (app->currentScene == LEVEL_1 && drawCollectible == true)
+	{		
+		app->render->DrawTexture(collectTexture, position.x - 16, position.y - 16, &currentAnimation->GetCurrentFrame());
 	}
+
 
 	return true;
 }
-void Collectible::Die()
-{
-	//app->physics->world->DestroyBody(collectiblePhysbody->body);
-	Destroyed = false;
-	draw = false;
-}
+
 bool Collectible::CleanUp()
 {
+	app->tex->UnLoad(collectTexture);
 	return true;
 }
 bool Collectible::LoadState(pugi::xml_node&)
 {
 	return true;
 }
+
 /*bool Collectible::SaveState(pugi::xml_node&)
 {
 	return true;
 }*/
+
 void Collectible::Destroy()
 {
 

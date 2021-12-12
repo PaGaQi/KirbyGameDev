@@ -146,8 +146,7 @@ bool Player::Start()
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
 		isDead = false;
-		collectibleGet = false;
-	
+		collectibleGet = false;	
 	}		
 
 	return true;
@@ -277,16 +276,20 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	LOG("%i, %i", METERS_TO_PIXELS(playerPhys->body->GetPosition().x), METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
-	if (bodyB == nullptr)
-	{}
-	else if (bodyB->id == 2)
+	if (app->currentScene == LEVEL_1)
 	{
-		isDead = true;
-	}
-	else if (bodyB->id == 3)
-	{
-		collectibleGet = true;
+		LOG("%i, %i", METERS_TO_PIXELS(playerPhys->body->GetPosition().x), METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
+		if (bodyB == nullptr)
+		{
+		}
+		else if (bodyB->id == 2)
+		{
+			isDead = true;
+		}
+		else if (bodyB->id == 3)
+		{
+			collectibleGet = true;
+		}
 	}
 }
 
