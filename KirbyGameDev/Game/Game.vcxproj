@@ -92,6 +92,7 @@
     <ClCompile Include="Source\Collectible.cpp" />
     <ClCompile Include="Source\FlyingEnemy.cpp" />
     <ClCompile Include="Source\GroundEnemy.cpp" />
+    <ClCompile Include="Source\GUIbutton.cpp" />
     <ClCompile Include="Source\Level01.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -112,6 +113,8 @@
     <ClInclude Include="Source\Collectible.h" />
     <ClInclude Include="Source\FlyingEnemy.h" />
     <ClInclude Include="Source\GroundEnemy.h" />
+    <ClInclude Include="Source\GUIbutton.h" />
+    <ClInclude Include="Source\GUIcontrol.h" />
     <ClInclude Include="Source\Level01.h" />
     <ClInclude Include="Source\Menu.h" />
     <ClInclude Include="Source\Map.h" />

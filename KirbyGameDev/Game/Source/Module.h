@@ -2,11 +2,14 @@
 #define __MODULE_H__
 
 #include "SString.h"
+//#include "GUIcontrol.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
 class PhysBody;
+class GuiControl;
+
 
 class Module
 {
@@ -78,6 +81,11 @@ public:
 	}
 
 	virtual bool SaveState(pugi::xml_node&) const
+	{
+		return true;
+	}
+
+	virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	{
 		return true;
 	}

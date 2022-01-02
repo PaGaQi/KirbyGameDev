@@ -64,6 +64,9 @@
     <ClCompile Include="Source\PathFinding.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GUIbutton.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -154,6 +157,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\PathFinding.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIbutton.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIcontrol.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
