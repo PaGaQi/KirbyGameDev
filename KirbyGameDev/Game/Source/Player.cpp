@@ -162,16 +162,21 @@ bool Player::PreUpdate()
 
 		if ((playerRect.y >= (lastY - 128)) && (deadDirection == 1))
 		{
-			playerRect.y -= 2;			
+			playerRect.y -= 4;			
 		}
 
 		if ((playerRect.y <= lastY - 128) && (deadDirection == 1))
 		{
-			deadDirection = 0;		
+			deadDirection = 0;
+			deathHeight = playerRect.y;
 		}
+
 		if (deadDirection == 0)
 		{
-			playerRect.y += 2;
+			LOG("DEATH AT %i", deathHeight);
+			playerRect.y += 4 * (625 - deathHeight) / 80;
+
+			LOG("POS = %i", playerRect.y);
 		}
 
 		if ((playerRect.y >= 708) && (app->currentScene == LEVEL_1))
@@ -270,7 +275,7 @@ bool Player::PostUpdate()
 		deadDirection = 1;
 	}
 
-	app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
+	if (app->currentScene == LEVEL_1) app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
 	return true;
 }
 
@@ -302,7 +307,7 @@ void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 bool Player::CleanUp()
 {
-	app->tex->UnLoad(playerSprites);
+	//app->tex->UnLoad(playerSprites);
 	
 	return true;
 }

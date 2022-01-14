@@ -41,12 +41,12 @@ bool Collectible::Awake(pugi::xml_node& config)
 bool Collectible::Start()
 {
 	bool ret = true;
+	
+	collectTexture = app->tex->Load("Assets/textures/Collectible.png");
 
 	if (app->currentScene == LEVEL_1)
 	{
-		LOG("Loading Collectible Sprite");
-		collectTexture = app->tex->Load("Assets/textures/Collectible.png");
-		
+		LOG("Loading Collectible Sprite");		
 		collectRect = { position.x, position.y, 32, 32};
 		
 		LOG("Creating Collectible Hitbox");

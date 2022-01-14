@@ -86,6 +86,7 @@ private:
 	b2Vec2 playerPos;
 	b2Vec2 playerVel;
 
+	int deathHeight;
 
 	int jumpSFX;
 	int deathSFX;

@@ -54,7 +54,7 @@ bool Scene::Start()
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
 
-			app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
+			//app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
 		}
 		break;
 
@@ -104,6 +104,8 @@ bool Scene::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				app->ChangeScene(MENU);
+
+				app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
 				app->render->camera.x = 0;
 				app->scene->Start();
 				return true;
@@ -115,9 +117,9 @@ bool Scene::Update(float dt)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
-				app->render->camera.x = 0;
-				
 				app->audio->PlayFx(pressOk);
+
+				app->render->camera.x = 0;
 
 				if (app->menu->currentButton == 0) app->ChangeScene(LEVEL_1);
 				else if (app->menu->currentButton == 1) app->ChangeScene(LEVEL_1);
@@ -126,6 +128,37 @@ bool Scene::Update(float dt)
 				else if (app->menu->currentButton == 4) return false;
 				
 				app->scene->Start();
+				return true;
+			}
+
+		}
+		break;
+
+		case SETTINGS:
+		{
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{		
+
+				if (app->menu->currentButton == 4)
+				{
+					app->audio->PlayFx(pressBack);
+					app->ChangeScene(MENU);
+				}
+
+				//app->scene->Start();
+				return true;
+			}
+
+		}
+		break;
+
+		case CREDITS:
+		{
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				app->audio->PlayFx(pressBack);
+				app->ChangeScene(MENU);
+
 				return true;
 			}
 

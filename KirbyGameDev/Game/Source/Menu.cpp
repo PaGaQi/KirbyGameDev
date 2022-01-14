@@ -106,6 +106,37 @@ bool Menu::Start()
 		}
 		break;
 
+		case (SETTINGS):
+		{
+			menuBackground = app->tex->Load("Assets/maps/Settings Menu Ver2.png");
+			titleMenu = false;
+
+			optionSelected[0] = { 268, 204 };
+			optionSelected[1] = { 268, 268 };
+			optionSelected[2] = { 268, 332 };
+			optionSelected[3] = { 268, 396 };
+			optionSelected[4] = { 364, 460 };
+
+			return true;
+		}
+		break;
+
+		case (CREDITS):
+		{
+			menuBackground = app->tex->Load("Assets/maps/Credits Screen.png");
+			
+			titleMenu = false;
+
+			optionSelected[0] = { 1024, 960 };
+			optionSelected[1] = { 1024, 960 };
+			optionSelected[2] = { 1024, 960 };
+			optionSelected[3] = { 1024, 960 };
+			optionSelected[4] = { 1024, 960 };
+
+			return true;
+		}
+		break;
+
 		case (DEATH):
 		{
 			LOG("Loading Death Menu");
@@ -150,7 +181,7 @@ bool Menu::PreUpdate()
 		}
 	}
 
-	if (app->currentScene == MENU)
+	else if (app->currentScene == MENU)
 	{
 		SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
 		
@@ -159,7 +190,24 @@ bool Menu::PreUpdate()
 		else if (mouseRect.y >= 334 && mouseRect.y < 398) currentButton = 2;
 		else if (mouseRect.y >= 398 && mouseRect.y < 462) currentButton = 3;
 		else if (mouseRect.y >= 462) currentButton = 4;
+	}
 
+	else if (app->currentScene == SETTINGS)
+	{
+		SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
+
+		if (mouseRect.y <= 270) currentButton = 0;
+		else if (mouseRect.y > 270 && mouseRect.y < 334) currentButton = 1;
+		else if (mouseRect.y >= 334 && mouseRect.y < 398) currentButton = 2;
+		else if (mouseRect.y >= 398 && mouseRect.y < 462) currentButton = 3;
+		else if (mouseRect.y >= 462) currentButton = 4;
+	}
+
+	else if (app->currentScene == CREDITS)
+	{
+		SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
+
+		currentButton = 0;		
 	}
 
 	return true;
@@ -177,7 +225,7 @@ bool Menu::Update(float dt)
 		if (titleMenu)currentAnimation->Update();
 	}
 
-	if (app->currentScene == MENU)
+	if (app->currentScene >= MENU)
 	{
 		//app->render->DrawRectangle(mouseRect, 0, 0, 255);
 		app->render->DrawTexture(menuHandTexture, menuHandRect.x, menuHandRect.y, &menuHandCrop);
@@ -198,6 +246,7 @@ bool Menu::PostUpdate()
 {
 	if (titleMenu) app->render->DrawTexture(menuKirby, titleKirby.x, titleKirby.y, &currentAnimation->GetCurrentFrame());
 	
+
 	if (app->currentScene == LEVEL_1) 
 	{		
 		app->render->DrawTexture(baseHUD, -(app->render->camera.x), 704, &baseHUDRect);
@@ -215,8 +264,8 @@ bool Menu::CleanUp()
 	{
 		case (DEATH):
 		{
-			app->tex->UnLoad(baseHUD);
-			app->tex->UnLoad(abilityHUD);
+			//app->tex->UnLoad(baseHUD);
+			//app->tex->UnLoad(abilityHUD);
 			return true;
 		}
 		break;
