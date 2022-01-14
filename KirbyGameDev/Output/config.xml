@@ -2,7 +2,7 @@
 <!-- L01: DONE 1: Create configuration file-->
 <config>
   <app>
-    <title>Kirby's Shit Adventures</title>
+    <title>Kirby's Shit Adventure</title>
     <organization>UPC</organization>
   </app>
 
@@ -16,6 +16,7 @@
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
+	<vsync value="false"/>
   </window>
 
   <!-- L03: Added maps folder as config option -->

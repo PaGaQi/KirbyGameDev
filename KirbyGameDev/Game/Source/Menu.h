@@ -36,6 +36,8 @@ public:
 	int currentButton;
 	int previousButton;
 
+	int currentMusVol;
+	int currentSFXVol;
 
 private:
 	
@@ -74,6 +76,26 @@ private:
 	SDL_Rect menuHandCrop;
 	SDL_Texture* menuHandTexture;
 
+	SDL_Texture* settingsTexture;
+
+	SDL_Rect musicVolumeRect;
+	SDL_Rect musicVolumeCrop;
+
+	SDL_Rect sfxVolumeRect;
+	SDL_Rect sfxVolumeCrop;
+
+	SDL_Rect vsyncRect;
+	SDL_Rect vsyncCrop;
+
+	SDL_Rect fullscreenRect;
+	SDL_Rect fullscreenCrop;
+
+	
+	//int musicVolume[5] = { 0, 25, 50, 75, 100 };
+	//int sfxVolume[5] = { 0, 25, 50, 75, 100 };
+
+	bool vsync = 0;
+	bool fullscreen = 0;
 
 	b2Vec2 optionSelected[5];
 

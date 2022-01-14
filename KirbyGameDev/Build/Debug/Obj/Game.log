@@ -2,7 +2,7 @@
   Menu.cpp
 D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Menu.cpp(233,49): warning C4244: '=': conversión de 'float32' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Menu.cpp(234,49): warning C4244: '=': conversión de 'float32' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Menu.cpp(166): warning C4715: 'Menu::Start': no todas las rutas de acceso de control devuelven un valor
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Menu.cpp(287,49): warning C4244: '=': conversión de 'float32' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Menu.cpp(288,49): warning C4244: '=': conversión de 'float32' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Menu.cpp(185): warning C4715: 'Menu::Start': no todas las rutas de acceso de control devuelven un valor
   Game.vcxproj -> D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe

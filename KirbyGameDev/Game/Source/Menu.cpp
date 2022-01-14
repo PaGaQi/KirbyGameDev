@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Audio.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
 #include "Defs.h"
 #include "Log.h"
 #include "Point.h"
@@ -40,21 +41,39 @@ Menu::Menu()
 	abilityWin.PushBack({ 396, 0, 128, 160 });
 
 
-
 	titleKirby = { SCREEN_WIDTH / 2 - 124, SCREEN_HEIGHT / 2 - 110, 248, 220 };
 	
 	baseHUDRect = { 0, 0, 1024, 256 };
 	abilityHUDRect = { 0, 0, 128, 220 };
 	mouseRect = { 0, 0, 16, 24 };
 
-	menuHandRect = {0, 0, 64, 64};
-	menuHandCrop = {0, 80, 64, 64};
+	menuHandRect = { 0, 0, 64, 64 };
+	menuHandCrop = { 0, 80, 64, 64 };
+
+	musicVolumeRect = {512, 224, 136, 28};
+	musicVolumeCrop = { 560, 0, 136, 28 };
+
+	sfxVolumeRect = {512, 288, 136, 28};
+	sfxVolumeCrop = {560, 0, 136, 28 };
+
+	fullscreenRect = { 580, 344, 44, 44 };
+	fullscreenCrop = { 0, 32, 44, 44 };
+
+	vsyncRect = { 580, 404, 44, 44 };
+	vsyncCrop = { 0, 32, 44, 44 };
+
+	
 
 	currentButton = 0;
 	previousButton = 0;
 
 	saveDataAvailable = 0;
 
+	currentMusVol = 4;
+	currentSFXVol = 4;
+
+	vsync = false;
+	fullscreen = false;
 }
 
 	// Destructor
@@ -74,7 +93,7 @@ bool Menu::Start()
 	abilityHUD = app->tex->Load("Assets/textures/HUD Sprites.png");
 
 	moveMouse = app->audio->LoadFx("Assets/audio/fx/2C - Moving Cursor Sound.wav");
-	
+
 	menuHandTexture = app->tex->Load("Assets/maps/UI Elements.png");
 
 	switch (app->currentScene)
@@ -180,11 +199,12 @@ bool Menu::PreUpdate()
 			currentAnimation = &abilityLose;
 		}
 	}
+	else	SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
 
-	else if (app->currentScene == MENU)
+	//MENU SCREENS GUI
+	if (app->currentScene == MENU)
 	{
-		SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
-		
+		//BUTTON SELECT BY HOVERING WITH MOUSE
 		if (mouseRect.y <= 270 ) currentButton = 0;
 		else if (mouseRect.y > 270 && mouseRect.y < 334 && saveDataAvailable) currentButton = 1;
 		else if (mouseRect.y >= 334 && mouseRect.y < 398) currentButton = 2;
@@ -194,21 +214,55 @@ bool Menu::PreUpdate()
 
 	else if (app->currentScene == SETTINGS)
 	{
-		SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
-
+		//BUTTON SELECT BY HOVERING WITH MOUSE
 		if (mouseRect.y <= 270) currentButton = 0;
 		else if (mouseRect.y > 270 && mouseRect.y < 334) currentButton = 1;
 		else if (mouseRect.y >= 334 && mouseRect.y < 398) currentButton = 2;
 		else if (mouseRect.y >= 398 && mouseRect.y < 462) currentButton = 3;
 		else if (mouseRect.y >= 462) currentButton = 4;
+
+		//SETTINGS MENU CHANGING VALUES
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			if (currentButton == 0)
+			{
+				currentMusVol++;
+				musicVolumeCrop.x += 140;
+
+				if (currentMusVol > 4)
+				{
+					currentMusVol = 0;
+					musicVolumeCrop.x = 0;
+				}
+			}
+			else if (currentButton == 1)
+			{
+				currentSFXVol++;
+				sfxVolumeCrop.x += 140;
+
+				if (currentSFXVol > 4)
+				{
+					currentSFXVol = 0;
+					sfxVolumeCrop.x = 0;
+				}
+			}
+			else if (currentButton == 2)
+			{
+				fullscreen = !fullscreen;
+				if (!fullscreen) fullscreenCrop = { 0, 32, 44, 44 };
+				else fullscreenCrop = { 48, 32, 44, 44 };
+			}
+			else if (currentButton == 3)
+			{
+				vsync = !vsync;
+				if (!vsync) vsyncCrop = { 0, 32, 44, 44 };
+				else vsyncCrop = { 48, 32, 44, 44 };
+			}
+		}
 	}
 
-	else if (app->currentScene == CREDITS)
-	{
-		SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
+	else if (app->currentScene == CREDITS) currentButton = 0;		
 
-		currentButton = 0;		
-	}
 
 	return true;
 }
@@ -216,7 +270,7 @@ bool Menu::PreUpdate()
 
 bool Menu::Update(float dt) 
 {	
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) saveDataAvailable = 1;
+	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) saveDataAvailable = 1;
 
 	if (app->currentScene != LEVEL_1)
 	{
@@ -229,7 +283,7 @@ bool Menu::Update(float dt)
 	{
 		//app->render->DrawRectangle(mouseRect, 0, 0, 255);
 		app->render->DrawTexture(menuHandTexture, menuHandRect.x, menuHandRect.y, &menuHandCrop);
-
+		
 		menuHandRect.x = optionSelected[currentButton].x;
 		menuHandRect.y = optionSelected[currentButton].y;	
 
@@ -237,6 +291,10 @@ bool Menu::Update(float dt)
 
 		previousButton = currentButton;
 	}
+	
+	
+
+	LOG("Fullscreen %i", fullscreen);
 
 	return true;
 }
@@ -247,12 +305,23 @@ bool Menu::PostUpdate()
 	if (titleMenu) app->render->DrawTexture(menuKirby, titleKirby.x, titleKirby.y, &currentAnimation->GetCurrentFrame());
 	
 
+	if (app->currentScene == SETTINGS)
+	{
+		app->render->DrawTexture(menuHandTexture, musicVolumeRect.x, musicVolumeRect.y, &musicVolumeCrop);
+		app->render->DrawTexture(menuHandTexture, sfxVolumeRect.x, sfxVolumeRect.y, &sfxVolumeCrop);
+
+		app->render->DrawTexture(menuHandTexture, vsyncRect.x, vsyncRect.y, &vsyncCrop);
+		app->render->DrawTexture(menuHandTexture, fullscreenRect.x, fullscreenRect.y, &fullscreenCrop);
+	}
+
 	if (app->currentScene == LEVEL_1) 
 	{		
 		app->render->DrawTexture(baseHUD, -(app->render->camera.x), 704, &baseHUDRect);
 		app->render->DrawTexture(abilityHUD, 592 -(app->render->camera.x), 736, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 	}
+	
+	//Mix_VolumeMusic(musicVolume[currentMusVol]);
 
 	return true;
 }

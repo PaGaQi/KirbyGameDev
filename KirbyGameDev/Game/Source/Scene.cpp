@@ -11,6 +11,8 @@
 #include "Box2D/Box2D/Box2D.h"
 #include "Collectible.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -97,6 +99,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	Mix_VolumeMusic(musicVolume[app->menu->currentMusVol]);
+	
 	switch (app->currentScene)
 	{
 		case TITLE:
@@ -138,14 +142,18 @@ bool Scene::Update(float dt)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{		
-
+								
 				if (app->menu->currentButton == 4)
 				{
 					app->audio->PlayFx(pressBack);
 					app->ChangeScene(MENU);
 				}
-
-				//app->scene->Start();
+				else if (app->menu->currentButton <= 3)
+				{
+					app->audio->PlayFx(pressOk);
+					app->win->fullscreen_window = !app->win->fullscreen_window;
+				}
+				
 				return true;
 			}
 

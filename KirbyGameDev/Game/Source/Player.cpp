@@ -173,10 +173,9 @@ bool Player::PreUpdate()
 
 		if (deadDirection == 0)
 		{
-			LOG("DEATH AT %i", deathHeight);
+			//LOG("DEATH AT %i", deathHeight);
 			playerRect.y += 4 * (625 - deathHeight) / 80;
-
-			LOG("POS = %i", playerRect.y);
+			//LOG("POS = %i", playerRect.y);
 		}
 
 		if ((playerRect.y >= 708) && (app->currentScene == LEVEL_1))
