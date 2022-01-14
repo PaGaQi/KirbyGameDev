@@ -34,8 +34,8 @@ public:
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
-	uint enemyhit_fx;
-	uint enemydeath_fx;
+	int pressOk;
+	int pressBack;
 
 private:
 	SDL_Texture* img;

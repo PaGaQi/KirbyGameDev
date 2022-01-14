@@ -31,6 +31,12 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	SDL_Rect mouseRect;
+
+	int currentButton;
+	int previousButton;
+
+
 private:
 	
 	bool titleMenu;
@@ -63,4 +69,17 @@ private:
 	Animation abilityLose;
 	Animation abilityWin;
 
+	//Main Menu Buttons
+	SDL_Rect menuHandRect;
+	SDL_Rect menuHandCrop;
+	SDL_Texture* menuHandTexture;
+
+
+	b2Vec2 optionSelected[5];
+
+	bool saveDataAvailable;
+
+	int moveMouse;
+	int pressOk;
+	int pressBack;
 };

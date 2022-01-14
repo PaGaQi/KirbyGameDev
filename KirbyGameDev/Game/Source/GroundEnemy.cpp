@@ -139,7 +139,7 @@ void GroundEnemy::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	else if ((bodyB->id == 0))
 	{
 		direction = !direction;
-		LOG("ENEMY COLLISION WITH WALL");
+		//LOG("ENEMY COLLISION WITH WALL");
 	}
 	
 }

@@ -37,12 +37,24 @@ bool Scene::Start()
 {
 	app->map->Load("Test Map.tmx");	
 
+	pressOk = app->audio->LoadFx("Assets/audio/fx/Ok  sound.wav");
+	pressBack = app->audio->LoadFx("Assets/audio/fx/Back Sound.wav");
+
 	switch (app->currentScene)
 	{
 		case TITLE:
 		{
 			//menuBackground = app->tex->Load("Assets/maps/TitleScreenVer2.png");
 			app->audio->PlayMusic("Assets/audio/music/01 - Title.ogg");
+		}
+		break;
+
+		case MENU:
+		{
+			LOG("CLEARING MAIN MENU");
+			app->menu->CleanUp();
+
+			app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
 		}
 		break;
 
@@ -91,11 +103,32 @@ bool Scene::Update(float dt)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
-				app->ChangeScene(LEVEL_1);
+				app->ChangeScene(MENU);
 				app->render->camera.x = 0;
 				app->scene->Start();
 				return true;
 			}
+		}
+		break;
+
+		case MENU:
+		{
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				app->render->camera.x = 0;
+				
+				app->audio->PlayFx(pressOk);
+
+				if (app->menu->currentButton == 0) app->ChangeScene(LEVEL_1);
+				else if (app->menu->currentButton == 1) app->ChangeScene(LEVEL_1);
+				else if (app->menu->currentButton == 2) app->ChangeScene(SETTINGS);
+				else if (app->menu->currentButton == 3) app->ChangeScene(CREDITS);
+				else if (app->menu->currentButton == 4) return false;
+				
+				app->scene->Start();
+				return true;
+			}
+
 		}
 		break;
 

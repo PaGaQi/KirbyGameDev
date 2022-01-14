@@ -41,10 +41,12 @@ class Pathfinding;
 enum sceneType
 {
 	TITLE,
+	MENU,
+	SETTINGS,
+	CREDITS,
+	PAUSE,
 	LEVEL_1,
 	DEATH,
-	
-
 };
 
 class App
