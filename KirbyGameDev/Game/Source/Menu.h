@@ -92,7 +92,7 @@ private:
 
 	
 	//int musicVolume[5] = { 0, 25, 50, 75, 100 };
-	//int sfxVolume[5] = { 0, 25, 50, 75, 100 };
+	int sfxVolume[5] = { 0, 25, 50, 75, 128 };
 
 	bool vsync = 0;
 	bool fullscreen = 0;

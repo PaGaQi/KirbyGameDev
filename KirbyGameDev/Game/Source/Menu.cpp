@@ -85,7 +85,6 @@ bool Menu::Awake()
 	return true;
 }
 
-
 bool Menu::Start() 
 {
 	//HUD Elements
@@ -224,6 +223,7 @@ bool Menu::PreUpdate()
 		//SETTINGS MENU CHANGING VALUES
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			//MUSIC VOLUME
 			if (currentButton == 0)
 			{
 				currentMusVol++;
@@ -235,6 +235,7 @@ bool Menu::PreUpdate()
 					musicVolumeCrop.x = 0;
 				}
 			}
+			//SFX VOLUME
 			else if (currentButton == 1)
 			{
 				currentSFXVol++;
@@ -246,12 +247,14 @@ bool Menu::PreUpdate()
 					sfxVolumeCrop.x = 0;
 				}
 			}
+			//FULLSCREEN TOGGLE
 			else if (currentButton == 2)
 			{
 				fullscreen = !fullscreen;
 				if (!fullscreen) fullscreenCrop = { 0, 32, 44, 44 };
 				else fullscreenCrop = { 48, 32, 44, 44 };
 			}
+			//VSYNC TOGGLE
 			else if (currentButton == 3)
 			{
 				vsync = !vsync;
@@ -290,9 +293,7 @@ bool Menu::Update(float dt)
 		if (currentButton != previousButton) app->audio->PlayFx(moveMouse);
 
 		previousButton = currentButton;
-	}
-	
-	
+	}	
 
 	LOG("Fullscreen %i", fullscreen);
 
@@ -322,7 +323,8 @@ bool Menu::PostUpdate()
 	}
 	
 	//Mix_VolumeMusic(musicVolume[currentMusVol]);
-
+	Mix_Volume(pressOk, sfxVolume[currentSFXVol]);
+	Mix_Volume(moveMouse, sfxVolume[currentSFXVol]);
 	return true;
 }
 
