@@ -42,6 +42,8 @@ bool Scene::Start()
 	pressOk = app->audio->LoadFx("Assets/audio/fx/Ok  sound.wav");
 	pressBack = app->audio->LoadFx("Assets/audio/fx/Back Sound.wav");
 
+	playSaved = 0;
+
 	switch (app->currentScene)
 	{
 		case TITLE:
@@ -125,8 +127,16 @@ bool Scene::Update(float dt)
 
 				app->render->camera.x = 0;
 
-				if (app->menu->currentButton == 0) app->ChangeScene(LEVEL_1);
-				else if (app->menu->currentButton == 1) app->ChangeScene(LEVEL_1);
+				if (app->menu->currentButton == 0)
+				{
+					playSaved = 0;
+					app->ChangeScene(LEVEL_1);
+				}
+				else if (app->menu->currentButton == 1)
+				{
+					playSaved = 1;
+					app->ChangeScene(LEVEL_1);
+				}
 				else if (app->menu->currentButton == 2) app->ChangeScene(SETTINGS);
 				else if (app->menu->currentButton == 3) app->ChangeScene(CREDITS);
 				else if (app->menu->currentButton == 4) return false;

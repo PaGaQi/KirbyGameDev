@@ -10,9 +10,12 @@
 #include "Physics.h"
 #include "Log.h"
 
+#include "Scene.h"
 
 Player::Player()
 {
+	name.Create("player");
+
 	isMoving = false;
 
 	//Right Idle Animation---------------------------
@@ -114,13 +117,17 @@ Player::Player()
 	//playerPhys;
 
 	lastY;
+
+	startPos = { 32, 576 };
+	
+	collectibleGet;
+
 }
 
-Player::~Player() {}
+Player::~Player() {};
 
 bool Player::Awake(pugi::xml_node&)
-{
-	
+{	
 	return true;
 }
 
@@ -132,22 +139,29 @@ bool Player::Start()
 		LOG("Loading player sprites");
 		playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
 		
-		direction = 0;	
 		lastY = 704;
 
-		playerRect = { 0, 576, 32, 32 };
+		playerRect = { (int)startPos.x, (int)startPos.y, 32, 32 };
 		b2Vec2 playerPos = { 0, 0 };
 		b2Vec2 playerVel = { 0, 0 };
 
 		LOG("Creating player hitbox");
-		playerPhys = app->physics->CreateCircle(32, 576, 14, b2_dynamicBody);
+		playerPhys = app->physics->CreateCircle((float)startPos.x, (float)startPos.y, 14, b2_dynamicBody);
 		playerPhys->id = 1;
 		playerPhys->listener = this;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
+		
+		if (app->scene->playSaved == 0)
+		{
+			startPos = { 32, 576 };
+			collectibleGet = false;
+			app->render->camera.x = 0;
+			direction = 0;
+		}
+
 		isDead = false;
-		collectibleGet = false;	
 	}		
 
 	return true;
@@ -259,6 +273,7 @@ bool Player::Update(float dt)
 // Called each loop iteration
 bool Player::PostUpdate()
 {
+	//if (collectibleGet) LOG("COLLECTIBLE %i", collectibleGet);
 	
 	if ((playerRect.x > SCREEN_WIDTH / 2 - 2) && (playerRect.x < SCREEN_WIDTH * 2.5 + 2) && (app->currentScene == LEVEL_1))
 	{
@@ -281,6 +296,38 @@ bool Player::PostUpdate()
 bool Player::PlayerWin()
 {
 	return win;
+}
+
+bool Player::LoadState(pugi::xml_node& data)
+{
+	LOG("loading player ");
+
+	startPos.x = data.child("playerPos").attribute("x").as_float(0);
+	startPos.y = data.child("playerPos").attribute("y").as_float(0);
+	collectibleGet = data.child("collectibleGet").attribute("value").as_bool();
+	direction = data.child("playerDir").attribute("value");
+
+	LOG("SUSSY DATA %f", data.child("collectibleGet").attribute("value").as_bool());
+
+	b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
+
+	playerPhys->body->SetTransform(newPos, 0);
+	//playerPhys->body->SetLinearVelocity({ 0, 0 });
+
+	return true;
+}
+
+
+bool Player::SaveState(pugi::xml_node& data) const
+{
+
+	LOG("saving player ");
+	data.child("playerPos").attribute("x").set_value(METERS_TO_PIXELS(playerPhys->body->GetPosition().x));
+	data.child("playerPos").attribute("y").set_value(METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
+	data.child("collectibleGet").attribute("value").set_value(collectibleGet);
+	data.child("playerDir").attribute("value").set_value(direction);
+	
+	return true;
 }
 
 void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)

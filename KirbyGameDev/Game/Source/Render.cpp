@@ -92,7 +92,8 @@ bool Render::CleanUp()
 // Load Game State
 bool Render::LoadState(pugi::xml_node& data)
 {
-	//...
+	app->render->camera.x = data.child("camera").attribute("x").as_float(0);
+	app->render->camera.y = data.child("camera").attribute("y").as_float(0);
 
 	return true;
 }
@@ -101,8 +102,8 @@ bool Render::LoadState(pugi::xml_node& data)
 // Save Game State
 bool Render::SaveState(pugi::xml_node& data) const
 {
-	//...
-
+	data.child("camera").attribute("x").as_float(0);
+	data.child("camera").attribute("y").as_float(0);
 	return true;
 }
 

@@ -37,6 +37,8 @@ public:
 	int pressOk;
 	int pressBack;
 
+	bool playSaved;
+
 private:
 	SDL_Texture* img;
 

@@ -6,6 +6,12 @@
     <organization>UPC</organization>
   </app>
 
+	<player>
+		<playerPos x="32" y="576" />
+		<isDead value="false" />
+		<collectibleGet value="false" />
+	</player>
+	
   <renderer>
     <vsync value="false"/>
   </renderer>
@@ -16,7 +22,6 @@
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
-	<vsync value="false"/>
   </window>
 
   <!-- L03: Added maps folder as config option -->

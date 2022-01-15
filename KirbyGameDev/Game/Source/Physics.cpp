@@ -12,6 +12,8 @@ Physics :: Physics()
 	world = NULL;
 	mouseJoint = NULL;
 	debug = false;
+
+	name.Create("physics");
 }
 
 // Destructor

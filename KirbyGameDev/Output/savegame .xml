@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config>
+	<app>
+		<title>Kirby's Shit Adventure</title>
+		<organization>UPC</organization>
+	</app>
+	<player>
+		<playerPos x="81" y="434" />
+		<isDead value="false" />
+		<collectibleGet value="true" />
+	</player>
+	<renderer>
+		<vsync value="false" />
+		<camera x="0" y="0" />
+	</renderer>
+	<window>
+		<resolution width="1024" height="960" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<map>
+		<folder>Assets/maps/</folder>
+	</map>
+</config>

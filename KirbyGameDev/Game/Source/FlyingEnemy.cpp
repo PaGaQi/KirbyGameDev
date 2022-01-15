@@ -18,6 +18,7 @@
 
 FlyingEnemy::FlyingEnemy()
 {	
+	name.Create("flying_enemy");
 	//ANIMATIONS
 
 	////Left Fly Animation---------------------------

@@ -18,6 +18,7 @@
 
 GroundEnemy::GroundEnemy()
 {
+	name.Create("ground_enemy");
 	//ANIMATIONS
 
 	////Left Walk Animation---------------------------

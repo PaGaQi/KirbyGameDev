@@ -5,10 +5,12 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Animation.h"
-
+#include "Player.h"
 
 Collectible::Collectible()
 {
+	name.Create("map");
+
 	//ANIMATION
 	collectAnim.PushBack({ 0, 0, 32, 32 });
 	collectAnim.PushBack({ 34, 0, 32, 32 });
@@ -19,9 +21,7 @@ Collectible::Collectible()
 	collectAnim.speed = 0.07f;
 
 
-	collectRect;
-
-	
+	collectRect;	
 }
 Collectible::~Collectible()
 {
@@ -54,8 +54,7 @@ bool Collectible::Start()
 		collectiblePhys->listener = this;
 		collectiblePhys->id = 3;	
 
-		
-		drawCollectible = true;
+		drawCollectible = 1;
 		
 		b2PolygonShape sensorShape;
 		sensorShape.SetAsBox(PIXEL_TO_METERS(16), PIXEL_TO_METERS(16));
@@ -100,16 +99,25 @@ bool Collectible::PreUpdate()
 bool Collectible::Update(float dt)
 {
 	if (drawCollectible == true && app->currentScene == LEVEL_1) currentAnimation->Update();
-	else if (app->currentScene != LEVEL_1)
+	
+	if ((app->currentScene != LEVEL_1) || (app->player->collectibleGet == true))
 	{
-		drawCollectible = false;	
+		drawCollectible = false;
+	}
+	else if (app->player->collectibleGet == false)
+	{
+		drawCollectible = true;
 	}
 	
+	if (drawCollectible) LOG("IS DRAWING", drawCollectible);
+
 	return true;
 }
 
 bool Collectible::PostUpdate()
 {
+	//if (app->player->collectibleGet) LOG("COLLECTIBLE %i", app->player->collectibleGet);
+
 	if (app->currentScene == LEVEL_1 && drawCollectible == true)
 	{		
 		app->render->DrawTexture(collectTexture, position.x - 16, position.y - 16, &currentAnimation->GetCurrentFrame());
@@ -122,6 +130,7 @@ bool Collectible::PostUpdate()
 bool Collectible::CleanUp()
 {
 	app->tex->UnLoad(collectTexture);
+
 	return true;
 }
 bool Collectible::LoadState(pugi::xml_node&)

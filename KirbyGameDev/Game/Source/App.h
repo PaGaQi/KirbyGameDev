@@ -19,7 +19,7 @@
 
 
 #define CONFIG_FILENAME		"config.xml"
-#define SAVE_STATE_FILENAME "savegame.xml"
+#define SAVE_STATE_FILENAME "save_game.xml"
 
 // Modules
 class Window;
@@ -47,7 +47,6 @@ enum sceneType
 	SETTINGS,
 	CREDITS,
 	PAUSE,
-	
 	
 };
 
@@ -93,6 +92,7 @@ private:
 	// Load config file
 	// NOTE: It receives config document
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	pugi::xml_node LoadSave(pugi::xml_document&) const;
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();

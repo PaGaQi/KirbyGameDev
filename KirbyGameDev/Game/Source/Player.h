@@ -43,9 +43,13 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	bool PlayerWin();
+	
+	bool LoadState(pugi::xml_node& data);
+	bool SaveState(pugi::xml_node& data) const;
 
 	bool isDead;
 	bool collectibleGet;
+
 private:
 	// Position of the player in the map
 	int x;
@@ -81,7 +85,8 @@ private:
 	Animation walkRight;
 	Animation death;
 
-	
+
+	b2Vec2 startPos;
 
 	b2Vec2 playerPos;
 	b2Vec2 playerVel;

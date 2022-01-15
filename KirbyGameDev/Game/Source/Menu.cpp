@@ -16,7 +16,8 @@
 
 Menu::Menu() 
 {
-	
+	name.Create("menu");
+
 	//Menu Animations----------------------------
 	welcomeKirby.PushBack({ 0, 0, 248, 220 });
 	welcomeKirby.PushBack({ 252, 0, 248, 220 });
@@ -63,7 +64,6 @@ Menu::Menu()
 	vsyncCrop = { 0, 32, 44, 44 };
 
 	
-
 	currentButton = 0;
 	previousButton = 0;
 
@@ -295,7 +295,7 @@ bool Menu::Update(float dt)
 		previousButton = currentButton;
 	}	
 
-	LOG("Fullscreen %i", fullscreen);
+	//LOG("Fullscreen %i", fullscreen);
 
 	return true;
 }

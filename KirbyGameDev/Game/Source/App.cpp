@@ -182,6 +182,18 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 	return ret;
 }
 
+pugi::xml_node App::LoadSave(pugi::xml_document& saveFile) const
+{
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = saveFile.load_file(SAVE_STATE_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description());
+	else ret = saveFile.child("config");
+
+	return ret;
+}
+
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
@@ -344,27 +356,23 @@ void App::SaveGameRequest() const
 // then call all the modules to load themselves
 bool App::LoadGame()
 {
-	bool ret = true;
+	bool ret = false;
 
-	pugi::xml_document gameStateFile;
-	pugi::xml_parse_result result = gameStateFile.load_file("savegame.xml");
+	pugi::xml_document saveFile;
+	pugi::xml_node save;
+	save = LoadSave(saveFile);
 
-	if (result == NULL)
+	ListItem<Module*>* item;
+	item = modules.start;
+	LOG("name: %s", item->data->name.GetString());
+	while (item != NULL)
 	{
-		LOG("Could not load xml file savegame.xml. pugi error: %s", result.description());
-		ret = false;
+		SString name = item->data->name;
+		LOG("name: %s", name.GetString());
+		ret = item->data->LoadState(save.child(name.GetString()));
+		item = item->next;
 	}
-	else
-	{
-		ListItem<Module*>* item;
-		item = modules.start;
-
-		while (item != NULL && ret == true)
-		{
-			ret = item->data->LoadState(gameStateFile.child("save_state").child(item->data->name.GetString()));
-			item = item->next;
-		}
-	}
+	
 
 	loadGameRequested = false;
 
@@ -374,26 +382,32 @@ bool App::LoadGame()
 // L02: DONE 7: Implement the xml save method for current state
 bool App::SaveGame() const
 {
-	bool ret = false;
+	bool ret = true;
 
-	pugi::xml_document* saveDoc = new pugi::xml_document();
-	pugi::xml_node saveStateNode = saveDoc->append_child("save_state");
+	pugi::xml_document saveFile;
+	pugi::xml_node save;
+
+	save = LoadSave(saveFile);
 
 	ListItem<Module*>* item;
 	item = modules.start;
 
 	while (item != NULL)
 	{
-		ret = item->data->SaveState(saveStateNode.append_child(item->data->name.GetString()));
+		LOG("name: %s", item->data->name.GetString());
+		SString name = item->data->name;
+		LOG("name: %s", name.GetString());
+		ret = item->data->SaveState(save.child(name.GetString()));
 		item = item->next;
 	}
 
-	ret = saveDoc->save_file("savegame.xml");
+	ret = saveFile.save_file("save_game.xml");
 
 	saveGameRequested = false;
 
 	return ret;
 }
+
 
 void App::ChangeScene(sceneType nextScene)
 {
