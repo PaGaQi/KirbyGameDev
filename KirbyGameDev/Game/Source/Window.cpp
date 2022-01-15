@@ -38,8 +38,9 @@ bool Window::Awake(pugi::xml_node& config)
 		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
+
 		fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
-		vsync = config.child("vsync").attribute("value").as_bool(false);
+	
 
 		width = config.child("resolution").attribute("width").as_int(1024);
 		height = config.child("resolution").attribute("height").as_int(960);

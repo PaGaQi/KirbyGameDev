@@ -38,7 +38,6 @@ public:
 	SDL_Surface* screenSurface;
 
 	bool fullscreen_window;
-	bool vsync;
 
 private:
 	SString title;

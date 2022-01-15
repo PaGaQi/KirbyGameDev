@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "Audio.h"
+#include "Window.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
 #include "Defs.h"
@@ -82,6 +83,9 @@ Menu:: ~Menu() {}
 	// Called before render is available	
 bool Menu::Awake() 
 {
+	pugi::xml_document c;
+	pugi::xml_node config;
+	pugi::xml_node configApp;
 	return true;
 }
 
@@ -251,8 +255,24 @@ bool Menu::PreUpdate()
 			else if (currentButton == 2)
 			{
 				fullscreen = !fullscreen;
-				if (!fullscreen) fullscreenCrop = { 0, 32, 44, 44 };
-				else fullscreenCrop = { 48, 32, 44, 44 };
+				if (!fullscreen)
+				{
+					fullscreenCrop = { 0, 32, 44, 44 };
+					SDL_SetWindowFullscreen(app->win->window, 0);
+					
+					//SDL_RestoreWindow(app->win->window);
+				}
+				else
+				{
+					fullscreenCrop = { 48, 32, 44, 44 };
+					//SDL_MaximizeWindow(app->win->window);
+					
+					SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+				}						
+
+				LOG("FULLSCREEN %i", fullscreen);
+				LOG("REAL FULLSCREEN %i", app->win->fullscreen_window);
+
 			}
 			//VSYNC TOGGLE
 			else if (currentButton == 3)
@@ -260,6 +280,8 @@ bool Menu::PreUpdate()
 				vsync = !vsync;
 				if (!vsync) vsyncCrop = { 0, 32, 44, 44 };
 				else vsyncCrop = { 48, 32, 44, 44 };
+			
+				SDL_GL_SetSwapInterval(vsync);
 			}
 		}
 	}
@@ -330,12 +352,12 @@ bool Menu::PostUpdate()
 
 bool Menu::LoadState(pugi::xml_node& data)
 {
-
+	
 	return true;
 }
 bool Menu::SaveState(pugi::xml_node& data) const
 {
-
+	
 	return true;
 }
 

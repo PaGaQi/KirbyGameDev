@@ -317,20 +317,24 @@ bool Player::PlayerWin()
 
 bool Player::LoadState(pugi::xml_node& data)
 {
-	LOG("loading player ");
 
-	if (data != NULL)
+	if (data != NULL && app->currentScene == LEVEL_1)
 	{
+		LOG("loading player ");
 		startPos.x = data.child("playerPos").attribute("x").as_float(0);
 		startPos.y = data.child("playerPos").attribute("y").as_float(0);
 		collectibleGet = data.child("collectibleGet").attribute("value").as_bool();
 		direction = data.child("playerDir").attribute("value").as_bool();
 
-		b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
+		if (startPos.x != NULL || startPos.y != NULL)
+		{
+			b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
 
-		playerPhys->body->SetTransform(newPos, 0);
+			playerPhys->body->SetTransform(newPos, 0);
+		}
+		
 
-		//playerPhys->body->SetLinearVelocity({ 0, 0 });
+		
 	}
 
 	return true;
@@ -339,15 +343,17 @@ bool Player::LoadState(pugi::xml_node& data)
 
 bool Player::SaveState(pugi::xml_node& data) const
 {
+	if(playerPhys == NULL) app->menu->saveDataAvailable = false;
+	else if (app->currentScene == LEVEL_1)
+	{
+		LOG("saving player ");
+		data.child("playerPos").attribute("x").set_value(METERS_TO_PIXELS(playerPhys->body->GetPosition().x));
+		data.child("playerPos").attribute("y").set_value(METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
+		data.child("collectibleGet").attribute("value").set_value(collectibleGet);
+		data.child("playerDir").attribute("value").set_value(direction);
 
-	LOG("saving player ");
-	data.child("playerPos").attribute("x").set_value(METERS_TO_PIXELS(playerPhys->body->GetPosition().x));
-	data.child("playerPos").attribute("y").set_value(METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
-	data.child("collectibleGet").attribute("value").set_value(collectibleGet);
-	data.child("playerDir").attribute("value").set_value(direction);
-	
-	app->menu->saveDataAvailable = true;
-
+		app->menu->saveDataAvailable = true;
+	}
 	return true;
 }
 

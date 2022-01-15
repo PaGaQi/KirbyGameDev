@@ -127,6 +127,8 @@ bool App::Awake()
 		}
 	}
 
+	//win->Awake();
+
 	return ret;
 }
 
