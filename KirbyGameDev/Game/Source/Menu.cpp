@@ -328,6 +328,16 @@ bool Menu::PostUpdate()
 	return true;
 }
 
+bool Menu::LoadState(pugi::xml_node& data)
+{
+
+	return true;
+}
+bool Menu::SaveState(pugi::xml_node& data) const
+{
+
+	return true;
+}
 
 bool Menu::CleanUp() 
 {	

@@ -5,9 +5,9 @@
 		<organization>UPC</organization>
 	</app>
 	<player>
-		<playerPos x="466" y="530" />
-		<playerDir value="true" />
-		<collectibleGet value="true" />
+		<playerPos x="837" y="530" />
+		<playerDir value="false" />
+		<collectibleGet value="false" />
 	</player>
 	<renderer>
 		<vsync value="false" />

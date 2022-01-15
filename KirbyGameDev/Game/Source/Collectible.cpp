@@ -109,8 +109,6 @@ bool Collectible::Update(float dt)
 		drawCollectible = true;
 	}
 	
-	if (drawCollectible) LOG("IS DRAWING", drawCollectible);
-
 	return true;
 }
 
@@ -122,7 +120,6 @@ bool Collectible::PostUpdate()
 	{		
 		app->render->DrawTexture(collectTexture, position.x - 16, position.y - 16, &currentAnimation->GetCurrentFrame());
 	}
-
 
 	return true;
 }

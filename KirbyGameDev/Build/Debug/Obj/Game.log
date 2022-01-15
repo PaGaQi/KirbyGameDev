@@ -2,6 +2,6 @@
   Player.cpp
 D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Animation.h(55,58): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Player.cpp(149,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Player.cpp(149,58): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Player.cpp(154,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Game\Source\Player.cpp(154,58): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
   Game.vcxproj -> D:\Usuarios\traxo\Documentos\GitHub\KirbyGameDev\KirbyGameDev\Build\Debug\Game.exe

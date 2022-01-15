@@ -31,6 +31,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool LoadState(pugi::xml_node& data);
+	bool SaveState(pugi::xml_node& data) const;
+
 	SDL_Rect mouseRect;
 
 	int currentButton;
@@ -38,6 +41,8 @@ public:
 
 	int currentMusVol;
 	int currentSFXVol;
+
+	bool saveDataAvailable;
 
 private:
 	
@@ -98,8 +103,6 @@ private:
 	bool fullscreen = 0;
 
 	b2Vec2 optionSelected[5];
-
-	bool saveDataAvailable;
 
 	int moveMouse;
 	int pressOk;

@@ -364,16 +364,15 @@ bool App::LoadGame()
 
 	ListItem<Module*>* item;
 	item = modules.start;
-	LOG("name: %s", item->data->name.GetString());
+	//LOG("name: %s", item->data->name.GetString());
 	while (item != NULL)
 	{
 		SString name = item->data->name;
-		LOG("name: %s", name.GetString());
+		//LOG("name: %s", name.GetString());
 		ret = item->data->LoadState(save.child(name.GetString()));
 		item = item->next;
 	}
 	
-
 	loadGameRequested = false;
 
 	return ret;
@@ -394,9 +393,9 @@ bool App::SaveGame() const
 
 	while (item != NULL)
 	{
-		LOG("name: %s", item->data->name.GetString());
+		//LOG("name: %s", item->data->name.GetString());
 		SString name = item->data->name;
-		LOG("name: %s", name.GetString());
+		//LOG("name: %s", name.GetString());
 		ret = item->data->SaveState(save.child(name.GetString()));
 		item = item->next;
 	}

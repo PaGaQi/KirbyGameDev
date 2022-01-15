@@ -19,6 +19,7 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+	playSaved = 1;
 }
 
 // Destructor
@@ -42,7 +43,6 @@ bool Scene::Start()
 	pressOk = app->audio->LoadFx("Assets/audio/fx/Ok  sound.wav");
 	pressBack = app->audio->LoadFx("Assets/audio/fx/Back Sound.wav");
 
-	playSaved = 0;
 
 	switch (app->currentScene)
 	{
@@ -101,6 +101,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	//playSaved = 1;
+
 	Mix_VolumeMusic(musicVolume[app->menu->currentMusVol]);
 	
 	switch (app->currentScene)
@@ -121,6 +123,8 @@ bool Scene::Update(float dt)
 
 		case MENU:
 		{
+			//playSaved = 0;
+
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				app->audio->PlayFx(pressOk);

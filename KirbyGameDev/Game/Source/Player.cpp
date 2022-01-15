@@ -3,12 +3,16 @@
 #include "Player.h"
 #include "Module.h"
 #include "Map.h"
+#include "Menu.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Animation.h"
 #include "Physics.h"
 #include "Log.h"
+
+#include <iostream>
+#include <sstream>
 
 #include "Scene.h"
 
@@ -145,20 +149,30 @@ bool Player::Start()
 		b2Vec2 playerPos = { 0, 0 };
 		b2Vec2 playerVel = { 0, 0 };
 
+		
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle((float)startPos.x, (float)startPos.y, 14, b2_dynamicBody);
 		playerPhys->id = 1;
 		playerPhys->listener = this;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
-		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
+		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");			
 		
 		if (app->scene->playSaved == 0)
 		{
 			startPos = { 32, 576 };
 			collectibleGet = false;
-			app->render->camera.x = 0;
 			direction = 0;
+
+			b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
+
+			playerPhys->body->SetTransform(newPos, 0);
+			
+			app->render->camera.x = 0;
+		}
+		else
+		{
+			app->LoadGameRequest();
 		}
 
 		isDead = false;
@@ -170,6 +184,7 @@ bool Player::Start()
 // Called each loop iteration
 bool Player::PreUpdate()
 {
+	//if (app->scene->playSaved) LOG("PlaySaved %i", app->scene->playSaved);
 	if (isDead == 1)													//Death Animation
 	{
 		currentAnimation = &death;		
@@ -279,6 +294,8 @@ bool Player::PostUpdate()
 	{
 		app->render->camera.x = (SCREEN_WIDTH / 2) - playerRect.x;  //The right camera limit is the level width - HALF THE SCREEN WIDTH
 	}
+	else if (playerRect.x <= SCREEN_WIDTH) app->render->camera.x = 0;
+
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) isDead = !isDead;
 
@@ -302,17 +319,19 @@ bool Player::LoadState(pugi::xml_node& data)
 {
 	LOG("loading player ");
 
-	startPos.x = data.child("playerPos").attribute("x").as_float(0);
-	startPos.y = data.child("playerPos").attribute("y").as_float(0);
-	collectibleGet = data.child("collectibleGet").attribute("value").as_bool();
-	direction = data.child("playerDir").attribute("value");
+	if (data != NULL)
+	{
+		startPos.x = data.child("playerPos").attribute("x").as_float(0);
+		startPos.y = data.child("playerPos").attribute("y").as_float(0);
+		collectibleGet = data.child("collectibleGet").attribute("value").as_bool();
+		direction = data.child("playerDir").attribute("value").as_bool();
 
-	LOG("SUSSY DATA %f", data.child("collectibleGet").attribute("value").as_bool());
+		b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
 
-	b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
+		playerPhys->body->SetTransform(newPos, 0);
 
-	playerPhys->body->SetTransform(newPos, 0);
-	//playerPhys->body->SetLinearVelocity({ 0, 0 });
+		//playerPhys->body->SetLinearVelocity({ 0, 0 });
+	}
 
 	return true;
 }
@@ -327,6 +346,8 @@ bool Player::SaveState(pugi::xml_node& data) const
 	data.child("collectibleGet").attribute("value").set_value(collectibleGet);
 	data.child("playerDir").attribute("value").set_value(direction);
 	
+	app->menu->saveDataAvailable = true;
+
 	return true;
 }
 
