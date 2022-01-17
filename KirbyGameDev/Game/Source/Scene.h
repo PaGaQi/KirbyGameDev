@@ -53,7 +53,6 @@ private:
 	PhysBody* Platform6;
 	PhysBody* PlatformSky;
 	
-	int musicVolume[5] = {0, 25, 50, 75, 100};
 };
 
 #endif // __SCENE_H__

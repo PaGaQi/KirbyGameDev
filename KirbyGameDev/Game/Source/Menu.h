@@ -39,8 +39,8 @@ public:
 	int currentButton;
 	int previousButton;
 
-	int currentMusVol;
-	int currentSFXVol;
+	float currentMusVol;
+	float currentSFXVol;
 
 	bool saveDataAvailable;
 
@@ -94,11 +94,7 @@ private:
 
 	SDL_Rect fullscreenRect;
 	SDL_Rect fullscreenCrop;
-
 	
-	//int musicVolume[5] = { 0, 25, 50, 75, 100 };
-	int sfxVolume[5] = { 0, 25, 50, 75, 128 };
-
 	bool vsync = 0;
 	bool fullscreen = 0;
 

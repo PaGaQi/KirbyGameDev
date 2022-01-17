@@ -103,7 +103,7 @@ bool Scene::Update(float dt)
 {
 	//playSaved = 1;
 
-	Mix_VolumeMusic(musicVolume[app->menu->currentMusVol]);
+	Mix_VolumeMusic(app->menu->currentMusVol);
 	
 	switch (app->currentScene)
 	{
@@ -155,17 +155,16 @@ bool Scene::Update(float dt)
 		case SETTINGS:
 		{
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-			{		
-								
+			{										
 				if (app->menu->currentButton == 4)
 				{
 					app->audio->PlayFx(pressBack);
 					app->ChangeScene(MENU);
 				}
-				else if (app->menu->currentButton <= 3)
+				else if (app->menu->currentButton == 3)
 				{
 					app->audio->PlayFx(pressOk);
-					app->win->fullscreen_window = !app->win->fullscreen_window;
+					//app->win->fullscreen_window = !app->win->fullscreen_window;
 				}
 				
 				return true;

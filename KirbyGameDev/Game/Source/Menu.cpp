@@ -49,20 +49,21 @@ Menu::Menu()
 	abilityHUDRect = { 0, 0, 128, 220 };
 	mouseRect = { 0, 0, 16, 24 };
 
+
 	menuHandRect = { 0, 0, 64, 64 };
-	menuHandCrop = { 0, 80, 64, 64 };
+	menuHandCrop = { 0, 88, 64, 64 };
 
-	musicVolumeRect = {512, 224, 136, 28};
-	musicVolumeCrop = { 560, 0, 136, 28 };
+	musicVolumeRect = { 508, 220, 252, 36};
+	musicVolumeCrop = { 0, 0, 252, 36 };
 
-	sfxVolumeRect = {512, 288, 136, 28};
-	sfxVolumeCrop = {560, 0, 136, 28 };
+	sfxVolumeRect = { 508, 284, 252, 36 };
+	sfxVolumeCrop = {0, 0, 252, 36 };
 
 	fullscreenRect = { 580, 344, 44, 44 };
-	fullscreenCrop = { 0, 32, 44, 44 };
+	fullscreenCrop = { 0, 40, 44, 44 };
 
 	vsyncRect = { 580, 404, 44, 44 };
-	vsyncCrop = { 0, 32, 44, 44 };
+	vsyncCrop = { 0, 40, 44, 44 };
 
 	
 	currentButton = 0;
@@ -70,8 +71,8 @@ Menu::Menu()
 
 	saveDataAvailable = 0;
 
-	currentMusVol = 4;
-	currentSFXVol = 4;
+	currentMusVol = 128;
+	currentSFXVol = 128;
 
 	vsync = false;
 	fullscreen = false;
@@ -97,7 +98,7 @@ bool Menu::Start()
 
 	moveMouse = app->audio->LoadFx("Assets/audio/fx/2C - Moving Cursor Sound.wav");
 
-	menuHandTexture = app->tex->Load("Assets/maps/UI Elements.png");
+	menuHandTexture = app->tex->Load("Assets/maps/UI Elements Ver2.png");
 
 	switch (app->currentScene)
 	{
@@ -130,7 +131,7 @@ bool Menu::Start()
 
 		case (SETTINGS):
 		{
-			menuBackground = app->tex->Load("Assets/maps/Settings Menu Ver2.png");
+			menuBackground = app->tex->Load("Assets/maps/Settings Menu Ver3.png");
 			titleMenu = false;
 
 			optionSelected[0] = { 268, 204 };
@@ -224,50 +225,56 @@ bool Menu::PreUpdate()
 		else if (mouseRect.y >= 398 && mouseRect.y < 462) currentButton = 3;
 		else if (mouseRect.y >= 462) currentButton = 4;
 
+		if ((app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP) && ((currentButton == 0) || (currentButton == 1))) app->audio->PlayFx(app->scene->pressOk);
+		
 		//SETTINGS MENU CHANGING VALUES
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
 		{
-			//MUSIC VOLUME
 			if (currentButton == 0)
 			{
-				currentMusVol++;
-				musicVolumeCrop.x += 140;
-
-				if (currentMusVol > 4)
+				if (mouseRect.x >= 508 && mouseRect.x <= 652)
 				{
-					currentMusVol = 0;
-					musicVolumeCrop.x = 0;
+					musicVolumeRect.x = mouseRect.x - 126;					
 				}
+
+				if (musicVolumeRect.x < 400) musicVolumeRect.x = 400;
+				else if (musicVolumeRect.x > 508) musicVolumeRect.x = 508;
+
+				currentMusVol = 128 * (musicVolumeRect.x - 400) / 108;
+
 			}
-			//SFX VOLUME
 			else if (currentButton == 1)
 			{
-				currentSFXVol++;
-				sfxVolumeCrop.x += 140;
-
-				if (currentSFXVol > 4)
+				if (mouseRect.x >= 508 && mouseRect.x <= 652)
 				{
-					currentSFXVol = 0;
-					sfxVolumeCrop.x = 0;
+					sfxVolumeRect.x = mouseRect.x - 126;
 				}
+
+				if (sfxVolumeRect.x < 400) sfxVolumeRect.x = 400;
+				else if (sfxVolumeRect.x > 508) sfxVolumeRect.x = 508;
+
+				currentSFXVol = 128 * (sfxVolumeRect.x - 400) / 108;
 			}
-			//FULLSCREEN TOGGLE
-			else if (currentButton == 2)
+		}
+		
+		else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			if (currentButton == 2)
 			{
 				fullscreen = !fullscreen;
 				if (!fullscreen)
 				{
-					fullscreenCrop = { 0, 32, 44, 44 };
+					fullscreenCrop = { 0, 40, 44, 44 };
 					SDL_SetWindowFullscreen(app->win->window, 0);
 					
 					//SDL_RestoreWindow(app->win->window);
 				}
 				else
 				{
-					fullscreenCrop = { 48, 32, 44, 44 };
-					//SDL_MaximizeWindow(app->win->window);
+					fullscreenCrop = { 48, 40, 44, 44 };
 					
-					SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+					
+					SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP); //CHANGE TO NORMAL FULLSCREEN WHEN POSSIBLE
 				}						
 
 				LOG("FULLSCREEN %i", fullscreen);
@@ -278,8 +285,8 @@ bool Menu::PreUpdate()
 			else if (currentButton == 3)
 			{
 				vsync = !vsync;
-				if (!vsync) vsyncCrop = { 0, 32, 44, 44 };
-				else vsyncCrop = { 48, 32, 44, 44 };
+				if (!vsync) vsyncCrop = { 0, 40, 44, 44 };
+				else vsyncCrop = { 48, 40, 44, 44 };
 			
 				SDL_GL_SetSwapInterval(vsync);
 			}
@@ -287,8 +294,8 @@ bool Menu::PreUpdate()
 	}
 
 	else if (app->currentScene == CREDITS) currentButton = 0;		
-
-
+		
+	//LOG("MusVol %f", currentMusVol);
 	return true;
 }
 
@@ -299,6 +306,12 @@ bool Menu::Update(float dt)
 
 	if (app->currentScene != LEVEL_1)
 	{
+		if (app->currentScene == SETTINGS)
+		{
+			app->render->DrawTexture(menuHandTexture, musicVolumeRect.x, musicVolumeRect.y, &musicVolumeCrop);
+			app->render->DrawTexture(menuHandTexture, sfxVolumeRect.x, sfxVolumeRect.y, &sfxVolumeCrop);
+		}
+		
 		app->render->DrawTexture(menuBackground, 0, 0);
 
 		if (titleMenu)currentAnimation->Update();
@@ -317,8 +330,6 @@ bool Menu::Update(float dt)
 		previousButton = currentButton;
 	}	
 
-	//LOG("Fullscreen %i", fullscreen);
-
 	return true;
 }
 
@@ -330,9 +341,6 @@ bool Menu::PostUpdate()
 
 	if (app->currentScene == SETTINGS)
 	{
-		app->render->DrawTexture(menuHandTexture, musicVolumeRect.x, musicVolumeRect.y, &musicVolumeCrop);
-		app->render->DrawTexture(menuHandTexture, sfxVolumeRect.x, sfxVolumeRect.y, &sfxVolumeCrop);
-
 		app->render->DrawTexture(menuHandTexture, vsyncRect.x, vsyncRect.y, &vsyncCrop);
 		app->render->DrawTexture(menuHandTexture, fullscreenRect.x, fullscreenRect.y, &fullscreenCrop);
 	}
@@ -344,9 +352,9 @@ bool Menu::PostUpdate()
 		currentAnimation->Update();
 	}
 	
-	//Mix_VolumeMusic(musicVolume[currentMusVol]);
-	Mix_Volume(pressOk, sfxVolume[currentSFXVol]);
-	Mix_Volume(moveMouse, sfxVolume[currentSFXVol]);
+	Mix_Volume(pressOk, currentSFXVol);
+	Mix_Volume(moveMouse, currentSFXVol);
+
 	return true;
 }
 
