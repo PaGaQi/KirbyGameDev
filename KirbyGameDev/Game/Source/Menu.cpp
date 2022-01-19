@@ -120,6 +120,7 @@ bool Menu::Start()
 
 		case (MENU):
 		{
+			app->render->camera.x = 0;
 			if (!saveDataAvailable) menuBackground = app->tex->Load("Assets/maps/Main Menu (No SaveData) Ver2.png");
 			else menuBackground = app->tex->Load("Assets/maps/Main Menu Ver2.png");
 			titleMenu = false;
@@ -136,6 +137,7 @@ bool Menu::Start()
 
 		case (SETTINGS):
 		{
+			app->render->camera.x = 0;
 			menuBackground = app->tex->Load("Assets/maps/Settings Menu Ver3.png");
 			titleMenu = false;
 
@@ -417,6 +419,16 @@ bool Menu::CleanUp()
 		case (LEVEL_1):
 		{
 			app->tex->UnLoad(menuBackground);
+			return true;
+		}
+		break;
+
+		case (SETTINGS):
+		{
+			app->tex->UnLoad(menuBackground);
+			app->tex->UnLoad(menuHandTexture);
+
+			delete &menuBackground;
 			return true;
 		}
 		break;

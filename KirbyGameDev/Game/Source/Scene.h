@@ -52,6 +52,8 @@ private:
 	PhysBody* Platform5;
 	PhysBody* Platform6;
 	PhysBody* PlatformSky;
+
+	sceneType prevScene = MENU;
 	
 };
 

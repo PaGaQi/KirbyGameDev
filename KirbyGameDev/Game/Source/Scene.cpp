@@ -19,6 +19,7 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+	prevScene = MENU;
 	playSaved = 1;
 }
 
@@ -55,6 +56,7 @@ bool Scene::Start()
 
 		case MENU:
 		{
+			prevScene = MENU;
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
 			//app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
@@ -63,10 +65,11 @@ bool Scene::Start()
 
 		case LEVEL_1:
 		{
+			if (prevScene != LEVEL_1) app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
+			prevScene = LEVEL_1;
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
 			
-			app->audio->PlayMusic("Assets/audio/music/02 - Level 01.ogg");
 		}
 		break;
 
@@ -123,6 +126,7 @@ bool Scene::Update(float dt)
 		case MENU:
 		{
 			//playSaved = 0;
+			prevScene = MENU;
 
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
@@ -158,12 +162,12 @@ bool Scene::Update(float dt)
 				if (app->menu->currentButton == 4)
 				{
 					app->audio->PlayFx(pressBack);
-					app->ChangeScene(MENU);
+					app->ChangeScene(prevScene);
+					if (prevScene == LEVEL_1) app->LoadGameRequest();
 				}
-				else if (app->menu->currentButton == 3)
+				else if (app->menu->currentButton == 3 || app->menu->currentButton == 2)
 				{
 					app->audio->PlayFx(pressOk);
-					//app->win->fullscreen_window = !app->win->fullscreen_window;
 				}
 				
 				return true;
@@ -191,7 +195,7 @@ bool Scene::Update(float dt)
 			{
 				if (app->menu->currentButton == 0)
 				{
-					app->audio->PlayFx(pressBack);
+					app->audio->PlayFx(pressOk);
 					app->player->paused = !app->player->paused;
 				}
 				else if (app->menu->currentButton == 1)
@@ -199,11 +203,11 @@ bool Scene::Update(float dt)
 					app->audio->PlayFx(pressOk);
 					app->ChangeScene(MENU);
 					app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
+					app->player->CleanUp();
 				}
 				else if (app->menu->currentButton == 2)
 				{
-					app->audio->PlayFx(pressOk);
-					app->SaveGameRequest();
+					app->audio->PlayFx(pressOk);					
 					app->ChangeScene(SETTINGS);			
 				}
 				else if (app->menu->currentButton == 3) return false;

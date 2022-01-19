@@ -5,7 +5,7 @@
 		<organization>UPC</organization>
 	</app>
 	<player>
-		<playerPos x="837" y="530" />
+		<playerPos x="506" y="530" />
 		<playerDir value="false" />
 		<collectibleGet value="false" />
 	</player>

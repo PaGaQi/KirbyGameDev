@@ -187,7 +187,12 @@ bool Player::Start()
 // Called each loop iteration
 bool Player::PreUpdate()
 {
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) paused = !paused;
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		if (!paused) app->SaveGameRequest();
+
+		paused = !paused;
+	}
 	else if (!paused)
 	{
 	if (isDead == 1)													//Death Animation
@@ -219,7 +224,7 @@ bool Player::PreUpdate()
 		}
 	}	
 	
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)			//Walking Right
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)				//Walking Right
 		{
 			playerVel = { 6, 0 };
 			direction = 0;
@@ -333,10 +338,7 @@ bool Player::LoadState(pugi::xml_node& data)
 			b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
 
 			playerPhys->body->SetTransform(newPos, 0);
-		}
-		
-
-		
+		}		
 	}
 
 	return true;
@@ -354,7 +356,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 		data.child("collectibleGet").attribute("value").set_value(collectibleGet);
 		data.child("playerDir").attribute("value").set_value(direction);
 
-		app->menu->saveDataAvailable = true;
+		if (!paused) app->menu->saveDataAvailable = true;
 	}
 	return true;
 }
@@ -364,9 +366,7 @@ void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (app->currentScene == LEVEL_1)
 	{
 		LOG("%i, %i", METERS_TO_PIXELS(playerPhys->body->GetPosition().x), METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
-		if (bodyB == nullptr)
-		{
-		}
+		if (bodyB == nullptr) {}
 		else if (bodyB->id == 2 && isDead == false)
 		{
 			isDead = true;
