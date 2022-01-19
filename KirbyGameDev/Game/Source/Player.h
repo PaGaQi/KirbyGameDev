@@ -50,6 +50,8 @@ public:
 	bool isDead;
 	bool collectibleGet;
 
+	bool paused;
+
 private:
 	// Position of the player in the map
 	int x;

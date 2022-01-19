@@ -57,7 +57,6 @@ bool Scene::Start()
 		{
 			LOG("CLEARING MAIN MENU");
 			app->menu->CleanUp();
-
 			//app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
 		}
 		break;
@@ -169,7 +168,6 @@ bool Scene::Update(float dt)
 				
 				return true;
 			}
-
 		}
 		break;
 
@@ -182,14 +180,37 @@ bool Scene::Update(float dt)
 
 				return true;
 			}
-
 		}
 		break;
 
 		case LEVEL_1:
 		{
 			app->map->Draw();
-			return true;
+
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && app->player->paused)
+			{
+				if (app->menu->currentButton == 0)
+				{
+					app->audio->PlayFx(pressBack);
+					app->player->paused = !app->player->paused;
+				}
+				else if (app->menu->currentButton == 1)
+				{
+					app->audio->PlayFx(pressOk);
+					app->ChangeScene(MENU);
+					app->audio->PlayMusic("Assets/audio/music/Menu Music - World Flower.ogg");
+				}
+				else if (app->menu->currentButton == 2)
+				{
+					app->audio->PlayFx(pressOk);
+					app->SaveGameRequest();
+					app->ChangeScene(SETTINGS);			
+				}
+				else if (app->menu->currentButton == 3) return false;
+
+				if (app->menu->currentButton > 0) app->scene->Start();
+				return true;
+			}
 		}
 		break;
 

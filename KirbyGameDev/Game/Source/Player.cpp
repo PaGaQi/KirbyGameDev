@@ -126,6 +126,7 @@ Player::Player()
 	
 	collectibleGet;
 
+	paused = 0;
 }
 
 Player::~Player() {};
@@ -158,6 +159,8 @@ bool Player::Start()
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");			
 		
+		paused = 0;
+
 		if (app->scene->playSaved == 0)
 		{
 			startPos = { 32, 576 };
@@ -176,7 +179,7 @@ bool Player::Start()
 		}
 
 		isDead = false;
-	}		
+	}	
 
 	return true;
 }
@@ -184,7 +187,9 @@ bool Player::Start()
 // Called each loop iteration
 bool Player::PreUpdate()
 {
-	//if (app->scene->playSaved) LOG("PlaySaved %i", app->scene->playSaved);
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) paused = !paused;
+	else if (!paused)
+	{
 	if (isDead == 1)													//Death Animation
 	{
 		currentAnimation = &death;		
@@ -215,52 +220,52 @@ bool Player::PreUpdate()
 	}	
 	
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)			//Walking Right
-	{		
-		playerVel = { 6, 0 };
-		direction = 0;
-		playerRect.x += 8;
-		currentAnimation = &walkRight;
+		{
+			playerVel = { 6, 0 };
+			direction = 0;
+			playerRect.x += 8;
+			currentAnimation = &walkRight;
+		}
+
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)			//Walking Left
+		{
+			playerVel = { -6, 0 };
+			direction = 1;
+			playerRect.x -= 8;
+			currentAnimation = &walkLeft;
+		}
+
+		else																//IDLE ANIMATIONS
+		{
+			playerVel = { 0, 0 };
+
+			//if (playerVel.y > 0) currentAnimation = &fallLeft;
+			if (direction == 0)currentAnimation = &idleRight;
+			else if (direction == 1) currentAnimation = &idleLeft;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)				//JUMPING ANIMATIONS
+		{
+			app->audio->PlayFx(jumpSFX);
+			playerVel.y = -40;
+			if (direction == 0) currentAnimation = &jumpRight;
+			else if (direction == 1) currentAnimation = &jumpLeft;
+		}
+
+		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		{
+			playerVel.y = -15;
+			if (direction == 0) currentAnimation = &jumpRight;
+			else if (direction == 1) currentAnimation = &jumpLeft;
+		}
+
+
+		if (godMode == true)												//GOD MODE
+		{
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) playerRect.y -= 8;
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) playerRect.y += 8;
+		}
 	}
-
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)			//Walking Left
-	{
-		playerVel = { -6, 0 };
-		direction = 1;
-		playerRect.x -= 8;
-		currentAnimation = &walkLeft;		
-	}
-
-	else																//IDLE ANIMATIONS
-	{
-		playerVel = { 0, 0 };
-
-		//if (playerVel.y > 0) currentAnimation = &fallLeft;
-		if (direction == 0)currentAnimation = &idleRight;
-		else if (direction == 1) currentAnimation = &idleLeft;		
-	}
-	
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)				//JUMPING ANIMATIONS
-	{
-		app->audio->PlayFx(jumpSFX);
-		playerVel.y = -40;
-		if (direction == 0) currentAnimation = &jumpRight;
-		else if (direction == 1) currentAnimation = &jumpLeft;
-	}
-
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-	{
-		playerVel.y = -15;
-		if (direction == 0) currentAnimation = &jumpRight;
-		else if (direction == 1) currentAnimation = &jumpLeft;
-	}
-
-
-	if (godMode == true)												//GOD MODE
-	{
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) playerRect.y -= 8;		
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) playerRect.y += 8;		
-	}
-
 	return true;
 }
 
@@ -295,9 +300,6 @@ bool Player::PostUpdate()
 		app->render->camera.x = (SCREEN_WIDTH / 2) - playerRect.x;  //The right camera limit is the level width - HALF THE SCREEN WIDTH
 	}
 	else if (playerRect.x <= SCREEN_WIDTH) app->render->camera.x = 0;
-
-
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) isDead = !isDead;
 
 	if ((playerRect.y >= 705) && (!isDead))
 	{

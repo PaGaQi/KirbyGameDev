@@ -94,6 +94,13 @@ private:
 
 	SDL_Rect fullscreenRect;
 	SDL_Rect fullscreenCrop;
+
+
+	SDL_Rect pauseRect;
+	SDL_Rect pauseCrop;
+	SDL_Texture* pauseTexture;
+	
+	SDL_Rect pauseHandCrop;
 	
 	bool vsync = 0;
 	bool fullscreen = 0;

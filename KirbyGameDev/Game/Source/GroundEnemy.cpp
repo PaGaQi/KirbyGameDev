@@ -73,7 +73,7 @@ bool GroundEnemy::Start()
 
 bool GroundEnemy::PreUpdate()
 {
-	if (app->currentScene == LEVEL_1)
+	if (app->currentScene == LEVEL_1 && app->player->paused == false)
 	{
 		if (direction == 0) // && enemyPhys->body->GetLinearVelocity().x == 0)
 		{
@@ -86,6 +86,7 @@ bool GroundEnemy::PreUpdate()
 			currentAnimation = &walkLeft;
 		}
 	}
+	else enemyVel = { 0 , 0 };
 
 	return true;
 }
@@ -93,7 +94,7 @@ bool GroundEnemy::PreUpdate()
 
 bool GroundEnemy::Update(float dt)
 {
-	if ((!isDead) && (enemyPhys != nullptr))
+	if ((!isDead) && (enemyPhys != nullptr) && (app->player->paused == false))
 	{
 		enemyPos = enemyPhys->body->GetPosition();
 		enemyRect.x = METERS_TO_PIXELS(enemyPos.x) - 16;
@@ -103,8 +104,10 @@ bool GroundEnemy::Update(float dt)
 
 		lastY = enemyRect.y;
 	}	
+	else if (app->player->paused == true) enemyPhys->body->SetLinearVelocity({ 0, 0});
 
 	if (app->currentScene == LEVEL_1) currentAnimation->Update();
+
 
 	return true;
 }
@@ -112,7 +115,7 @@ bool GroundEnemy::Update(float dt)
 
 bool GroundEnemy::PostUpdate()
 {
-	if (app->currentScene == LEVEL_1 && enemySprites != nullptr)
+	if (app->currentScene == LEVEL_1 && enemySprites != nullptr && !app->player->paused)
 	{
 		app->render->DrawTexture(enemySprites, enemyRect.x, enemyRect.y, &currentAnimation->GetCurrentFrame());
 	}

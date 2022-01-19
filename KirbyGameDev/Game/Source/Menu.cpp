@@ -47,9 +47,13 @@ Menu::Menu()
 	
 	baseHUDRect = { 0, 0, 1024, 256 };
 	abilityHUDRect = { 0, 0, 128, 220 };
+
+	pauseRect = { 320, 224, 384, 256 };
+	pauseCrop = { 0, 0, 384, 256 };
+	pauseHandCrop = { 68, 120, 32, 32 };
+
 	mouseRect = { 0, 0, 16, 24 };
-
-
+	
 	menuHandRect = { 0, 0, 64, 64 };
 	menuHandCrop = { 0, 88, 64, 64 };
 
@@ -64,7 +68,6 @@ Menu::Menu()
 
 	vsyncRect = { 580, 404, 44, 44 };
 	vsyncCrop = { 0, 40, 44, 44 };
-
 	
 	currentButton = 0;
 	previousButton = 0;
@@ -95,6 +98,8 @@ bool Menu::Start()
 	//HUD Elements
 	baseHUD = app->tex->Load("Assets/textures/HUD Base.png");
 	abilityHUD = app->tex->Load("Assets/textures/HUD Sprites.png");
+
+	pauseTexture = app->tex->Load("Assets/textures/Pause Menu.png");
 
 	moveMouse = app->audio->LoadFx("Assets/audio/fx/2C - Moving Cursor Sound.wav");
 
@@ -182,6 +187,12 @@ bool Menu::Start()
 			app->render->camera.x = 0;
 
 			titleMenu = false;
+
+			optionSelected[0] = { 430, 294 };
+			optionSelected[1] = { 392, 326 };
+			optionSelected[2] = { 414, 358 };
+			optionSelected[3] = { 444, 390 };
+			optionSelected[4] = { 444, 390 };
 			return true;
 		}
 		break;
@@ -192,7 +203,8 @@ bool Menu::Start()
 bool Menu::PreUpdate() 
 {
 	if (titleMenu) currentAnimation = &welcomeKirby;
-	if (app->currentScene == LEVEL_1)
+	if ((app->currentScene == LEVEL_1 && app->player->paused) || (app->currentScene != LEVEL_1)) SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
+	else if (app->currentScene == LEVEL_1)
 	{
 		if (app->player->isDead == false)
 		{
@@ -203,7 +215,6 @@ bool Menu::PreUpdate()
 			currentAnimation = &abilityLose;
 		}
 	}
-	else	SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
 
 	//MENU SCREENS GUI
 	if (app->currentScene == MENU)
@@ -293,7 +304,15 @@ bool Menu::PreUpdate()
 		}
 	}
 
-	else if (app->currentScene == CREDITS) currentButton = 0;		
+	else if (app->currentScene == CREDITS) currentButton = 0;
+
+	else if (app->currentScene == LEVEL_1)
+	{
+		if (mouseRect.y <= 327) currentButton = 0;
+		else if (mouseRect.y > 327 && mouseRect.y < 359) currentButton = 1;
+		else if (mouseRect.y >= 359 && mouseRect.y < 391) currentButton = 2;
+		else if (mouseRect.y >= 391) currentButton = 3;
+	}
 		
 	//LOG("MusVol %f", currentMusVol);
 	return true;
@@ -330,6 +349,15 @@ bool Menu::Update(float dt)
 		previousButton = currentButton;
 	}	
 
+	else if (app->currentScene == LEVEL_1 && app->player->paused == true)
+	{
+		menuHandRect.x = optionSelected[currentButton].x;
+		menuHandRect.y = optionSelected[currentButton].y;
+
+		if (currentButton != previousButton) app->audio->PlayFx(moveMouse);
+
+		previousButton = currentButton;
+	}
 	return true;
 }
 
@@ -345,8 +373,13 @@ bool Menu::PostUpdate()
 		app->render->DrawTexture(menuHandTexture, fullscreenRect.x, fullscreenRect.y, &fullscreenCrop);
 	}
 
-	if (app->currentScene == LEVEL_1) 
-	{		
+	if (app->currentScene == LEVEL_1)
+	{
+		if (app->player->paused)
+		{
+			app->render->DrawTexture(pauseTexture, pauseRect.x - (app->render->camera.x), pauseRect.y, &pauseCrop);
+			app->render->DrawTexture(menuHandTexture, menuHandRect.x - (app->render->camera.x), menuHandRect.y, &pauseHandCrop);
+		}
 		app->render->DrawTexture(baseHUD, -(app->render->camera.x), 704, &baseHUDRect);
 		app->render->DrawTexture(abilityHUD, 592 -(app->render->camera.x), 736, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
