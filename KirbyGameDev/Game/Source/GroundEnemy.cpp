@@ -137,8 +137,7 @@ void GroundEnemy::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	else if ((bodyB->id == 1))
 	{
-		LOG("PLAYER KILLED BY WADDLE DEE");
-
+		direction = !direction;		
 	}
 	else if ((bodyB->id == 0))
 	{

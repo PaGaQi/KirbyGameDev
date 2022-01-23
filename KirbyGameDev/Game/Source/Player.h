@@ -51,6 +51,7 @@ public:
 	bool collectibleGet;
 
 	bool paused;
+	int health;
 
 private:
 	// Position of the player in the map
@@ -86,7 +87,6 @@ private:
 	Animation walkLeft;
 	Animation walkRight;
 	Animation death;
-
 
 	b2Vec2 startPos;
 

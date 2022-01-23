@@ -5,9 +5,11 @@
 		<organization>UPC</organization>
 	</app>
 	<player>
-		<playerPos x="528" y="530" />
+		<playerPos x="350" y="562" />
 		<playerDir value="false" />
 		<collectibleGet value="true" />
+		<health value="54" />
+		<isDead value="false" />
 	</player>
 	<renderer>
 		<vsync value="false" />

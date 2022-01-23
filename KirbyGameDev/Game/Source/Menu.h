@@ -102,7 +102,10 @@ private:
 	
 	SDL_Rect pauseHandCrop;
 
+
 	SDL_Rect collCountCrop;
+	SDL_Rect kirbyStateCrop;
+	SDL_Rect healthBarCrop;
 	
 	bool vsync = 0;
 	bool fullscreen = 0;

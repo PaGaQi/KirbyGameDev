@@ -127,6 +127,8 @@ Player::Player()
 	collectibleGet;
 
 	paused = 0;
+
+	health = 110;
 }
 
 Player::~Player() {};
@@ -166,16 +168,19 @@ bool Player::Start()
 			startPos = { 32, 576 };
 			collectibleGet = false;
 			direction = 0;
+			health = 110;
 
 			b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
 
 			playerPhys->body->SetTransform(newPos, 0);
 			
+
 			app->render->camera.x = 0;
 		}
 		else
 		{
 			app->LoadGameRequest();
+			isDead = false;
 		}
 
 		isDead = false;
@@ -306,8 +311,9 @@ bool Player::PostUpdate()
 	}
 	else if (playerRect.x <= SCREEN_WIDTH) app->render->camera.x = 0;
 
-	if ((playerRect.y >= 705) && (!isDead))
+	if ((playerRect.y >= 705 || health <= 0) && (!isDead))
 	{
+		health = 0;
 		isDead = true;
 		app->audio->PlayFx(deathSFX);
 		deadDirection = 1;
@@ -332,6 +338,8 @@ bool Player::LoadState(pugi::xml_node& data)
 		startPos.y = data.child("playerPos").attribute("y").as_float(0);
 		collectibleGet = data.child("collectibleGet").attribute("value").as_bool();
 		direction = data.child("playerDir").attribute("value").as_bool();
+		health = data.child("health").attribute("value").as_int(100);
+		isDead = data.child("isDead").attribute("value").as_bool(0);
 
 		if (startPos.x != NULL || startPos.y != NULL)
 		{
@@ -355,6 +363,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 		data.child("playerPos").attribute("y").set_value(METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
 		data.child("collectibleGet").attribute("value").set_value(collectibleGet);
 		data.child("playerDir").attribute("value").set_value(direction);
+		data.child("health").attribute("value").set_value(health);
 
 		if (!paused) app->menu->saveDataAvailable = true;
 	}
@@ -365,13 +374,13 @@ void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	if (app->currentScene == LEVEL_1)
 	{
-		LOG("%i, %i", METERS_TO_PIXELS(playerPhys->body->GetPosition().x), METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
+		//LOG("%i, %i", METERS_TO_PIXELS(playerPhys->body->GetPosition().x), METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
 		if (bodyB == nullptr) {}
 		else if (bodyB->id == 2 && isDead == false)
 		{
-			isDead = true;
-			app->audio->PlayFx(deathSFX);
-			deadDirection = 1;			
+			health -= 28;
+			//app->audio->PlayFx(deathSFX);
+			//deadDirection = 1;			
 		}
 		else if (bodyB->id == 3)
 		{

@@ -70,6 +70,8 @@ Menu::Menu()
 	vsyncCrop = { 0, 40, 44, 44 };
 
 	collCountCrop = { 0, 312, 52, 48 };
+
+	healthBarCrop = { 0, 364, 204, 33 };
 	
 	currentButton = 0;
 	previousButton = 0;
@@ -319,6 +321,8 @@ bool Menu::PreUpdate()
 
 		if (app->player->collectibleGet == 1) collCountCrop = { 56, 312, 52, 48 };
 		else collCountCrop = { 0, 312, 52, 48 };
+
+		healthBarCrop.w = app->player->health * 2;
 	}
 		
 	//LOG("MusVol %f", currentMusVol);
@@ -390,6 +394,7 @@ bool Menu::PostUpdate()
 		
 		app->render->DrawTexture(baseHUD, -(app->render->camera.x), 704, &baseHUDRect);
 		
+		app->render->DrawTexture(abilityHUD, 304 - (app->render->camera.x), 768, &healthBarCrop);
 		app->render->DrawTexture(abilityHUD, 848 - (app->render->camera.x), 752, &collCountCrop);
 		app->render->DrawTexture(abilityHUD, 592 -(app->render->camera.x), 736, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
@@ -418,8 +423,8 @@ bool Menu::CleanUp()
 	{
 		case (DEATH):
 		{
-			//app->tex->UnLoad(baseHUD);
-			//app->tex->UnLoad(abilityHUD);
+			app->tex->UnLoad(abilityHUD);
+			app->tex->UnLoad(baseHUD);
 			return true;
 		}
 		break;
