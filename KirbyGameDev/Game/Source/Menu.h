@@ -68,13 +68,9 @@ private:
 	Animation damageBarHUD;
 
 	//Abilites HUD
-	Animation* currentAbilityAnim;
 	SDL_Texture* abilityHUD;
 	SDL_Rect abilityHUDRect;
-	Animation abilityNormal;
-	Animation abilityHit;
-	Animation abilityLose;
-	Animation abilityWin;
+	SDL_Rect abilityHUDCrop;
 
 	//Main Menu Buttons
 	SDL_Rect menuHandRect;
@@ -95,7 +91,6 @@ private:
 	SDL_Rect fullscreenRect;
 	SDL_Rect fullscreenCrop;
 
-
 	SDL_Rect pauseRect;
 	SDL_Rect pauseCrop;
 	SDL_Texture* pauseTexture;
@@ -106,6 +101,10 @@ private:
 	SDL_Rect collCountCrop;
 	SDL_Rect kirbyStateCrop;
 	SDL_Rect healthBarCrop;
+
+	SDL_Rect lifesCrop;
+
+	Animation lifesAnim;
 	
 	bool vsync = 0;
 	bool fullscreen = 0;

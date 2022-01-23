@@ -36,17 +36,23 @@ Menu::Menu()
 	welcomeKirby.speed = 0.2f;
 
 	//HUD Animations-----------------------------
+	lifesAnim.PushBack({ 0, 164, 52, 48 });
+	lifesAnim.PushBack({ 56, 164, 52, 48 });
+	lifesAnim.PushBack({ 112, 164, 52, 48 });
 
-	abilityNormal.PushBack({ 0, 0, 128, 160 });
-	abilityHit.PushBack({ 132, 0, 128, 160 });
-	abilityLose.PushBack({ 264, 0, 128, 160 });
-	abilityWin.PushBack({ 396, 0, 128, 160 });
+	lifesAnim.loop = true;
+	lifesAnim.speed = 0.1f;
 
 
 	titleKirby = { SCREEN_WIDTH / 2 - 124, SCREEN_HEIGHT / 2 - 110, 248, 220 };
 	
 	baseHUDRect = { 0, 0, 1024, 256 };
 	abilityHUDRect = { 0, 0, 128, 220 };
+	abilityHUDCrop = { 0, 0, 128, 160 };
+
+	collCountCrop = { 0, 312, 52, 48 };
+	healthBarCrop = { 0, 364, 204, 33 };
+	lifesCrop = { 36, 276 , 32, 32 };
 
 	pauseRect = { 320, 224, 384, 256 };
 	pauseCrop = { 0, 0, 384, 256 };
@@ -69,9 +75,6 @@ Menu::Menu()
 	vsyncRect = { 580, 404, 44, 44 };
 	vsyncCrop = { 0, 40, 44, 44 };
 
-	collCountCrop = { 0, 312, 52, 48 };
-
-	healthBarCrop = { 0, 364, 204, 33 };
 	
 	currentButton = 0;
 	previousButton = 0;
@@ -80,6 +83,7 @@ Menu::Menu()
 
 	currentMusVol = 128;
 	currentSFXVol = 128;
+
 
 	vsync = false;
 	fullscreen = false;
@@ -210,19 +214,8 @@ bool Menu::PreUpdate()
 {
 	if (titleMenu) currentAnimation = &welcomeKirby;
 	if ((app->currentScene == LEVEL_1 && app->player->paused) || (app->currentScene != LEVEL_1)) SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
-	else if (app->currentScene == LEVEL_1)
-	{
-		if (app->player->isDead == false)
-		{
-			currentAnimation = &abilityNormal;
-		}
-		else //if (app->player->isDead == true)
-		{
-			currentAnimation = &abilityLose;
-		}
-	}
 
-	//MENU SCREENS GUI
+	//Preparing HUD and GUI for MAIN MENU--------------------------------------------------------------------------------------------------------------------------------
 	if (app->currentScene == MENU)
 	{
 		//BUTTON SELECT BY HOVERING WITH MOUSE
@@ -233,6 +226,7 @@ bool Menu::PreUpdate()
 		else if (mouseRect.y >= 462) currentButton = 4;
 	}
 
+	//Preparing HUD and GUI for SETTINGS MENU--------------------------------------------------------------------------------------------------------------------------------
 	else if (app->currentScene == SETTINGS)
 	{
 		//BUTTON SELECT BY HOVERING WITH MOUSE
@@ -288,8 +282,7 @@ bool Menu::PreUpdate()
 				}
 				else
 				{
-					fullscreenCrop = { 48, 40, 44, 44 };
-					
+					fullscreenCrop = { 48, 40, 44, 44 };					
 					
 					SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP); //CHANGE TO NORMAL FULLSCREEN WHEN POSSIBLE
 				}						
@@ -309,11 +302,14 @@ bool Menu::PreUpdate()
 			}
 		}
 	}
-
+	//Preparing HUD and GUI for CREDITS--------------------------------------------------------------------------------------------------------------------------------
 	else if (app->currentScene == CREDITS) currentButton = 0;
 
+	//Preparing HUD and GUI for LEVEL 1--------------------------------------------------------------------------------------------------------------------------------
 	else if (app->currentScene == LEVEL_1)
 	{
+		currentAnimation = &lifesAnim;
+
 		if (mouseRect.y <= 327) currentButton = 0;
 		else if (mouseRect.y > 327 && mouseRect.y < 359) currentButton = 1;
 		else if (mouseRect.y >= 359 && mouseRect.y < 391) currentButton = 2;
@@ -323,9 +319,18 @@ bool Menu::PreUpdate()
 		else collCountCrop = { 0, 312, 52, 48 };
 
 		healthBarCrop.w = app->player->health * 2;
+
+		if (app->player->isDead == false)
+		{
+			abilityHUDCrop = { 0, 0, 128, 160 };
+			lifesCrop = { 36, 276 , 32, 32 };
+		}
+		else
+		{
+			abilityHUDCrop.x = 264;
+			lifesCrop.x = 0;
+		}
 	}
-		
-	//LOG("MusVol %f", currentMusVol);
 	return true;
 }
 
@@ -392,11 +397,15 @@ bool Menu::PostUpdate()
 			app->render->DrawTexture(menuHandTexture, menuHandRect.x - (app->render->camera.x), menuHandRect.y, &pauseHandCrop);
 		}
 		
+		if (baseHUD == NULL) LOG("NO HUD TEXTURE");
 		app->render->DrawTexture(baseHUD, -(app->render->camera.x), 704, &baseHUDRect);
 		
-		app->render->DrawTexture(abilityHUD, 304 - (app->render->camera.x), 768, &healthBarCrop);
-		app->render->DrawTexture(abilityHUD, 848 - (app->render->camera.x), 752, &collCountCrop);
-		app->render->DrawTexture(abilityHUD, 592 -(app->render->camera.x), 736, &currentAnimation->GetCurrentFrame());
+		app->render->DrawTexture(abilityHUD, 880 - (app->render->camera.x), 832, &lifesCrop);							//Lifes Counter
+		app->render->DrawTexture(abilityHUD, 764 - (app->render->camera.x), 816, &currentAnimation->GetCurrentFrame()); //Lifes Animation
+		app->render->DrawTexture(abilityHUD, 304 - (app->render->camera.x), 768, &healthBarCrop);						//Health Bar
+		app->render->DrawTexture(abilityHUD, 848 - (app->render->camera.x), 752, &collCountCrop);						//Collectible Counter
+		app->render->DrawTexture(abilityHUD, 592 -(app->render->camera.x), 736, &abilityHUDCrop);						//Kirby Ability
+		
 		currentAnimation->Update();
 	}
 	
