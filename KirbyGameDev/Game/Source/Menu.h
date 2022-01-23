@@ -101,6 +101,8 @@ private:
 	SDL_Texture* pauseTexture;
 	
 	SDL_Rect pauseHandCrop;
+
+	SDL_Rect collCountCrop;
 	
 	bool vsync = 0;
 	bool fullscreen = 0;

@@ -68,6 +68,8 @@ Menu::Menu()
 
 	vsyncRect = { 580, 404, 44, 44 };
 	vsyncCrop = { 0, 40, 44, 44 };
+
+	collCountCrop = { 0, 312, 52, 48 };
 	
 	currentButton = 0;
 	previousButton = 0;
@@ -314,6 +316,9 @@ bool Menu::PreUpdate()
 		else if (mouseRect.y > 327 && mouseRect.y < 359) currentButton = 1;
 		else if (mouseRect.y >= 359 && mouseRect.y < 391) currentButton = 2;
 		else if (mouseRect.y >= 391) currentButton = 3;
+
+		if (app->player->collectibleGet == 1) collCountCrop = { 56, 312, 52, 48 };
+		else collCountCrop = { 0, 312, 52, 48 };
 	}
 		
 	//LOG("MusVol %f", currentMusVol);
@@ -382,7 +387,10 @@ bool Menu::PostUpdate()
 			app->render->DrawTexture(pauseTexture, pauseRect.x - (app->render->camera.x), pauseRect.y, &pauseCrop);
 			app->render->DrawTexture(menuHandTexture, menuHandRect.x - (app->render->camera.x), menuHandRect.y, &pauseHandCrop);
 		}
+		
 		app->render->DrawTexture(baseHUD, -(app->render->camera.x), 704, &baseHUDRect);
+		
+		app->render->DrawTexture(abilityHUD, 848 - (app->render->camera.x), 752, &collCountCrop);
 		app->render->DrawTexture(abilityHUD, 592 -(app->render->camera.x), 736, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 	}
