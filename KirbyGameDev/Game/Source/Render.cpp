@@ -88,6 +88,41 @@ bool Render::CleanUp()
 	return true;
 }
 
+bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, bool useCamera)
+{
+	bool ret = true;
+
+	SDL_Rect dstRect{ x * SCREEN_WIDTH, y * SCREEN_HEIGHT, 0, 0 };
+
+	if (useCamera)
+	{
+		dstRect.x -= (camera.x * speed);
+		dstRect.y -= (camera.y * speed);
+	}
+
+	if (section != nullptr)
+	{
+		dstRect.w = section->w;
+		dstRect.h = section->h;
+	}
+	else
+	{
+		//Collect the texture size into rect.w and rect.h variables
+		SDL_QueryTexture(texture, nullptr, nullptr, &dstRect.w, &dstRect.h);
+	}
+
+	dstRect.w *= SCREEN_WIDTH;
+	dstRect.h *= SCREEN_HEIGHT;
+
+	if (SDL_RenderCopy(renderer, texture, section, &dstRect) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
 // L02: TODO 6: Implement a method to load the state, for now load camera's x and y
 // Load Game State
 bool Render::LoadState(pugi::xml_node& data)

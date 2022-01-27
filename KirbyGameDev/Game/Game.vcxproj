@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Collectible.cpp" />
     <ClCompile Include="Source\FlyingEnemy.cpp" />
+    <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\GroundEnemy.cpp" />
     <ClCompile Include="Source\GUIbutton.cpp" />
     <ClCompile Include="Source\Level01.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Collectible.h" />
     <ClInclude Include="Source\FlyingEnemy.h" />
+    <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\GroundEnemy.h" />
     <ClInclude Include="Source\GUIbutton.h" />
     <ClInclude Include="Source\GUIcontrol.h" />

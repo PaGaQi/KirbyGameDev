@@ -30,6 +30,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, bool useCamera);
+
 	// Load / Save
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;

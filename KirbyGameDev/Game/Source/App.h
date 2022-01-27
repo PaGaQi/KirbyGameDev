@@ -26,6 +26,7 @@ class Window;
 class Input;
 class Render;
 class Textures;
+class Fonts;
 class Audio;
 class Player;
 class Menu;
@@ -121,6 +122,7 @@ public:
 	Input* input;
 	Render* render;
 	Textures* tex;
+	Fonts* fonts;
 	Audio* audio;
 	Player* player;
 	Menu* menu;

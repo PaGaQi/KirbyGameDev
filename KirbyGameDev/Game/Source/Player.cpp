@@ -129,6 +129,7 @@ Player::Player()
 	paused = 0;
 
 	health = 110;
+	timer = 300.0f;
 }
 
 Player::~Player() {};
@@ -169,6 +170,7 @@ bool Player::Start()
 			collectibleGet = false;
 			direction = 0;
 			health = 110;
+			timer = 300;
 
 			b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
 
@@ -295,6 +297,17 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) godMode = !godMode;
 
+	if ((app->currentScene == LEVEL_1))
+	{
+		if (timer >= 0) timer -= dt;
+		else if (timer <= 0 && !isDead)
+		{
+			timer = 0;
+			health = 0;
+		}
+	}
+	LOG("TIMER %f", timer);
+
 	currentAnimation->Update();
 
 	return true;
@@ -302,9 +315,7 @@ bool Player::Update(float dt)
 
 // Called each loop iteration
 bool Player::PostUpdate()
-{
-	//if (collectibleGet) LOG("COLLECTIBLE %i", collectibleGet);
-	
+{	
 	if ((playerRect.x > SCREEN_WIDTH / 2 - 2) && (playerRect.x < SCREEN_WIDTH * 2.5 + 2) && (app->currentScene == LEVEL_1))
 	{
 		app->render->camera.x = (SCREEN_WIDTH / 2) - playerRect.x;  //The right camera limit is the level width - HALF THE SCREEN WIDTH
@@ -340,6 +351,7 @@ bool Player::LoadState(pugi::xml_node& data)
 		direction = data.child("playerDir").attribute("value").as_bool();
 		health = data.child("health").attribute("value").as_int(100);
 		isDead = data.child("isDead").attribute("value").as_bool(0);
+		timer = data.child("timer").attribute("value").as_float(300.0f);
 
 		if (startPos.x != NULL || startPos.y != NULL)
 		{
@@ -364,6 +376,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 		data.child("collectibleGet").attribute("value").set_value(collectibleGet);
 		data.child("playerDir").attribute("value").set_value(direction);
 		data.child("health").attribute("value").set_value(health);
+		data.child("timer").attribute("value").set_value(timer);
 
 		if (!paused) app->menu->saveDataAvailable = true;
 	}

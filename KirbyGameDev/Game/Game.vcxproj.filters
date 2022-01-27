@@ -67,6 +67,9 @@
     <ClCompile Include="Source\GUIbutton.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Fonts.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -163,6 +166,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\GUIcontrol.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Fonts.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

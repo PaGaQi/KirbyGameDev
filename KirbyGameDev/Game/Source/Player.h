@@ -52,6 +52,7 @@ public:
 
 	bool paused;
 	int health;
+	float timer;
 
 private:
 	// Position of the player in the map
