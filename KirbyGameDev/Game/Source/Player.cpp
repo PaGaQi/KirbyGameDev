@@ -270,7 +270,10 @@ bool Player::PreUpdate()
 			if (direction == 0) currentAnimation = &jumpRight;
 			else if (direction == 1) currentAnimation = &jumpLeft;
 		}
-
+		else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		{
+			timer = 30;
+		}
 
 		if (godMode == true)												//GOD MODE
 		{
@@ -306,7 +309,7 @@ bool Player::Update(float dt)
 			health = 0;
 		}
 	}
-	LOG("TIMER %f", timer);
+	//LOG("TIMER %f", timer);
 
 	currentAnimation->Update();
 

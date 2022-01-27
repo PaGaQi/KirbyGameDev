@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Audio.h"
 #include "Window.h"
+#include "Fonts.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
 #include "Defs.h"
@@ -84,7 +85,6 @@ Menu::Menu()
 	currentMusVol = 128;
 	currentSFXVol = 128;
 
-
 	vsync = false;
 	fullscreen = false;
 }
@@ -104,7 +104,7 @@ bool Menu::Awake()
 bool Menu::Start() 
 {
 	//HUD Elements
-	baseHUD = app->tex->Load("Assets/textures/HUD Base.png");
+	if (baseHUD == nullptr) baseHUD = app->tex->Load("Assets/textures/HUD Base.png");
 	abilityHUD = app->tex->Load("Assets/textures/HUD Sprites.png");
 
 	pauseTexture = app->tex->Load("Assets/textures/Pause Menu.png");
@@ -112,6 +112,9 @@ bool Menu::Start()
 	moveMouse = app->audio->LoadFx("Assets/audio/fx/2C - Moving Cursor Sound.wav");
 
 	menuHandTexture = app->tex->Load("Assets/maps/UI Elements Ver2.png");
+
+	char lookupTable[] = { "0123456789" };
+	timerFont = app->fonts->Load("Assets/textures/Font Numbers.png", lookupTable, 1);
 
 	switch (app->currentScene)
 	{
@@ -406,6 +409,9 @@ bool Menu::PostUpdate()
 		app->render->DrawTexture(abilityHUD, 848 - (app->render->camera.x), 752, &collCountCrop);						//Collectible Counter
 		app->render->DrawTexture(abilityHUD, 592 -(app->render->camera.x), 736, &abilityHUDCrop);						//Kirby Ability
 		
+		sprintf_s(timerText, 8, "%7d", (int)app->player->timer);
+		app->fonts->BlitText(304, 832, timerFont, timerText);
+
 		currentAnimation->Update();
 	}
 	

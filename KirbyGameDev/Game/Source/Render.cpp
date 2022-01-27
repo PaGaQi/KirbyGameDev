@@ -92,7 +92,7 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, f
 {
 	bool ret = true;
 
-	SDL_Rect dstRect{ x * SCREEN_WIDTH, y * SCREEN_HEIGHT, 0, 0 };
+	SDL_Rect dstRect{ x, y, 0, 0 };
 
 	if (useCamera)
 	{
@@ -111,8 +111,8 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, f
 		SDL_QueryTexture(texture, nullptr, nullptr, &dstRect.w, &dstRect.h);
 	}
 
-	dstRect.w *= SCREEN_WIDTH;
-	dstRect.h *= SCREEN_HEIGHT;
+	dstRect.w *= 1;
+	dstRect.h *= 1;
 
 	if (SDL_RenderCopy(renderer, texture, section, &dstRect) != 0)
 	{

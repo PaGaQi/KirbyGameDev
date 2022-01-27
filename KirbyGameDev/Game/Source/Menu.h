@@ -115,6 +115,6 @@ private:
 	int pressOk;
 	int pressBack;
 
-	char timerText[4] = { " \0" };
+	char timerText[8] = { " \0" };
 	int timerFont = -1;
 };
