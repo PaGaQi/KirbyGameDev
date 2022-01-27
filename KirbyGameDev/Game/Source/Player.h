@@ -98,5 +98,7 @@ private:
 
 	int jumpSFX;
 	int deathSFX;
+	int hitSFX;
+	int collSFX;
 };
 

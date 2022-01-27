@@ -104,17 +104,17 @@ bool Menu::Awake()
 bool Menu::Start() 
 {
 	//HUD Elements
-	if (baseHUD == nullptr) baseHUD = app->tex->Load("Assets/textures/HUD Base.png");
+	baseHUD = app->tex->Load("Assets/textures/HUD_base.png");
 	abilityHUD = app->tex->Load("Assets/textures/HUD Sprites.png");
-
 	pauseTexture = app->tex->Load("Assets/textures/Pause Menu.png");
 
 	moveMouse = app->audio->LoadFx("Assets/audio/fx/2C - Moving Cursor Sound.wav");
 
+	app->tex->UnLoad(menuHandTexture);
 	menuHandTexture = app->tex->Load("Assets/maps/UI Elements Ver2.png");
 
 	char lookupTable[] = { "0123456789" };
-	timerFont = app->fonts->Load("Assets/textures/Font Numbers.png", lookupTable, 1);
+	timerFont = app->fonts->Load("Assets/textures/font_numbers.png", lookupTable, 1);
 
 	switch (app->currentScene)
 	{
@@ -194,7 +194,7 @@ bool Menu::Start()
 		case (LEVEL_1):
 		{
 			LOG("Loading Player HUD");				
-			baseHUD = app->tex->Load("Assets/textures/HUD Base.png");
+			baseHUD = app->tex->Load("Assets/textures/HUD_base.png");
 			abilityHUD = app->tex->Load("Assets/textures/HUD Sprites.png");
 
 			app->render->camera.x = 0;
@@ -436,10 +436,31 @@ bool Menu::CleanUp()
 {	
 	switch (app->currentScene)
 	{
+		case (TITLE):
+		{
+			app->tex->UnLoad(menuBackground);
+			app->tex->UnLoad(abilityHUD);
+			app->tex->UnLoad(baseHUD);
+		}
+		break;
+	
+		case (MENU):
+		{
+			app->tex->UnLoad(abilityHUD);
+			app->tex->UnLoad(baseHUD);
+			app->tex->UnLoad(pauseTexture);			
+
+			app->fonts->UnLoad(timerFont);
+			return true;
+		}
+		break;
+
 		case (DEATH):
 		{
 			app->tex->UnLoad(abilityHUD);
 			app->tex->UnLoad(baseHUD);
+
+			app->fonts->UnLoad(timerFont);
 			return true;
 		}
 		break;

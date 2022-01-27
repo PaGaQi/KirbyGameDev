@@ -5,12 +5,12 @@
 		<organization>UPC</organization>
 	</app>
 	<player>
-		<playerPos x="827" y="530" />
+		<playerPos x="32" y="562" />
 		<playerDir value="false" />
 		<collectibleGet value="false" />
 		<health value="110" />
 		<isDead value="false" />
-		<timer value="103.525909" />
+		<timer value="298.605347" />
 	</player>
 	<renderer>
 		<vsync value="false" />

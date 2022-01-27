@@ -160,7 +160,9 @@ bool Player::Start()
 		playerPhys->listener = this;
 
 		jumpSFX = app->audio->LoadFx("Assets/audio/fx/jump.wav");
-		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");			
+		deathSFX = app->audio->LoadFx("Assets/audio/fx/death_Kirb.wav");
+		hitSFX = app->audio->LoadFx("Assets/audio/fx/Hit SFX.wav");
+		collSFX = app->audio->LoadFx("Assets/audio/fx/Collectible Sound.wav");
 		
 		paused = 0;
 
@@ -395,11 +397,11 @@ void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		else if (bodyB->id == 2 && isDead == false)
 		{
 			health -= 28;
-			//app->audio->PlayFx(deathSFX);
-			//deadDirection = 1;			
+			app->audio->PlayFx(hitSFX);
 		}
 		else if (bodyB->id == 3)
 		{
+			if (collectibleGet == false) app->audio->PlayFx(collSFX);
 			collectibleGet = true;
 		}
 	}
