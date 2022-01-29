@@ -128,7 +128,7 @@ bool Scene::Update(float dt)
 			//playSaved = 0;
 			prevScene = MENU;
 
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				app->audio->PlayFx(pressOk);
 
@@ -157,7 +157,7 @@ bool Scene::Update(float dt)
 
 		case SETTINGS:
 		{
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{										
 				if (app->menu->currentButton == 4)
 				{
@@ -177,7 +177,7 @@ bool Scene::Update(float dt)
 
 		case CREDITS:
 		{
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				app->audio->PlayFx(pressBack);
 				app->ChangeScene(MENU);
@@ -191,7 +191,7 @@ bool Scene::Update(float dt)
 		{
 			app->map->Draw();
 
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && app->player->paused)
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && app->player->paused)
 			{
 				if (app->menu->currentButton == 0)
 				{
@@ -220,7 +220,7 @@ bool Scene::Update(float dt)
 
 		case DEATH:
 		{
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				app->ChangeScene(TITLE);
 				//app->menu->Start();

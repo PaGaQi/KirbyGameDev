@@ -10,7 +10,7 @@
 		<collectibleGet value="false" />
 		<health value="110" />
 		<isDead value="false" />
-		<timer value="298.605347" />
+		<timer value="296.741333" />
 	</player>
 	<renderer>
 		<vsync value="false" />

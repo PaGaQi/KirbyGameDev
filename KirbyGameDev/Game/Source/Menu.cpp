@@ -242,7 +242,7 @@ bool Menu::PreUpdate()
 		if ((app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP) && ((currentButton == 0) || (currentButton == 1))) app->audio->PlayFx(app->scene->pressOk);
 		
 		//SETTINGS MENU CHANGING VALUES
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
+		if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		{
 			if (currentButton == 0)
 			{
@@ -271,7 +271,7 @@ bool Menu::PreUpdate()
 			}
 		}
 		
-		else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
 			if (currentButton == 2)
 			{
