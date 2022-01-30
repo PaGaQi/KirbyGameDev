@@ -47,51 +47,21 @@ public:
 	bool CleanUp();	
 	void SetEnemyState(FLYING_ENEMY_STATE state);
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	bool LoadState(pugi::xml_node& data);
+	bool SaveState(pugi::xml_node& data) const;
 
-
-	//int direction;
-
-	/*void FlyingEnemy::SetAnimation(Animation& toChange)
-	{
-		if (currentAnimation != &toChange) {
-
-			toChange.Reset();
-			currentAnimation = &toChange;
-		}
-	}
-
-	FlyingEnemy* CreateFlyingEnemy(int xPosition, int yPosition)
-	{
-		FlyingEnemy enemy;
-
-		enemy.startPosX = xPosition;
-		enemy.startPosY = yPosition;
-
-		enemy.enemyPhys = app->physics->CreateCircle(enemy.startPosX, enemy.startPosY, 6, b2_dynamicBody);
-		enemy.enemyPhys->id = 5;
-		enemy.enemyPhys->listener = app->flyingEnemy;
-
-		enemy.actualState = PATROLLIN;
-
-		enemy.deathAnimAllowed = false;
-
-
-
-		return &enemy;
-	}
-	*/
 
 	iPoint directionPoint; // pixels	
 
 	iPoint positionOfTheObject; // pixels	
 
-	float startPosX;
-	float startPosY;
 	bool isDead;
 	int lastY;
 	bool direction;
 	int statesInt;
 
+	b2Vec2 startPos;
+	int deathSFX;
 
 	FLYING_ENEMY_STATE actualState;
 

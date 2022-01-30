@@ -44,37 +44,9 @@ public:
 	bool CleanUp();
 	//void SetEnemyState(GROUND_ENEMY_STATE state);
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	bool LoadState(pugi::xml_node& data);
+	bool SaveState(pugi::xml_node& data) const;
 
-	/*
-	void GroundEnemy::SetAnimation(Animation& toChange)
-	{
-		if (currentAnimation != &toChange) {
-
-			toChange.Reset();
-			currentAnimation = &toChange;
-		}
-	}
-
-	GroundEnemy* CreateGroundEnemy(int xPosition, int yPosition)
-	{
-		GroundEnemy enemy;
-
-		enemy.startPosX = xPosition;
-		enemy.startPosY = yPosition;
-
-		enemy.enemyPhys = app->physics->CreateCircle(enemy.startPosX, enemy.startPosY, 6, b2_dynamicBody);
-		enemy.enemyPhys->id = 5;
-		enemy.enemyPhys->listener = app->groundEnemy;
-
-		enemy.actualState = WALKING;
-
-		enemy.lifes = 2;
-		enemy.isAlive = true;
-		enemy.deathAnimAllowed = false;
-
-		return &enemy;
-	}
-	*/
 private:
 	iPoint directionPoint; // pixels	
 
@@ -84,11 +56,14 @@ private:
 	int lastY;
 	bool direction;
 
+	int deathSFX;
 
 	GROUND_ENEMY_STATE actualState;
 
 	b2Vec2 enemyPos;
 	b2Vec2 enemyVel;
+
+	b2Vec2 startPos;
 
 	PhysBody* enemyPhys;
 	SDL_Rect enemyRect;

@@ -14,7 +14,8 @@ class Player : public Module
 {
 public:
 
-	PhysBody* playerPhys;
+	PhysBody* playerPhys;	
+	PhysBody* attackPhys;
 
 	Player();
 
@@ -89,7 +90,12 @@ private:
 	Animation walkRight;
 	Animation death;
 
+	SDL_Texture* attackText;
+	SDL_Rect attackRect;
+	SDL_Rect attackCrop;
+
 	b2Vec2 startPos;
+	b2Vec2 startAttackPos;
 
 	b2Vec2 playerPos;
 	b2Vec2 playerVel;
@@ -100,5 +106,6 @@ private:
 	int deathSFX;
 	int hitSFX;
 	int collSFX;
+
 };
 

@@ -82,30 +82,18 @@ Player::Player()
 	walkLeft.speed = 0.2f;
 
 	//Right Jump Animation---------------------------
-	
-	jumpRight.PushBack({ 0, 68, 32, 32 });
-	//jumpRight.PushBack({ 34, 68, 32, 32 });
-	//jumpRight.PushBack({ 68, 68, 32, 32 });
-	//jumpRight.PushBack({ 102, 68, 32, 32 });
-	//jumpRight.PushBack({ 136, 68, 32, 32 });
 
+	jumpRight.PushBack({ 0, 68, 32, 32 });
 
 	jumpRight.loop = true;
 	jumpRight.speed = 0.1f;
 
 	//Left Jump Animation---------------------------
 	jumpLeft.PushBack({ 0, 170, 32, 32 });
-	//jumpLeft.PushBack({ 34, 170, 32, 32 });
-	//jumpLeft.PushBack({ 68, 170, 32, 32 });
-	//jumpLeft.PushBack({ 102, 170, 32, 32 });
-	//jumpLeft.PushBack({ 136, 170, 32, 32 });
 
 	jumpLeft.loop = true;
 	jumpLeft.speed = 0.1f;
 
-	//Left Fall Animation
-	//fallLeft.PushBack({ 136, 170, 32, 32 });
-	
 	//Death Animation-------------------------------
 	death.PushBack({ 0, 204, 32, 32 });
 	death.PushBack({ 34, 204, 32, 32 });
@@ -114,15 +102,15 @@ Player::Player()
 
 	death.loop = true;
 	death.speed = 0.1f;
-	
+
 	deadDirection = 1;
 
 	playerRect = { 0, 320, 32, 32 };
-	//playerPhys;
 
 	lastY;
 
 	startPos = { 32, 576 };
+	startAttackPos = {-100, 0 };
 	
 	collectibleGet;
 
@@ -146,6 +134,7 @@ bool Player::Start()
 	{		
 		LOG("Loading player sprites");
 		playerSprites = app->tex->Load("Assets/textures/KirbyFullSpritesheet.png");
+		attackText = app->tex->Load("Assets/textures/Attack.png");
 		
 		lastY = 704;
 
@@ -153,7 +142,9 @@ bool Player::Start()
 		b2Vec2 playerPos = { 0, 0 };
 		b2Vec2 playerVel = { 0, 0 };
 
-		
+		attackRect = { (int)startAttackPos.x, (int)startAttackPos.y, 32, 32 };
+		attackCrop = { 0, 0, 32, 32 };
+
 		LOG("Creating player hitbox");
 		playerPhys = app->physics->CreateCircle((float)startPos.x, (float)startPos.y, 14, b2_dynamicBody);
 		playerPhys->id = 1;
@@ -164,20 +155,29 @@ bool Player::Start()
 		hitSFX = app->audio->LoadFx("Assets/audio/fx/Hit SFX.wav");
 		collSFX = app->audio->LoadFx("Assets/audio/fx/Collectible Sound.wav");
 		
+		b2Vec2 attackPos = { playerPos.x + PIXEL_TO_METERS(32), playerPos.y };
+		b2Vec2 attackVel = playerVel;
+
+		attackPhys = app->physics->CreateCircle(METERS_TO_PIXELS(attackPos.x + 32), METERS_TO_PIXELS(attackPos.y), 14, b2_kinematicBody);
+		attackPhys->id = 4;
+		attackPhys->listener = this;
+
 		paused = 0;
 
 		if (app->scene->playSaved == 0)
 		{
 			startPos = { 32, 576 };
+			startAttackPos = {-100, -100 };
 			collectibleGet = false;
 			direction = 0;
 			health = 110;
 			timer = 300;
 
 			b2Vec2 newPos = { PIXEL_TO_METERS(startPos.x), PIXEL_TO_METERS(startPos.y) };
+			b2Vec2 newAttackPos = { PIXEL_TO_METERS(startAttackPos.x), PIXEL_TO_METERS(startAttackPos.y) };
 
 			playerPhys->body->SetTransform(newPos, 0);
-			
+			attackPhys->body->SetTransform(newAttackPos, 0);
 
 			app->render->camera.x = 0;
 		}
@@ -277,6 +277,18 @@ bool Player::PreUpdate()
 			timer = 30;
 		}
 
+		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+		{
+			b2Vec2 attackPos = { 0, 0 };
+			if (direction == 0) attackPos = { playerPos.x + PIXEL_TO_METERS(32), playerPos.y };
+			else attackPos = { playerPos.x + PIXEL_TO_METERS(-32), playerPos.y };
+			b2Vec2 attackVel = playerVel;
+			
+			attackPhys->body->SetTransform(attackPos, 0);
+			attackPhys->body->SetLinearVelocity(attackVel);
+		
+		}		
+
 		if (godMode == true)												//GOD MODE
 		{
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) playerRect.y -= 8;
@@ -298,6 +310,9 @@ bool Player::Update(float dt)
 		playerPhys->body->SetLinearVelocity(playerVel);
 
 		lastY = playerRect.y;
+
+		attackRect.x = METERS_TO_PIXELS(attackPhys->body->GetPosition().x) - 16;
+		attackRect.y = METERS_TO_PIXELS(attackPhys->body->GetPosition().y) - 16;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) godMode = !godMode;
@@ -311,7 +326,6 @@ bool Player::Update(float dt)
 			health = 0;
 		}
 	}
-	//LOG("TIMER %f", timer);
 
 	currentAnimation->Update();
 
@@ -335,7 +349,13 @@ bool Player::PostUpdate()
 		deadDirection = 1;
 	}
 
-	if (app->currentScene == LEVEL_1) app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
+	if (app->currentScene == LEVEL_1)
+	{
+		app->render->DrawTexture(playerSprites, playerRect.x, playerRect.y, &currentAnimation->GetCurrentFrame());
+
+		app->render->DrawTexture(attackText, attackRect.x, attackRect.y, &attackCrop);
+	}
+	
 	return true;
 }
 
@@ -346,7 +366,6 @@ bool Player::PlayerWin()
 
 bool Player::LoadState(pugi::xml_node& data)
 {
-
 	if (data != NULL && app->currentScene == LEVEL_1)
 	{
 		LOG("loading player ");
@@ -357,6 +376,14 @@ bool Player::LoadState(pugi::xml_node& data)
 		health = data.child("health").attribute("value").as_int(100);
 		isDead = data.child("isDead").attribute("value").as_bool(0);
 		timer = data.child("timer").attribute("value").as_float(300.0f);
+		startAttackPos.x = data.child("attackPos").attribute("x").as_float(0.0f);
+		startAttackPos.y = data.child("attackPos").attribute("y").as_float(0.0f);
+
+		if (startAttackPos.x != NULL || startAttackPos.y != NULL)
+		{
+			b2Vec2 newAttackPos = { PIXEL_TO_METERS(startAttackPos.x), PIXEL_TO_METERS(startAttackPos.y) };
+			attackPhys->body->SetTransform(newAttackPos, 0);
+		}
 
 		if (startPos.x != NULL || startPos.y != NULL)
 		{
@@ -382,6 +409,8 @@ bool Player::SaveState(pugi::xml_node& data) const
 		data.child("playerDir").attribute("value").set_value(direction);
 		data.child("health").attribute("value").set_value(health);
 		data.child("timer").attribute("value").set_value(timer);
+		data.child("attackPos").attribute("x").set_value(METERS_TO_PIXELS(attackPhys->body->GetPosition().x));
+		data.child("attackPos").attribute("y").set_value(METERS_TO_PIXELS(attackPhys->body->GetPosition().y));
 
 		if (!paused) app->menu->saveDataAvailable = true;
 	}
@@ -393,16 +422,23 @@ void Player::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (app->currentScene == LEVEL_1)
 	{
 		//LOG("%i, %i", METERS_TO_PIXELS(playerPhys->body->GetPosition().x), METERS_TO_PIXELS(playerPhys->body->GetPosition().y));
-		if (bodyB == nullptr) {}
-		else if (bodyB->id == 2 && isDead == false)
+		if (bodyA == playerPhys)
 		{
-			health -= 28;
-			app->audio->PlayFx(hitSFX);
+			if (bodyB == nullptr) {}
+			else if (bodyB->id == 2 && isDead == false)
+			{
+				health -= 28;
+				app->audio->PlayFx(hitSFX);
+			}
+			else if (bodyB->id == 3)
+			{
+				if (collectibleGet == false) app->audio->PlayFx(collSFX);
+				collectibleGet = true;
+			}
 		}
-		else if (bodyB->id == 3)
-		{
-			if (collectibleGet == false) app->audio->PlayFx(collSFX);
-			collectibleGet = true;
+
+		if (bodyA->id == 4 && attackPhys->body != NULL)
+		{		
 		}
 	}
 }
